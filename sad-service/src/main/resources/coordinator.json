@@ -1,0 +1,14 @@
+{
+    "database": {
+        "mongo_server": {
+            "host": "localhost",
+            "port": "27017"
+        },
+        "name": "experimedia"
+    },
+    "pojo_packages": [
+    {
+        "name": "eu.experimedia.itinnovation.scc.dao"
+    }
+    ]
+}

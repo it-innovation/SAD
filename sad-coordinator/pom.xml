@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>uk.ac.soton.itinnovation.sad</groupId>
+    <artifactId>sad-coordinator</artifactId>
+    <name>Experimedia SAD Coordinator library</name>
+    <description>SAD coordinator library for database access an plugin init methods</description>
+
+    <parent>
+        <groupId>uk.ac.soton.itinnovation.sad</groupId>
+        <artifactId>sad-parent</artifactId>
+        <version>2.6</version>
+    </parent>
+
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>3.8.1</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!--Pretty Logback, see https://github.com/n0rad/logback-prettier-->
+        <dependency>
+            <groupId>fr.norad.logback.prettier</groupId>
+            <artifactId>logback-prettier</artifactId>
+            <version>0.5</version>
+        </dependency>
+
+        <dependency>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
+            <version>1.5</version>
+        </dependency>
+
+        <!--JSON-->
+        <dependency>
+            <groupId>net.sf.json-lib</groupId>
+            <artifactId>json-lib</artifactId>
+            <version>2.4</version>
+            <classifier>jdk15</classifier>
+        </dependency>
+
+        <!-- Mongo driver -->
+        <dependency>
+            <groupId>org.mongodb</groupId>
+            <artifactId>mongo-java-driver</artifactId>
+            <version>2.12.1</version>
+        </dependency>
+
+        <!--Morphia-->
+        <dependency>
+            <groupId>com.google.code.morphia</groupId>
+            <artifactId>morphia</artifactId>
+            <version>0.101.0</version>
+        </dependency>
+
+        <!--Morphia logger-->
+        <dependency>
+            <groupId>com.google.code.morphia</groupId>
+            <artifactId>morphia-logging-slf4j</artifactId>
+            <version>0.101.0</version>
+        </dependency>
+
+    </dependencies>
+
+</project>

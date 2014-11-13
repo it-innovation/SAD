@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>uk.ac.soton.itinnovation.sad.plugins</groupId>
+    <artifactId>sad-plugins</artifactId>
+    <packaging>pom</packaging>
+    <name>Experimedia SAD Plugins Parent</name>
+    <description>SAD plugins to be run by SAD service</description>
+
+    <parent>
+        <groupId>uk.ac.soton.itinnovation.sad</groupId>
+        <artifactId>sad-parent</artifactId>
+        <version>2.6</version>
+        <relativePath>..</relativePath>
+    </parent>
+
+    <properties>
+        <license.licenseName>apache_v2</license.licenseName>
+    </properties>
+
+    <modules>
+        <module>twitter-searcher</module>
+        <module>facebook-collector</module>
+        <module>basic-sns-stats</module>
+    </modules>
+
+</project>

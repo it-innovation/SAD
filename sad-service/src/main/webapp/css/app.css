@@ -1,0 +1,88 @@
+.alert-color {
+    color: #f04124;
+}
+
+.success-color {
+    color: #43AC6A;
+}
+
+
+.fullWidth {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: initial;
+}
+
+.resultsContainer {
+    word-wrap: break-word;
+}
+
+p.longjobid {
+    word-wrap: break-word;
+}
+
+.string { color: green; }
+.number { color: blue; }
+.boolean { color: darkorange; }
+.null { color: magenta; }
+.key { color: red; }
+
+.no_padding {
+    padding: 0;
+    margin: 0;
+}
+
+.only_top_bottom_padding {
+    padding: 5px 0;
+    margin: 0;
+}
+
+.only_bottom_padding {
+    padding: 0 0 5px 0;
+    margin: 0;
+}
+
+.no_padding_left_padding {
+    padding: 0 0 0 8px;
+    margin: 0;
+}
+.left_padding {
+    padding: 0 0 10px 8px;
+    margin: 0;
+}
+.bottom_padding {
+    padding: 0 0 10px 0;
+    margin: 0;
+}
+
+.break_word {
+    word-break: break-all;
+}
+
+.header  p{
+    font-weight: bold;
+}
+
+.fakeLink {
+    text-decoration: underline;
+    color: #666;
+    font-size: smaller;
+    cursor: pointer;
+}
+
+.hiddenResponse {
+    display:none;
+}
+
+#requestContainer {
+    height: 520px;
+}
+
+#tweet_locations_map_container {
+    height: 400px;
+}
+
+#tweet_locations_info_container {
+    padding-bottom: 10px;
+}

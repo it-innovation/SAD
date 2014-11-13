@@ -1,0 +1,188 @@
+<assembly>
+    <id>src</id>
+    <formats>
+        <format>dir</format>
+        <format>zip</format>
+    </formats>
+    <includeBaseDirectory>false</includeBaseDirectory>
+    <files>
+
+        <!-- root readme file -->
+        <file>
+            <source>README-src.md</source>
+            <outputDirectory></outputDirectory>
+            <filtered>true</filtered>
+            <destName>README.md</destName>
+        </file>
+
+        <!-- coordinator third-party licenses filtered html file -->
+        <file>
+            <source>${basedir}/sad-coordinator/target/site/third-party-report.html</source>
+            <outputDirectory>licences/sad-coordinator</outputDirectory>
+            <filtered>true</filtered>
+            <destName>third-party-licences.html</destName>
+        </file>
+
+        <!-- sad-service third-party licenses filtered html file -->
+        <file>
+            <source>${basedir}/sad-service/target/site/third-party-report.html</source>
+            <outputDirectory>licences/sad-service</outputDirectory>
+            <filtered>true</filtered>
+            <destName>third-party-licences.html</destName>
+        </file>
+
+        <!-- sad-service non-java third-party licenses filtered html file -->
+        <file>
+            <source>${basedir}/sad-service/src/license/extra/extra-licences.html</source>
+            <outputDirectory>licences/sad-service</outputDirectory>
+            <filtered>true</filtered>
+            <destName>third-party-licences-non-java.html</destName>
+        </file>
+
+        <!-- twitter-searcher plugin third-party licenses filtered html file -->
+        <file>
+            <source>${basedir}/sad-plugins/twitter-searcher/target/site/third-party-report.html</source>
+            <outputDirectory>licences/sad-plugins/twitter-searcher</outputDirectory>
+            <filtered>true</filtered>
+            <destName>third-party-licences.html</destName>
+        </file>
+
+        <!-- twitter-searcher plugin non-java third-party licenses filtered html file -->
+        <file>
+            <source>${basedir}/sad-plugins/twitter-searcher/src/license/extra/extra-licences.html</source>
+            <outputDirectory>licences/sad-plugins/twitter-searcher</outputDirectory>
+            <filtered>true</filtered>
+            <destName>third-party-licences-non-java.html</destName>
+        </file>
+
+        <!-- facebook-collector plugin third-party licenses filtered html file -->
+        <file>
+            <source>${basedir}/sad-plugins/facebook-collector/target/site/third-party-report.html</source>
+            <outputDirectory>licences/sad-plugins/facebook-collector</outputDirectory>
+            <filtered>true</filtered>
+            <destName>third-party-licences.html</destName>
+        </file>
+
+        <!-- facebook-collector plugin non-java third-party licenses filtered html file -->
+        <file>
+            <source>${basedir}/sad-plugins/facebook-collector/src/license/extra/extra-licences.html</source>
+            <outputDirectory>licences/sad-plugins/facebook-collector</outputDirectory>
+            <filtered>true</filtered>
+            <destName>third-party-licences-non-java.html</destName>
+        </file>
+
+        <!-- basic-sns-stats plugin third-party licenses filtered html file -->
+        <file>
+            <source>${basedir}/sad-plugins/basic-sns-stats/target/site/third-party-report.html</source>
+            <outputDirectory>licences/sad-plugins/basic-sns-stats</outputDirectory>
+            <filtered>true</filtered>
+            <destName>third-party-licences.html</destName>
+        </file>
+
+        <!-- basic-sns-stats plugin non-java third-party licenses filtered html file -->
+        <file>
+            <source>${basedir}/sad-plugins/basic-sns-stats/src/license/extra/extra-licences.html</source>
+            <outputDirectory>licences/sad-plugins/basic-sns-stats</outputDirectory>
+            <filtered>true</filtered>
+            <destName>third-party-licences-non-java.html</destName>
+        </file>
+
+    </files>
+
+    <fileSets>
+
+        <!-- copy from root and all ignores -->
+        <fileSet>
+            <directory>.</directory>
+            <outputDirectory></outputDirectory>
+            <excludes>
+                <exclude>**/target/**</exclude>
+                <exclude>**/docs/**</exclude>
+                <exclude>*.pages</exclude>
+                <exclude>*.txt</exclude>
+                <exclude>*.md</exclude>
+                <exclude>LICENSE.txt</exclude>
+                <exclude>**/.git/**</exclude>
+                <exclude>**/.gitignore/**</exclude>
+                <exclude>**.DS_Store**</exclude>
+                <exclude>**/wegov-analysis/**</exclude>
+                <exclude>**/hot-tweets/**</exclude>
+                <exclude>sad-service/data/</exclude>
+            </excludes>
+        </fileSet>
+
+        <!-- sad-coordinator third-party licenses css and images -->
+        <fileSet>
+            <directory>${basedir}/sad-coordinator/target/site</directory>
+            <includes>
+                <include>css/**</include>
+                <include>images/**</include>
+            </includes>
+            <outputDirectory>licences/sad-coordinator</outputDirectory>
+        </fileSet>
+
+        <!-- sad-service third-party licenses css and images -->
+        <fileSet>
+            <directory>${basedir}/sad-service/target/site</directory>
+            <includes>
+                <include>css/**</include>
+                <include>images/**</include>
+            </includes>
+            <outputDirectory>licences/sad-service</outputDirectory>
+        </fileSet>
+
+        <!-- twitter-searcher plugin third-party licenses css and images -->
+        <fileSet>
+            <directory>${basedir}/sad-plugins/twitter-searcher/target/site</directory>
+            <includes>
+                <include>css/**</include>
+                <include>images/**</include>
+            </includes>
+            <outputDirectory>licences/sad-plugins/twitter-searcher</outputDirectory>
+        </fileSet>
+
+        <!-- facebook-collector plugin third-party licenses css and images -->
+        <fileSet>
+            <directory>${basedir}/sad-plugins/facebook-collector/target/site</directory>
+            <includes>
+                <include>css/**</include>
+                <include>images/**</include>
+            </includes>
+            <outputDirectory>licences/sad-plugins/facebook-collector</outputDirectory>
+        </fileSet>
+
+        <!-- basic-sns-stats plugin third-party licenses -->
+        <fileSet>
+            <directory>${basedir}/sad-plugins/basic-sns-stats/target/site</directory>
+            <includes>
+                <include>css/**</include>
+                <include>images/**</include>
+            </includes>
+            <outputDirectory>licences/sad-plugins/basic-sns-stats</outputDirectory>
+        </fileSet>
+
+        <!-- coordinator javadoc -->
+        <fileSet>
+            <directory>${basedir}/sad-coordinator/target/site/apidocs</directory>
+            <outputDirectory>javadoc/sad-coordinator</outputDirectory>
+        </fileSet>
+
+        <!-- service javadoc -->
+        <fileSet>
+            <directory>${basedir}/sad-service/target/site/apidocs</directory>
+            <outputDirectory>javadoc/sad-service</outputDirectory>
+        </fileSet>
+
+        <!-- sphinx docs -->
+        <fileSet>
+            <directory>${basedir}/docs/_build/html</directory>
+            <outputDirectory>docs/html</outputDirectory>
+        </fileSet>
+
+        <fileSet>
+            <directory>${basedir}/docs/src</directory>
+            <outputDirectory>docs/src</outputDirectory>
+        </fileSet>
+
+    </fileSets>
+</assembly>

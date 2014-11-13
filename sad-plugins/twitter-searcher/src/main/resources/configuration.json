@@ -1,0 +1,35 @@
+{
+    "enabled": "y",
+    "name": "twitter-searcher",
+    "description": "Twitter searcher EXPERIMEDIA SAD Plugin. Performs static Twitter searches for a keyword or a hashtag",
+    "paths": {
+        "jar": "target/${project.build.finalName}.jar",
+        "dependenciesFolder": "target/${sad.plugin.lib.folder}"
+    },
+    "arguments": [
+    {
+        "name": "search_terms",
+        "description": "Keyword or hashtag to search Twitter for",
+        "isOptional": false,
+        "defaultValue": "football",
+        "sample_values": "Schladming OR Planai OR Dachstein OR Rohrmoos OR MidEurope"
+    },
+    {
+        "name": "num_posts",
+        "description": "Number of tweets to find",
+        "isOptional": true,
+        "defaultValue": "99",
+        "sample_values": "all|125"
+    }
+    ],
+    "inputs": [
+    ],
+    "outputs": {
+        "data": [
+        {
+            "type": "twitter-static-search-raw",
+            "description": "JSON containing all processed tweets"
+        }
+        ]
+    }
+}

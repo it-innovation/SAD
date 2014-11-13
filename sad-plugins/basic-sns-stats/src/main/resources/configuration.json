@@ -1,0 +1,68 @@
+{
+    "enabled": "y",
+    "name": "basic-sns-stats",
+    "description": "Basic Social Network posts analytics plugin. Extracts basics stats from collections of tweets or Facebook posts",
+    "paths": {
+        "jar": "target/${project.build.finalName}.jar",
+        "dependenciesFolder": "target/${sad.plugin.lib.folder}"
+    },
+    "arguments": [
+        {
+            "name": "num_posts",
+            "description": "Number of social network posts per social network to analyse",
+            "isOptional": true,
+            "defaultValue": "all",
+            "sample_values": "all|125"
+        }
+    ],
+    "inputs": [
+        {
+            "source": "job_id",
+            "defaultValue": "1",
+            "required_data_types": [
+                {
+                    "twitter-static-search-raw": "JSON Twitter posts as returned by Twitter API"
+                },
+                {
+                    "facebook-posts-raw": "JSON Facebook posts as returned by Facebook API"
+                }
+            ]
+        },
+        {
+            "source": "plugin_name",
+            "defaultValue": "twitter-searcher",
+            "required_data_types": [
+                {
+                    "twitter-static-search-raw": "JSON Twitter posts as returned by Twitter API"
+                },
+                {
+                    "facebook-posts-raw": "JSON Facebook posts as returned by Facebook API"
+                }
+            ]
+        }
+    ],
+    "outputs": {
+        "data": [
+            {
+                "type": "twitter-basic-stats",
+                "description": "JSON containing basic stats extracted from processed tweets"
+            },
+            {
+                "type": "twitter-static-search-raw",
+                "description": "JSON containing tweets used in the analysis"
+            },
+            {
+                "type": "facebook-basic-stats",
+                "description": "JSON containing basic stats extracted from processed Facebook posts"
+            },
+            {
+                "type": "facebook-posts-raw",
+                "description": "JSON containing Facebook posts used in the analysis"
+            },
+            {
+                "type": "media-links-with-descriptions",
+                "description": "Link to a media file with description"
+            }
+        ]
+    }
+}

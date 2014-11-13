@@ -1,0 +1,366 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Using sample SAD plugins &mdash; EXPERIMEDIA SAD 2.6 documentation</title>
+    
+    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '2.6',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="EXPERIMEDIA SAD 2.6 documentation" href="index.html" />
+    <link rel="next" title="ECC integration" href="eccintegration.html" />
+    <link rel="prev" title="Using SAD Control panel" href="using_control_panel.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="eccintegration.html" title="ECC integration"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="using_control_panel.html" title="Using SAD Control panel"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">EXPERIMEDIA SAD 2.6 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Using sample SAD plugins</a><ul>
+<li><a class="reference internal" href="#twitter-searcher-twitter-searcher">Twitter searcher (twitter-searcher)</a></li>
+<li><a class="reference internal" href="#facebook-collector-facebook-collector">Facebook collector (facebook-collector)</a></li>
+<li><a class="reference internal" href="#hot-tweets-hot-tweets-only-available-in-deployment-release">Hot tweets (hot-tweets) - only available in deployment release</a></li>
+<li><a class="reference internal" href="#basic-stats-for-twitter-facebook-collected-data-basic-sns-stats">Basic stats for Twitter/Facebook collected data (basic-sns-stats)</a></li>
+<li><a class="reference internal" href="#next-steps">Next steps</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="using_control_panel.html"
+                        title="previous chapter">Using SAD Control panel</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="eccintegration.html"
+                        title="next chapter">ECC integration</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/sample_plugins.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="using-sample-sad-plugins">
+<h1>Using sample SAD plugins<a class="headerlink" href="#using-sample-sad-plugins" title="Permalink to this headline">¶</a></h1>
+<p>This distribution comes with three sample plugins: Twitter searcher, Facebook collector and Basic SNS stats (located in <strong>sad-plugins</strong> folder). Each can be run either by <a class="reference internal" href="using_control_panel.html"><em>Using SAD Control panel</em></a> or with a <a class="reference internal" href="service_api.html"><em>SAD Service API</em></a>.</p>
+<div class="section" id="twitter-searcher-twitter-searcher">
+<h2>Twitter searcher (twitter-searcher)<a class="headerlink" href="#twitter-searcher-twitter-searcher" title="Permalink to this headline">¶</a></h2>
+<p>This plugin retrieves up to 100 posts (argument: <code class="docutils literal"><span class="pre">num_posts</span></code>) from Twitter using Social Integrator library. Supported search terms (argument: <code class="docutils literal"><span class="pre">search_terms</span></code>) are:</p>
+<blockquote>
+<div><img alt="_images/twitter_operators.png" src="_images/twitter_operators.png" />
+</div></blockquote>
+<p>It uses credentials located in <strong>sad-plugins/twitter-searcher/src/main/resources/oauth-twitter.properties</strong>.</p>
+<p>For example, to search for &#8220;cute OR adorable&#8221; once using SAD Control panel, paste the following into Request template and click <strong>Send request to run Plugin</strong>:</p>
+<blockquote>
+<div><div class="highlight-javascript"><div class="highlight"><pre><span class="p">{</span>
+  <span class="s2">&quot;pluginName&quot;</span><span class="o">:</span> <span class="s2">&quot;twitter-searcher&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;arguments&quot;</span><span class="o">:</span> <span class="p">[</span>
+    <span class="p">{</span>
+      <span class="s2">&quot;search_terms&quot;</span><span class="o">:</span> <span class="s2">&quot;cute OR adorable&quot;</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="s2">&quot;num_posts&quot;</span><span class="o">:</span> <span class="s2">&quot;99&quot;</span>
+    <span class="p">}</span>
+  <span class="p">],</span>
+  <span class="s2">&quot;inputs&quot;</span><span class="o">:</span> <span class="p">[],</span>
+  <span class="s2">&quot;outputs&quot;</span><span class="o">:</span> <span class="p">[</span>
+    <span class="p">{</span>
+      <span class="s2">&quot;type&quot;</span><span class="o">:</span> <span class="s2">&quot;twitter-static-search-raw&quot;</span>
+    <span class="p">}</span>
+  <span class="p">],</span>
+  <span class="s2">&quot;schedule&quot;</span><span class="o">:</span> <span class="p">{</span>
+    <span class="s2">&quot;times&quot;</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s2">&quot;withIntervalInMilliseconds&quot;</span><span class="o">:</span> <span class="mi">20000</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>Use Job list at the bottom of the Control panel to monitor the progress of the plugin execution and once it&#8217;s finished, use links under the plugin name to view:</p>
+<p><strong>raw data</strong> - collected tweets as JSON:</p>
+<blockquote>
+<div><div class="highlight-javascript"><div class="highlight"><pre><span class="p">{</span>
+  <span class="s2">&quot;response&quot;</span><span class="o">:</span> <span class="p">{</span>
+  <span class="s2">&quot;series&quot;</span><span class="o">:</span> <span class="p">{</span>
+  <span class="s2">&quot;0&quot;</span><span class="o">:</span> <span class="p">{</span>
+  <span class="s2">&quot;jsonData&quot;</span><span class="o">:</span> <span class="p">{</span>
+  <span class="s2">&quot;contributors&quot;</span><span class="o">:</span> <span class="kc">null</span><span class="p">,</span>
+  <span class="s2">&quot;text&quot;</span><span class="o">:</span> <span class="s2">&quot;@Jamieboo8 hahahah you&#39;re so cute&quot;</span><span class="p">,</span>
+  <span class="p">...</span>
+  <span class="p">},</span>
+  <span class="s2">&quot;num&quot;</span><span class="o">:</span> <span class="mi">98</span><span class="p">,</span>
+  <span class="s2">&quot;jobstatus&quot;</span><span class="o">:</span> <span class="s2">&quot;finished&quot;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p><strong>visualised data</strong> - HTML/CSS/JS rendering of raw data:</p>
+<a class="reference internal image-reference" href="_images/twitter_searcher_visualisation.png"><img alt="_images/twitter_searcher_visualisation.png" src="_images/twitter_searcher_visualisation.png" style="width: 100%;" /></a>
+<p><strong>job details</strong> - JSON containing job&#8217;s metadata:</p>
+<blockquote>
+<div><div class="highlight-javascript"><div class="highlight"><pre><span class="p">{</span>
+   <span class="s2">&quot;result&quot;</span><span class="o">:</span><span class="s2">&quot;ok&quot;</span><span class="p">,</span>
+   <span class="s2">&quot;response&quot;</span><span class="o">:</span><span class="p">{</span>
+      <span class="s2">&quot;job&quot;</span><span class="o">:</span><span class="p">{</span>
+         <span class="s2">&quot;ID&quot;</span><span class="o">:</span><span class="mi">1</span><span class="p">,</span>
+         <span class="s2">&quot;PluginName&quot;</span><span class="o">:</span><span class="s2">&quot;twitter-searcher&quot;</span><span class="p">,</span>
+         <span class="s2">&quot;Name&quot;</span><span class="o">:</span><span class="s2">&quot;Job for plugin twitter-searcher&quot;</span><span class="p">,</span>
+         <span class="s2">&quot;Description&quot;</span><span class="o">:</span><span class="s2">&quot;Job created by Scheduling service&quot;</span><span class="p">,</span>
+         <span class="s2">&quot;Arguments&quot;</span><span class="o">:</span><span class="p">[</span>
+            <span class="p">{</span>
+               <span class="s2">&quot;search_terms&quot;</span><span class="o">:</span><span class="s2">&quot;cute OR adorable&quot;</span>
+            <span class="p">},</span>
+            <span class="p">{</span>
+               <span class="s2">&quot;num_posts&quot;</span><span class="o">:</span><span class="s2">&quot;99&quot;</span>
+            <span class="p">}</span>
+         <span class="p">],</span>
+         <span class="s2">&quot;Inputs&quot;</span><span class="o">:</span><span class="p">[</span>
+         <span class="p">],</span>
+         <span class="s2">&quot;Outputs&quot;</span><span class="o">:</span><span class="p">[</span>
+            <span class="p">{</span>
+               <span class="s2">&quot;type&quot;</span><span class="o">:</span><span class="s2">&quot;twitter-static-search-raw&quot;</span>
+            <span class="p">}</span>
+         <span class="p">],</span>
+         <span class="s2">&quot;Schedule&quot;</span><span class="o">:</span><span class="p">{</span>
+            <span class="s2">&quot;times&quot;</span><span class="o">:</span><span class="mi">1</span><span class="p">,</span>
+            <span class="s2">&quot;withIntervalInMilliseconds&quot;</span><span class="o">:</span><span class="mi">20000</span>
+         <span class="p">},</span>
+         <span class="s2">&quot;Status&quot;</span><span class="o">:</span><span class="s2">&quot;finished&quot;</span><span class="p">,</span>
+         <span class="s2">&quot;WhenCreated_as_string&quot;</span><span class="o">:</span><span class="s2">&quot;2013-07-18 16:09:57&quot;</span><span class="p">,</span>
+         <span class="s2">&quot;WhenCreated_in_msec&quot;</span><span class="o">:</span><span class="mi">1374160197491</span><span class="p">,</span>
+         <span class="s2">&quot;WhenLastrun_as_string&quot;</span><span class="o">:</span><span class="s2">&quot;2013-07-18 16:10:00&quot;</span><span class="p">,</span>
+         <span class="s2">&quot;WhenLastrun_in_msec&quot;</span><span class="o">:</span><span class="mi">1374160200247</span><span class="p">,</span>
+         <span class="s2">&quot;Executions_num&quot;</span><span class="o">:</span><span class="mi">1</span><span class="p">,</span>
+         <span class="s2">&quot;status_url&quot;</span><span class="o">:</span><span class="s2">&quot;http://localhost:8081/SAD/service/jobs/1&quot;</span><span class="p">,</span>
+         <span class="s2">&quot;data_url&quot;</span><span class="o">:</span><span class="s2">&quot;http://localhost:8081/SAD/service/jobs/1/data&quot;</span><span class="p">,</span>
+         <span class="s2">&quot;visualised_data_url&quot;</span><span class="o">:</span><span class="s2">&quot;http://localhost:8081/SAD/visualise/twitter-searcher/data.html?jobid=1&amp;num_results=20&quot;</span>
+      <span class="p">}</span>
+   <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="facebook-collector-facebook-collector">
+<h2>Facebook collector (facebook-collector)<a class="headerlink" href="#facebook-collector-facebook-collector" title="Permalink to this headline">¶</a></h2>
+<p>Uses Social Integrator library to collect <code class="docutils literal"><span class="pre">max_posts</span></code> recent posts from one or more Facebook pages (in case of multiple pages, <code class="docutils literal"><span class="pre">max_posts</span></code> recent posts from each page). Page names in <code class="docutils literal"><span class="pre">page_name</span></code> argument can be separated by commas or an individual <code class="docutils literal"><span class="pre">page_name</span></code> argument can be added for each Facebook page.</p>
+<p>It uses credentials located in <strong>sad-plugins/facebook-collector/src/main/resources/oauth-facebook.properties</strong>.</p>
+<p>For example, to collect recent 123 posts from each of &#8220;congressschladming&#8221;, &#8220;cocacola&#8221;, &#8220;Schladming2013&#8221; Facebook pages once using SAD Control panel, paste the following into Request template and click <strong>Send request to run Plugin</strong>:</p>
+<blockquote>
+<div><div class="highlight-javascript"><div class="highlight"><pre><span class="p">{</span>
+  <span class="s2">&quot;pluginName&quot;</span><span class="o">:</span> <span class="s2">&quot;facebook-collector&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;arguments&quot;</span><span class="o">:</span> <span class="p">[</span>
+    <span class="p">{</span>
+      <span class="s2">&quot;page_name&quot;</span><span class="o">:</span> <span class="s2">&quot;congressschladming, cocacola&quot;</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="s2">&quot;page_name&quot;</span><span class="o">:</span> <span class="s2">&quot;Schladming2013&quot;</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="s2">&quot;max_posts&quot;</span><span class="o">:</span> <span class="s2">&quot;123&quot;</span>
+    <span class="p">}</span>
+  <span class="p">],</span>
+  <span class="s2">&quot;inputs&quot;</span><span class="o">:</span> <span class="p">[],</span>
+  <span class="s2">&quot;outputs&quot;</span><span class="o">:</span> <span class="p">[</span>
+    <span class="p">{</span>
+      <span class="s2">&quot;type&quot;</span><span class="o">:</span> <span class="s2">&quot;facebook-posts-raw&quot;</span>
+    <span class="p">}</span>
+  <span class="p">],</span>
+  <span class="s2">&quot;schedule&quot;</span><span class="o">:</span> <span class="p">{</span>
+    <span class="s2">&quot;times&quot;</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s2">&quot;withIntervalInMilliseconds&quot;</span><span class="o">:</span> <span class="mi">20000</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>Use Job list at the bottom of the Control panel to monitor the progress of the plugin execution and once it&#8217;s finished, use links under the plugin name to view:</p>
+<p><strong>visualised data</strong> - HTML/CSS/JS rendering of raw Facebook data:</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="_images/facebook_collector_visualisation.png"><img alt="_images/facebook_collector_visualisation.png" src="_images/facebook_collector_visualisation.png" style="width: 100%;" /></a>
+</div></blockquote>
+</div>
+<div class="section" id="hot-tweets-hot-tweets-only-available-in-deployment-release">
+<h2>Hot tweets (hot-tweets) - only available in deployment release<a class="headerlink" href="#hot-tweets-hot-tweets-only-available-in-deployment-release" title="Permalink to this headline">¶</a></h2>
+<p>Uses data collected by Twitter plugin to create a list of most influential tweets. It requires <code class="docutils literal"><span class="pre">hours_back</span></code> argument to know how far in the past to go back for input tweets and a location of data folder <code class="docutils literal"><span class="pre">data_folder_path</span></code> which is required by analysis algorythm:</p>
+<blockquote>
+<div><div class="highlight-javascript"><div class="highlight"><pre><span class="p">{</span>
+ <span class="s2">&quot;pluginName&quot;</span><span class="o">:</span> <span class="s2">&quot;hot-tweets&quot;</span><span class="p">,</span>
+ <span class="s2">&quot;arguments&quot;</span><span class="o">:</span> <span class="p">[</span>
+   <span class="p">{</span>
+     <span class="s2">&quot;hours_back&quot;</span><span class="o">:</span> <span class="s2">&quot;1&quot;</span>
+   <span class="p">},</span>
+   <span class="p">{</span>
+     <span class="s2">&quot;data_folder_path&quot;</span><span class="o">:</span> <span class="s2">&quot;./data&quot;</span>
+   <span class="p">}</span>
+ <span class="p">],</span>
+ <span class="s2">&quot;inputs&quot;</span><span class="o">:</span> <span class="p">[</span>
+   <span class="p">{</span>
+     <span class="s2">&quot;plugin_name&quot;</span><span class="o">:</span> <span class="s2">&quot;twitter-searcher&quot;</span>
+   <span class="p">}</span>
+ <span class="p">],</span>
+ <span class="s2">&quot;outputs&quot;</span><span class="o">:</span> <span class="p">[</span>
+   <span class="p">{</span>
+     <span class="s2">&quot;type&quot;</span><span class="o">:</span> <span class="s2">&quot;twitter-hot-tweets&quot;</span>
+   <span class="p">},</span>
+   <span class="p">{</span>
+     <span class="s2">&quot;type&quot;</span><span class="o">:</span> <span class="s2">&quot;twitter-static-search-raw&quot;</span>
+   <span class="p">}</span>
+ <span class="p">],</span>
+ <span class="s2">&quot;schedule&quot;</span><span class="o">:</span> <span class="p">{</span>
+   <span class="s2">&quot;times&quot;</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span>
+   <span class="s2">&quot;withIntervalInMilliseconds&quot;</span><span class="o">:</span> <span class="mi">20000</span>
+ <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>A feed of 5 latest hot tweets can be accessed at:</p>
+<blockquote>
+<div><div class="highlight-javascript"><div class="highlight"><pre>&lt;SAD basepath&gt;/service/executions/hot-tweets/twitter-hot-tweets
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="basic-stats-for-twitter-facebook-collected-data-basic-sns-stats">
+<h2>Basic stats for Twitter/Facebook collected data (basic-sns-stats)<a class="headerlink" href="#basic-stats-for-twitter-facebook-collected-data-basic-sns-stats" title="Permalink to this headline">¶</a></h2>
+<p><strong>Basic-sns-stats</strong> plugin can fetch <code class="docutils literal"><span class="pre">num_posts</span></code> social network posts collected by Twitter and Facebook plugins (described above) and extract basic stats from that data. It also provides examples of direct database access including extraction of media links and descriptions.</p>
+<p>For example, to analyse 54 posts from the output of each of two previous plugins once using SAD Control panel, paste the following into Request template and click <strong>Send request to run Plugin</strong>:</p>
+<blockquote>
+<div><div class="highlight-javascript"><div class="highlight"><pre><span class="p">{</span>
+  <span class="s2">&quot;pluginName&quot;</span><span class="o">:</span> <span class="s2">&quot;basic-sns-stats&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;arguments&quot;</span><span class="o">:</span> <span class="p">[</span>
+    <span class="p">{</span>
+      <span class="s2">&quot;num_posts&quot;</span><span class="o">:</span> <span class="s2">&quot;54&quot;</span>
+    <span class="p">}</span>
+  <span class="p">],</span>
+  <span class="s2">&quot;inputs&quot;</span><span class="o">:</span> <span class="p">[</span>
+    <span class="p">{</span>
+      <span class="s2">&quot;plugin_name&quot;</span><span class="o">:</span> <span class="s2">&quot;twitter-searcher&quot;</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="s2">&quot;plugin_name&quot;</span><span class="o">:</span> <span class="s2">&quot;facebook-collector&quot;</span>
+    <span class="p">}</span>
+  <span class="p">],</span>
+  <span class="s2">&quot;outputs&quot;</span><span class="o">:</span> <span class="p">[</span>
+    <span class="p">{</span>
+      <span class="s2">&quot;type&quot;</span><span class="o">:</span> <span class="s2">&quot;twitter-basic-stats&quot;</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="s2">&quot;type&quot;</span><span class="o">:</span> <span class="s2">&quot;facebook-basic-stats&quot;</span>
+    <span class="p">}</span>
+  <span class="p">],</span>
+  <span class="s2">&quot;schedule&quot;</span><span class="o">:</span> <span class="p">{</span>
+    <span class="s2">&quot;times&quot;</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s2">&quot;withIntervalInMilliseconds&quot;</span><span class="o">:</span> <span class="mi">20000</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>Use Job list at the bottom of the Control panel to monitor the progress of the plugin execution and once it&#8217;s finished, use links under the plugin name to view:</p>
+<p><strong>visualised data</strong> - HTML/CSS/JS rendering of raw basic stats data:</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="_images/basic_stats_visualisation.png"><img alt="_images/basic_stats_visualisation.png" src="_images/basic_stats_visualisation.png" style="width: 100%;" /></a>
+</div></blockquote>
+<p>Extracted media links with descriptions can be requested with the following output type:</p>
+<blockquote>
+<div><div class="highlight-javascript"><div class="highlight"><pre><span class="s2">&quot;outputs&quot;</span><span class="o">:</span> <span class="p">[</span>
+  <span class="p">{</span>
+    <span class="s2">&quot;type&quot;</span><span class="o">:</span> <span class="s2">&quot;media-links-with-descriptions&quot;</span>
+  <span class="p">},</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>and visualised alongside other output types:</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="_images/media_links_visualised.png"><img alt="_images/media_links_visualised.png" src="_images/media_links_visualised.png" style="width: 100%;" /></a>
+</div></blockquote>
+</div>
+<div class="section" id="next-steps">
+<h2>Next steps<a class="headerlink" href="#next-steps" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference internal" href="service_api.html"><em>SAD Service API</em></a></p>
+<p><a class="reference internal" href="eccintegration.html"><em>ECC integration</em></a></p>
+<p><a class="reference internal" href="plugin_dev.html"><em>Plugin development</em></a></p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="eccintegration.html" title="ECC integration"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="using_control_panel.html" title="Using SAD Control panel"
+             >previous</a> |</li>
+        <li><a href="index.html">EXPERIMEDIA SAD 2.6 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright University of Southampton IT Innovation Centre 2013-2014.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3b1.
+    </div>
+  </body>
+</html>

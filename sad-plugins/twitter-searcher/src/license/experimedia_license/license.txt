@@ -1,0 +1,35 @@
+IT Innovation Experimedia License, Version 1.0
+
+Licence to use IT Innovation Software for carrying out the EXPERIMEDIA Project
+
+DEFINITIONS
+
+"Contract" means EC FP7 ICT Contract 287966 relating to the Project EXPERIMEDIA: EXPERiments in live social and networked MEDIA experiences.
+"Software" means the source code, binaries, executable scripts and any documentation and any error corrections provided by IT Innovation.
+"IT Innovation" means the University of Southampton acting through the IT Innovation Centre of Gamma House, Enterprise Road, Southampton, SO17 7NS, UK.
+"You" means any Contractor identified in the Contract.
+Words defined in the Contract or in the Contract Annex II or in the Consortium Agreement have the same meaning in this Licence.
+
+ACCEPTANCE
+
+By using the Software, You accept the terms of this Licence.
+
+INTELLECTUAL PROPERTY RIGHTS
+
+The Software includes IT Innovation Knowledge. The Software is confidential and copyrighted. Title to the Software and all associated intellectual property rights are retained by the owners, as set out in the IPR Registry referenced in the README.txt file.
+
+LICENCE
+
+IT Innovation grants You a free non-exclusive and non-transferable licence giving You Access Rights to the Software for carrying out the Project, as set out in the Contract Annex II sections II.31 to II.34 and the Consortium Agreement Section 9.
+
+RESTRICTIONS
+
+This Licence specifically excludes Access Rights for Use outside the Project as set out in the Consortium Agreement Section 9.2.4. You may not assign or transfer this Licence. You may not sublicense the Software. You may not make copies of the Software, other than for carrying out the Project and for backup purposes.
+
+LIABILITY
+
+This Licence implies no warranty, as set out in the Consortium Agreement Section 5.1.
+
+TERMINATION
+
+This Licence is effective until the end of the Project.  You may terminate this Licence at any time by written notice to IT Innovation. This Licence will terminate immediately without notice from IT Innovation if You fail to comply with any provision of this Licence. Upon Termination, You must destroy all copies of the Software.

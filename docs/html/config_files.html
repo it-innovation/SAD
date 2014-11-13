@@ -1,0 +1,168 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>SAD configuration files explained &mdash; EXPERIMEDIA SAD 2.6 documentation</title>
+    
+    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '2.6',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="EXPERIMEDIA SAD 2.6 documentation" href="index.html" />
+    <link rel="prev" title="Data Types" href="data_types.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="data_types.html" title="Data Types"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">EXPERIMEDIA SAD 2.6 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">SAD configuration files explained</a><ul>
+<li><a class="reference internal" href="#sad-service-database-access">SAD Service Database access</a></li>
+<li><a class="reference internal" href="#sad-service">SAD Service</a></li>
+<li><a class="reference internal" href="#sample-sad-plugins">Sample SAD Plugins</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="data_types.html"
+                        title="previous chapter">Data Types</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/config_files.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="sad-configuration-files-explained">
+<h1>SAD configuration files explained<a class="headerlink" href="#sad-configuration-files-explained" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="sad-service-database-access">
+<h2>SAD Service Database access<a class="headerlink" href="#sad-service-database-access" title="Permalink to this headline">¶</a></h2>
+<p>SAD Service is using SAD Coordinator as a framework for PosgreSQL database access. Configuration file: <strong>sad-service/src/main/resources/coordinator.json</strong>.</p>
+<blockquote>
+<div><div class="highlight-javascript"><div class="highlight"><pre><span class="p">{</span>
+   <span class="s2">&quot;database&quot;</span><span class="o">:</span><span class="p">{</span>
+      <span class="s2">&quot;server&quot;</span><span class="o">:</span><span class="p">{</span>
+         <span class="s2">&quot;url&quot;</span><span class="o">:</span><span class="s2">&quot;jdbc:postgresql://localhost:5432/&quot;</span><span class="p">,</span>
+         <span class="s2">&quot;username&quot;</span><span class="o">:</span><span class="s2">&quot;postgres&quot;</span><span class="p">,</span>
+         <span class="s2">&quot;password&quot;</span><span class="o">:</span><span class="s2">&quot;sofia&quot;</span>
+      <span class="p">},</span>
+      <span class="s2">&quot;name&quot;</span><span class="o">:</span><span class="s2">&quot;experimedia-sad&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;schemas&quot;</span><span class="o">:</span><span class="p">{</span>
+         <span class="s2">&quot;management&quot;</span><span class="o">:</span><span class="s2">&quot;management&quot;</span><span class="p">,</span>
+         <span class="s2">&quot;data&quot;</span><span class="o">:</span><span class="s2">&quot;data&quot;</span>
+      <span class="p">}</span>
+   <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p><code class="docutils literal"><span class="pre">server</span></code>: full PostgreSQL server URL including port.</p>
+<p><code class="docutils literal"><span class="pre">username</span></code>, <code class="docutils literal"><span class="pre">password</span></code>: valid credentials for database user (preferably with admin priviledges).</p>
+<p><code class="docutils literal"><span class="pre">name</span></code>: name of the database to be used.</p>
+<p><code class="docutils literal"><span class="pre">management</span></code>, <code class="docutils literal"><span class="pre">data</span></code>: internal names for datbase schemas to store management information and all data.</p>
+</div>
+<div class="section" id="sad-service">
+<h2>SAD Service<a class="headerlink" href="#sad-service" title="Permalink to this headline">¶</a></h2>
+<p>See <a class="reference internal" href="service_exec.html"><em>Running &amp; Configuring SAD Service</em></a>.</p>
+</div>
+<div class="section" id="sample-sad-plugins">
+<h2>Sample SAD Plugins<a class="headerlink" href="#sample-sad-plugins" title="Permalink to this headline">¶</a></h2>
+<p>Configuration files for sample SAD plugins <strong>sad-plugins/&lt;plugin name&gt;/src/main/resources/configuration.json</strong> are used to generate main configuration file for corresponding plugins during Maven build.</p>
+<blockquote>
+<div><div class="highlight-javascript"><div class="highlight"><pre><span class="p">{</span>
+   <span class="s2">&quot;enabled&quot;</span><span class="o">:</span> <span class="s2">&quot;y&quot;</span><span class="p">,</span>
+   <span class="s2">&quot;name&quot;</span><span class="o">:</span> <span class="s2">&quot;basic-sns-stats&quot;</span><span class="p">,</span>
+   <span class="s2">&quot;description&quot;</span><span class="o">:</span> <span class="s2">&quot;Basic Social Network posts analytics plugin. Extracts basics stats from collections of tweets or Facebook posts&quot;</span><span class="p">,</span>
+   <span class="s2">&quot;paths&quot;</span><span class="o">:</span> <span class="p">{</span>
+       <span class="s2">&quot;jar&quot;</span><span class="o">:</span> <span class="s2">&quot;target/${project.build.finalName}.jar&quot;</span><span class="p">,</span>
+       <span class="s2">&quot;dependenciesFolder&quot;</span><span class="o">:</span> <span class="s2">&quot;target/${sad.plugin.lib.folder}&quot;</span>
+   <span class="p">},</span>
+   <span class="s2">&quot;arguments&quot;</span><span class="o">:</span> <span class="p">[</span> <span class="p">],</span>
+   <span class="s2">&quot;inputs&quot;</span><span class="o">:</span> <span class="p">[</span> <span class="p">],</span>
+   <span class="s2">&quot;outputs&quot;</span><span class="o">:</span> <span class="p">{</span> <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p><code class="docutils literal"><span class="pre">enabled</span></code>: if set to <code class="docutils literal"><span class="pre">n</span></code>, the plugin will be omitted from installed plugins list by the service.</p>
+<p><code class="docutils literal"><span class="pre">name</span></code>: the name of the plugin. Can not contain spaces or symbols as used in visualisation URLs.</p>
+<p><code class="docutils literal"><span class="pre">description</span></code>: human-readable description of the plugin.</p>
+<p><code class="docutils literal"><span class="pre">paths/jar</span></code>: location of the plugin jar with Main method.</p>
+<p><code class="docutils literal"><span class="pre">paths/dependenciesFolder</span></code>: location of the folder with all plugin&#8217;s java dependencies.</p>
+<p><code class="docutils literal"><span class="pre">arguments</span></code>, <code class="docutils literal"><span class="pre">inputs</span></code>, <code class="docutils literal"><span class="pre">outputs</span></code>: describe plugin&#8217;s interaction with the world.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="data_types.html" title="Data Types"
+             >previous</a> |</li>
+        <li><a href="index.html">EXPERIMEDIA SAD 2.6 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright University of Southampton IT Innovation Centre 2013-2014.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3b1.
+    </div>
+  </body>
+</html>

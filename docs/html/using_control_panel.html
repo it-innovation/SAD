@@ -1,0 +1,330 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Using SAD Control panel &mdash; EXPERIMEDIA SAD 2.6 documentation</title>
+    
+    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '2.6',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="EXPERIMEDIA SAD 2.6 documentation" href="index.html" />
+    <link rel="next" title="Using sample SAD plugins" href="sample_plugins.html" />
+    <link rel="prev" title="Running &amp; Configuring SAD Service" href="service_exec.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="sample_plugins.html" title="Using sample SAD plugins"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="service_exec.html" title="Running &amp; Configuring SAD Service"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">EXPERIMEDIA SAD 2.6 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Using SAD Control panel</a><ul>
+<li><a class="reference internal" href="#arguments-inputs-outputs">Arguments, inputs, outputs</a></li>
+<li><a class="reference internal" href="#scheduling">Scheduling</a></li>
+<li><a class="reference internal" href="#jobs-and-executions">Jobs and Executions</a></li>
+<li><a class="reference internal" href="#logging">Logging</a></li>
+<li><a class="reference internal" href="#next-steps">Next steps</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="service_exec.html"
+                        title="previous chapter">Running &amp; Configuring SAD Service</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="sample_plugins.html"
+                        title="next chapter">Using sample SAD plugins</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/using_control_panel.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="using-sad-control-panel">
+<h1>Using SAD Control panel<a class="headerlink" href="#using-sad-control-panel" title="Permalink to this headline">¶</a></h1>
+<p>SAD Control panel page is only available when the service is fully configured. It helps launch SAD plugins, view existing jobs and access job details and visualisations of output data by combining a few calls to <a class="reference internal" href="service_api.html"><em>SAD Service API</em></a>:</p>
+<a class="reference internal image-reference" href="_images/sad_control.png"><img alt="_images/sad_control.png" src="_images/sad_control.png" style="width: 100%;" /></a>
+<p>Installed SAD plugins can be found under the dropdown box in top right corner. Selecting a plugin will create a Request template (based on the plugin&#8217;s configuration) in the text field below that can be used to manually adjust any parameters.</p>
+<p>Area to the right is reserved for display of the data sent to the SAD service to run a plugin and also the service&#8217;s response (once the plugin has been submitted).</p>
+<p>The list of created jobs with links to raw data, visualisations, details and execution controls is at the bottom of the page:</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="_images/sad_control_list_of_jobs.png"><img alt="_images/sad_control_list_of_jobs.png" src="_images/sad_control_list_of_jobs.png" style="width: 100%;" /></a>
+</div></blockquote>
+<div class="section" id="arguments-inputs-outputs">
+<h2>Arguments, inputs, outputs<a class="headerlink" href="#arguments-inputs-outputs" title="Permalink to this headline">¶</a></h2>
+<p>Arguments should contain key-value pairs as define in the plugin&#8217;s configuration file <strong>configuration.json</strong>. Multiple instances of keys are allowed:</p>
+<blockquote>
+<div><div class="highlight-javascript"><div class="highlight"><pre><span class="s2">&quot;arguments&quot;</span><span class="o">:</span> <span class="p">[</span>
+  <span class="p">{</span>
+    <span class="s2">&quot;search_terms&quot;</span><span class="o">:</span> <span class="s2">&quot;football&quot;</span>
+  <span class="p">},</span>
+  <span class="p">{</span>
+    <span class="s2">&quot;search_terms&quot;</span><span class="o">:</span> <span class="s2">&quot;soccer OR championship&quot;</span>
+  <span class="p">},</span>
+  <span class="p">{</span>
+    <span class="s2">&quot;num_posts&quot;</span><span class="o">:</span> <span class="s2">&quot;99&quot;</span>
+  <span class="p">}</span>
+ <span class="p">]</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>Inputs can contain one or more entries specifying SAD Job ID or another plugin&#8217;s name:</p>
+<blockquote>
+<div><div class="highlight-javascript"><div class="highlight"><pre><span class="s2">&quot;inputs&quot;</span><span class="o">:</span> <span class="p">[</span>
+  <span class="p">{</span>
+    <span class="s2">&quot;job_id&quot;</span><span class="o">:</span> <span class="s2">&quot;521dd8a76532b2410b54dcc1&quot;</span>
+  <span class="p">},</span>
+  <span class="p">{</span>
+    <span class="s2">&quot;plugin_name&quot;</span><span class="o">:</span> <span class="s2">&quot;twitter-searcher&quot;</span>
+  <span class="p">}</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>For example, to make <strong>basic-sns-stats</strong> plugin use outputs of both <strong>twitter-searcher</strong> and <strong>facebook-collector</strong> plugins, set inputs to the following:</p>
+<blockquote>
+<div><div class="highlight-javascript"><div class="highlight"><pre><span class="s2">&quot;inputs&quot;</span><span class="o">:</span> <span class="p">[</span>
+  <span class="p">{</span>
+    <span class="s2">&quot;plugin_name&quot;</span><span class="o">:</span> <span class="s2">&quot;twitter-searcher&quot;</span>
+  <span class="p">},</span>
+  <span class="p">{</span>
+    <span class="s2">&quot;plugin_name&quot;</span><span class="o">:</span> <span class="s2">&quot;facebook-collector&quot;</span>
+  <span class="p">}</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>Outputs tell the plugin what type of data (see <a class="reference internal" href="data_types.html"><em>Data types</em></a>) to save to the database as output. For example, <strong>basic-sns-stats</strong> can output for types of data as defined in its configuration:</p>
+<blockquote>
+<div><div class="highlight-javascript"><div class="highlight"><pre><span class="s2">&quot;outputs&quot;</span><span class="o">:</span> <span class="p">{</span>
+   <span class="s2">&quot;data&quot;</span><span class="o">:</span> <span class="p">[</span>
+   <span class="p">{</span>
+       <span class="s2">&quot;type&quot;</span><span class="o">:</span> <span class="s2">&quot;twitter-basic-stats&quot;</span><span class="p">,</span>
+       <span class="s2">&quot;description&quot;</span><span class="o">:</span> <span class="s2">&quot;JSON containing basic stats extracted from processed tweets&quot;</span>
+   <span class="p">},</span>
+   <span class="p">{</span>
+       <span class="s2">&quot;type&quot;</span><span class="o">:</span> <span class="s2">&quot;twitter-static-search-raw&quot;</span><span class="p">,</span>
+       <span class="s2">&quot;description&quot;</span><span class="o">:</span> <span class="s2">&quot;JSON containing tweets used in the analysis&quot;</span>
+   <span class="p">},</span>
+   <span class="p">{</span>
+       <span class="s2">&quot;type&quot;</span><span class="o">:</span> <span class="s2">&quot;facebook-basic-stats&quot;</span><span class="p">,</span>
+       <span class="s2">&quot;description&quot;</span><span class="o">:</span> <span class="s2">&quot;JSON containing basic stats extracted from processed Facebook posts&quot;</span>
+   <span class="p">},</span>
+   <span class="p">{</span>
+       <span class="s2">&quot;type&quot;</span><span class="o">:</span> <span class="s2">&quot;facebook-posts-raw&quot;</span><span class="p">,</span>
+       <span class="s2">&quot;description&quot;</span><span class="o">:</span> <span class="s2">&quot;JSON containing Facebook posts used in the analysis&quot;</span>
+   <span class="p">}</span>
+   <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>If processed tweets and posts are not required as its output, only stats can be requested:</p>
+<blockquote>
+<div><div class="highlight-javascript"><div class="highlight"><pre><span class="s2">&quot;outputs&quot;</span><span class="o">:</span> <span class="p">[</span>
+  <span class="p">{</span>
+    <span class="s2">&quot;type&quot;</span><span class="o">:</span> <span class="s2">&quot;twitter-basic-stats&quot;</span>
+  <span class="p">},</span>
+  <span class="p">{</span>
+    <span class="s2">&quot;type&quot;</span><span class="o">:</span> <span class="s2">&quot;facebook-basic-stats&quot;</span>
+  <span class="p">}</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="scheduling">
+<h2>Scheduling<a class="headerlink" href="#scheduling" title="Permalink to this headline">¶</a></h2>
+<p>Scheduling of the plugin execution has the following parameters:</p>
+<blockquote>
+<div><div class="highlight-javascript"><div class="highlight"><pre><span class="s2">&quot;schedule&quot;</span><span class="o">:</span> <span class="p">{</span>
+  <span class="s2">&quot;startAt&quot;</span><span class="o">:</span> <span class="mi">1405759070000</span><span class="p">,</span>
+  <span class="s2">&quot;times&quot;</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span>
+  <span class="s2">&quot;withIntervalInMilliseconds&quot;</span><span class="o">:</span> <span class="mi">20000</span><span class="p">,</span>
+  <span class="s2">&quot;endAt&quot;</span><span class="o">:</span> <span class="mi">1405762670000</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p><code class="docutils literal"><span class="pre">startAt</span></code>: time in msec on when to start running the plugin.</p>
+<p><code class="docutils literal"><span class="pre">times</span></code>: number of times the plugin will be executed.</p>
+<p><code class="docutils literal"><span class="pre">withIntervalInMilliseconds</span></code>: interval between executions.</p>
+<p><code class="docutils literal"><span class="pre">endAt</span></code>: when to stop creating new executions.</p>
+<p>Common combinations of those parameters are:</p>
+<ul class="simple">
+<li>start now, run ten times with twenty seconds interval</li>
+</ul>
+<blockquote>
+<div><div class="highlight-javascript"><div class="highlight"><pre><span class="s2">&quot;schedule&quot;</span><span class="o">:</span> <span class="p">{</span>
+  <span class="s2">&quot;times&quot;</span><span class="o">:</span> <span class="mi">10</span><span class="p">,</span>
+  <span class="s2">&quot;withIntervalInMilliseconds&quot;</span><span class="o">:</span> <span class="mi">20000</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+<ul class="simple">
+<li>start on Fri Jul 19 2014 09:37:50 GMT+0100 (BST), run ten times with twenty seconds interval</li>
+</ul>
+<blockquote>
+<div><div class="highlight-javascript"><div class="highlight"><pre><span class="s2">&quot;schedule&quot;</span><span class="o">:</span> <span class="p">{</span>
+  <span class="s2">&quot;startAt&quot;</span><span class="o">:</span> <span class="mi">1405759070000</span><span class="p">,</span>
+  <span class="s2">&quot;times&quot;</span><span class="o">:</span> <span class="mi">10</span><span class="p">,</span>
+  <span class="s2">&quot;withIntervalInMilliseconds&quot;</span><span class="o">:</span> <span class="mi">20000</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+<ul class="simple">
+<li>start on Fri Jul 19 2014 09:37:50 GMT+0100 (BST), finish in one hour with twenty seconds interval</li>
+</ul>
+<blockquote>
+<div><div class="highlight-javascript"><div class="highlight"><pre><span class="s2">&quot;schedule&quot;</span><span class="o">:</span> <span class="p">{</span>
+  <span class="s2">&quot;startAt&quot;</span><span class="o">:</span> <span class="mi">1405759070000</span><span class="p">,</span>
+  <span class="s2">&quot;withIntervalInMilliseconds&quot;</span><span class="o">:</span> <span class="mi">20000</span><span class="p">,</span>
+  <span class="s2">&quot;endAt&quot;</span><span class="o">:</span> <span class="mi">1405762670000</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="jobs-and-executions">
+<h2>Jobs and Executions<a class="headerlink" href="#jobs-and-executions" title="Permalink to this headline">¶</a></h2>
+<p>To run a plugin means to send a data request to the service containing plugin name, arguments, inputs, outputs and a schedule. <strong>Running plugins</strong> creates <strong>Jobs</strong>. Depending on a <code class="docutils literal"><span class="pre">schedule</span></code>, a Job can have one or more <strong>Executions</strong>.</p>
+<p>For example, submittion of:</p>
+<blockquote>
+<div><div class="highlight-javascript"><div class="highlight"><pre><span class="p">{</span>
+  <span class="s2">&quot;pluginName&quot;</span><span class="o">:</span> <span class="s2">&quot;twitter-searcher&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;arguments&quot;</span><span class="o">:</span> <span class="p">[</span>
+  <span class="p">...</span>
+  <span class="s2">&quot;schedule&quot;</span><span class="o">:</span> <span class="p">{</span>
+    <span class="s2">&quot;times&quot;</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s2">&quot;withIntervalInMilliseconds&quot;</span><span class="o">:</span> <span class="mi">20000</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>creates a twitter-searcher Job with one Execution.</p>
+<blockquote>
+<div><div class="highlight-javascript"><div class="highlight"><pre><span class="p">{</span>
+  <span class="s2">&quot;pluginName&quot;</span><span class="o">:</span> <span class="s2">&quot;facebook-collector&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;arguments&quot;</span><span class="o">:</span> <span class="p">[</span>
+  <span class="p">...</span>
+  <span class="s2">&quot;schedule&quot;</span><span class="o">:</span> <span class="p">{</span>
+    <span class="s2">&quot;times&quot;</span><span class="o">:</span> <span class="mi">5</span><span class="p">,</span>
+    <span class="s2">&quot;withIntervalInMilliseconds&quot;</span><span class="o">:</span> <span class="mi">10000</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>will create another Job with five Executions.</p>
+</div>
+<div class="section" id="logging">
+<h2>Logging<a class="headerlink" href="#logging" title="Permalink to this headline">¶</a></h2>
+<p>Both stdout and stderr from plugin executions appear in the service logs and individually in temporary .txt files:</p>
+<blockquote>
+<div><img alt="_images/plugin_logs.png" src="_images/plugin_logs.png" />
+</div></blockquote>
+<p>The location of the temporary folder depends on the operating system and the way you chose to deploy SAD (Jetty, Tomcat etc.). Location of each temporary file is printed in the service log before and after each plugin execution:</p>
+<blockquote>
+<div><div class="highlight-javascript"><div class="highlight"><pre>2014-03-12 10:45:40,561 DEBUG   [SadScheduler_Worker-4 | PluginRunner:157] Executing plugin &#39;hot-tweets&#39; as job [53203ad43004ee8c434c681c] with command (as an array, not plain string): java -cp /Users/max/Documents/Work/experimedia/SAD/experimedia-sad/sad-plugins/hot-tweets/target/lib/* -jar /Users/max/Documents/Work/experimedia/SAD/experimedia-sad/sad-plugins/hot-tweets/target/hot-tweets-2.6.jar execute /Users/max/Documents/Work/experimedia/SAD/experimedia-sad/sad-service/src/main/resources/coordinator.json 53203ad43004ee8c434c681c 61102
+2014-03-12 10:45:40,561 DEBUG   [SadScheduler_Worker-4 | PluginRunner:163] STD OUT path: /var/folders/xf/3bb43x651yz50_8sfhc0b_2r0000gn/T/log-hot-tweets-13946211405612987986579489586052.txt
+2014-03-12 10:45:40,562 DEBUG   [SadScheduler_Worker-4 | PluginRunner:172] STD ERR path: /var/folders/xf/3bb43x651yz50_8sfhc0b_2r0000gn/T/error-hot-tweets-13946211405614578272892819600364.txt
+
+...
+
+2014-03-12 10:45:48,083 DEBUG   [SadScheduler_Worker-4 | PluginRunner:295] JOB EXECUTION FINISHED
+2014-03-12 10:45:48,083 DEBUG   [SadScheduler_Worker-4 | PluginRunner:301] STD OUT path again: /var/folders/xf/3bb43x651yz50_8sfhc0b_2r0000gn/T/log-hot-tweets-13946211405612987986579489586052.txt
+2014-03-12 10:45:48,083 DEBUG   [SadScheduler_Worker-4 | PluginRunner:304] STD ERR path again: /var/folders/xf/3bb43x651yz50_8sfhc0b_2r0000gn/T/error-hot-tweets-13946211405614578272892819600364.txt
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="next-steps">
+<h2>Next steps<a class="headerlink" href="#next-steps" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference internal" href="sample_plugins.html"><em>Using sample SAD plugins</em></a></p>
+<p><a class="reference internal" href="plugin_dev.html"><em>Plugin development</em></a></p>
+<p><a class="reference internal" href="service_api.html"><em>SAD Service API</em></a></p>
+<p><a class="reference internal" href="config_files.html"><em>SAD configuration files explained</em></a></p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="sample_plugins.html" title="Using sample SAD plugins"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="service_exec.html" title="Running &amp; Configuring SAD Service"
+             >previous</a> |</li>
+        <li><a href="index.html">EXPERIMEDIA SAD 2.6 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright University of Southampton IT Innovation Centre 2013-2014.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3b1.
+    </div>
+  </body>
+</html>

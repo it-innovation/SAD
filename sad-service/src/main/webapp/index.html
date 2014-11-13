@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+
+<!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ -->
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8" />
+
+        <meta name="viewport" content="width=device-width" />
+
+        <title>Social Analytics Dashboard Configuration</title>
+
+
+        <link rel="stylesheet" href="css/foundation.min.css">
+        <link rel="stylesheet" href="css/app.css">
+
+        <script src="js/vendor/modernizr.js"></script>
+
+        <!-- IE Fix for HTML5 Tags -->
+        <!--[if lt IE 9]>
+          <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+
+    </head>
+    <body>
+
+        <div class="row">
+            <div class="small-8 small-offset-2 columns text-center end">
+                <h3>EXPERIMEDIA SAD Configuration</h3>
+                <p id="configStatus"></p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="small-8 small-offset-2 columns end">
+
+                <form id="configurationForm">
+                    <fieldset>
+                        <legend>Service settings</legend>
+                        <div class="row">
+                            <div class="small-6 columns">
+                                <label>Base URL
+                                    <input type="text" name="basepath" id="config_basepath" placeholder="http://localhost:8081/SAD/">
+                                </label>
+                            </div>
+                            <div class="small-6 columns">
+                                <label>Path to SAD plugins folder
+                                    <input type="text" name="pluginsPath" id="config_pluginsPath" placeholder="../sad-plugins">
+                                </label>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <legend>Database settings</legend>
+                        <div class="row">
+                            <div class="small-12 columns">
+                                <input type="hidden" name="resetDatabaseOnStart" value="false">
+                                <input type="checkbox" name="resetDatabaseOnStart" id="config_resetDatabaseOnStart">
+                                <label for="config_resetDatabaseOnStart">Reset database on service start</label>
+                            </div>
+                            <div class="small-12 columns">
+                                <label>Database settings file path
+                                    <input type="text" name="coordinatorPath" id="config_coordinatorPath" placeholder="src/main/resources/coordinator.json">
+                                </label>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <legend>ECC settings</legend>
+                        <div class="row">
+                            <div class="small-12 columns">
+                                <input type="hidden" name="eccEnabled" value="false">
+                                <input type="checkbox" name="eccEnabled" id="config_useecc"><label for="config_useecc">Use ECC</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="small-8 columns">
+                                <label>Rabbit IP/URL
+                                    <input type="text" name="ecc[rabbitIp]" placeholder="127.0.0.1" id="config_rabbitip"/>
+                                </label>
+                            </div>
+                            <div class="small-4 columns">
+                                <label>Rabbit port
+                                    <input type="text" name="ecc[rabbitPort]" placeholder="5672" id="config_rabbitport"/>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="small-12 columns">
+                                <label>Monitor ID
+                                    <input type="text"  name="ecc[monitorId]" placeholder="00000000-0000-0000-0000-000000000000" id="config_monitorid"/>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="small-12 columns">
+                                <label>ECC client name
+                                    <input type="text"  name="ecc[clientName]" placeholder="Social Analytics Dashboard" id="config_clientname"/>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="small-12 columns">
+                                <label>ECC client UUID seed
+                                    <input type="text"  name="ecc[clientsUuuidSeed]" placeholder="3e85977c-f791-11e3-865e-b2227cce2b5" id="config_clientuuidseed"/>
+                                </label>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+                <div class="row">
+                    <div class="small-12 columns text-center">
+                        <a href="#" class="button medium" id="setConfiguration">Use this configuration</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="js/vendor/jquery.js"></script>
+        <script src="js/foundation.min.js"></script>
+        <script src="js/vendor/jquery.serializeJSON.min.js"></script>
+        <script src="js/index.js"></script>
+    </body>
+</html>

@@ -1,0 +1,530 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Plugin development &mdash; EXPERIMEDIA SAD 2.6 documentation</title>
+    
+    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '2.6',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="EXPERIMEDIA SAD 2.6 documentation" href="index.html" />
+    <link rel="next" title="Data Types" href="data_types.html" />
+    <link rel="prev" title="SAD Service API" href="service_api.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="data_types.html" title="Data Types"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="service_api.html" title="SAD Service API"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">EXPERIMEDIA SAD 2.6 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Plugin development</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#file-structure">File Structure</a></li>
+<li><a class="reference internal" href="#code-structure">Code structure</a></li>
+<li><a class="reference internal" href="#direct-access-to-mongo-database">Direct access to Mongo Database</a></li>
+<li><a class="reference internal" href="#next-steps">Next steps</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="service_api.html"
+                        title="previous chapter">SAD Service API</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="data_types.html"
+                        title="next chapter">Data Types</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/plugin_dev.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="plugin-development">
+<h1>Plugin development<a class="headerlink" href="#plugin-development" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>SAD plugins are executable java libraries launched by the SAD service according to incoming requests. The following diagram illustrates access to Social Networks using plugins:</p>
+<a class="reference internal image-reference" href="_images/sad_plugins_diagram.png"><img alt="_images/sad_plugins_diagram.png" src="_images/sad_plugins_diagram.png" style="width: 100%;" /></a>
+<p>Plugin launch request is received by SAD service and based on the parameters, a plugin is scheduled for execution. Request parameters can be split in two parts (see <a class="reference internal" href="using_control_panel.html"><em>Using SAD Control panel</em></a> for more details):</p>
+<ol class="arabic simple">
+<li>Execution configuration:</li>
+</ol>
+<blockquote>
+<div><div class="highlight-javascript"><div class="highlight"><pre><span class="p">{</span>
+  <span class="s2">&quot;pluginName&quot;</span><span class="o">:</span> <span class="s2">&quot;twitter-searcher&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;arguments&quot;</span><span class="o">:</span> <span class="p">[</span>
+    <span class="p">{</span>
+      <span class="s2">&quot;search_terms&quot;</span><span class="o">:</span> <span class="s2">&quot;football&quot;</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="s2">&quot;num_posts&quot;</span><span class="o">:</span> <span class="s2">&quot;99&quot;</span>
+    <span class="p">}</span>
+  <span class="p">],</span>
+  <span class="s2">&quot;inputs&quot;</span><span class="o">:</span> <span class="p">[],</span>
+  <span class="s2">&quot;outputs&quot;</span><span class="o">:</span> <span class="p">[</span>
+    <span class="p">{</span>
+      <span class="s2">&quot;type&quot;</span><span class="o">:</span> <span class="s2">&quot;twitter-static-search-raw&quot;</span>
+    <span class="p">}</span>
+  <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The code above tells the service to launch plugin <strong>twitter-searcher</strong> and pass it two arguments: <em>search_terms</em> and <em>num_posts</em>. It also requests that the plugin outputs data of type <em>twitter-static-search-raw</em>.</p>
+</div></blockquote>
+<ol class="arabic simple" start="2">
+<li>Execution schedule:</li>
+</ol>
+<blockquote>
+<div><div class="highlight-javascript"><div class="highlight"><pre><span class="s2">&quot;schedule&quot;</span><span class="o">:</span> <span class="p">{</span>
+  <span class="s2">&quot;times&quot;</span><span class="o">:</span> <span class="mi">2</span><span class="p">,</span>
+  <span class="s2">&quot;withIntervalInMilliseconds&quot;</span><span class="o">:</span> <span class="mi">20000</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The code above schedules the plugin to be run twice with 20 second interval.</p>
+</div></blockquote>
+<p>Both parts of the request are saved in the database and the plugin is launched using <a class="reference external" href="http://quartz-scheduler.org">Quartz scheduler</a>. SAD Plugin executable has full access to the service&#8217;s database which allows it to retrieve arguments, input and output parameters, and save own data.</p>
+<p>Plugins must be located in the folder set in <code class="docutils literal"><span class="pre">plugins/path</span></code> part of the service configuration file <code class="docutils literal"><span class="pre">sad.properties</span></code> and follow a simple file structure detailed in the following section.</p>
+</div>
+<div class="section" id="file-structure">
+<h2>File Structure<a class="headerlink" href="#file-structure" title="Permalink to this headline">¶</a></h2>
+<p>Three parts constitue a SAD plugin:</p>
+<img alt="_images/sad_plugin_files.png" src="_images/sad_plugin_files.png" />
+<ol class="arabic simple">
+<li>Configuration file <strong>configuration.json</strong>.</li>
+</ol>
+<blockquote>
+<div><div class="highlight-javascript"><div class="highlight"><pre><span class="p">{</span>
+  <span class="s2">&quot;enabled&quot;</span><span class="o">:</span> <span class="s2">&quot;y&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;name&quot;</span><span class="o">:</span> <span class="s2">&quot;basic-sns-stats&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;description&quot;</span><span class="o">:</span> <span class="s2">&quot;Basic Social Network posts analytics plugin. Extracts basics stats from collections of tweets or Facebook posts&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;paths&quot;</span><span class="o">:</span> <span class="p">{</span>
+      <span class="s2">&quot;jar&quot;</span><span class="o">:</span> <span class="s2">&quot;target/basic-sns-stats-2.6.jar&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;dependenciesFolder&quot;</span><span class="o">:</span> <span class="s2">&quot;target/lib&quot;</span>
+  <span class="p">},</span>
+  <span class="s2">&quot;arguments&quot;</span><span class="o">:</span> <span class="p">[</span>
+  <span class="p">{</span>
+      <span class="s2">&quot;name&quot;</span><span class="o">:</span> <span class="s2">&quot;num_posts&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;description&quot;</span><span class="o">:</span> <span class="s2">&quot;Number of social network posts per social network to analyse&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;isOptional&quot;</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+      <span class="s2">&quot;defaultValue&quot;</span><span class="o">:</span> <span class="s2">&quot;all&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;sample_values&quot;</span><span class="o">:</span> <span class="s2">&quot;all|125&quot;</span>
+  <span class="p">}</span>
+  <span class="p">],</span>
+  <span class="s2">&quot;inputs&quot;</span><span class="o">:</span> <span class="p">[</span>
+  <span class="p">{</span>
+      <span class="s2">&quot;source&quot;</span><span class="o">:</span> <span class="s2">&quot;job_id&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;defaultValue&quot;</span><span class="o">:</span> <span class="s2">&quot;1&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;required_data_types&quot;</span><span class="o">:</span> <span class="p">[</span>
+          <span class="p">{</span>
+              <span class="s2">&quot;twitter-static-search-raw&quot;</span><span class="o">:</span> <span class="s2">&quot;JSON Twitter posts as returned by Twitter API&quot;</span>
+          <span class="p">},</span>
+          <span class="p">{</span>
+              <span class="s2">&quot;facebook-posts-raw&quot;</span><span class="o">:</span> <span class="s2">&quot;JSON Facebook posts as returned by Facebook API&quot;</span>
+          <span class="p">},</span>
+      <span class="p">]</span>
+  <span class="p">},</span>
+  <span class="p">{</span>
+      <span class="s2">&quot;source&quot;</span><span class="o">:</span> <span class="s2">&quot;plugin_name&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;defaultValue&quot;</span><span class="o">:</span> <span class="s2">&quot;twitter-searcher&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;required_data_types&quot;</span><span class="o">:</span> <span class="p">[</span>
+          <span class="p">{</span>
+              <span class="s2">&quot;twitter-static-search-raw&quot;</span><span class="o">:</span> <span class="s2">&quot;JSON Twitter posts as returned by Twitter API&quot;</span>
+          <span class="p">},</span>
+          <span class="p">{</span>
+              <span class="s2">&quot;facebook-posts-raw&quot;</span><span class="o">:</span> <span class="s2">&quot;JSON Facebook posts as returned by Facebook API&quot;</span>
+          <span class="p">},</span>
+      <span class="p">]</span>
+  <span class="p">}</span>
+  <span class="p">],</span>
+  <span class="s2">&quot;outputs&quot;</span><span class="o">:</span> <span class="p">{</span>
+      <span class="s2">&quot;data&quot;</span><span class="o">:</span> <span class="p">[</span>
+      <span class="p">{</span>
+          <span class="s2">&quot;type&quot;</span><span class="o">:</span> <span class="s2">&quot;twitter-basic-stats&quot;</span><span class="p">,</span>
+          <span class="s2">&quot;description&quot;</span><span class="o">:</span> <span class="s2">&quot;JSON containing basic stats extracted from processed tweets&quot;</span>
+      <span class="p">},</span>
+      <span class="p">{</span>
+          <span class="s2">&quot;type&quot;</span><span class="o">:</span> <span class="s2">&quot;twitter-static-search-raw&quot;</span><span class="p">,</span>
+          <span class="s2">&quot;description&quot;</span><span class="o">:</span> <span class="s2">&quot;JSON containing tweets used in the analysis&quot;</span>
+      <span class="p">},</span>
+      <span class="p">{</span>
+          <span class="s2">&quot;type&quot;</span><span class="o">:</span> <span class="s2">&quot;facebook-basic-stats&quot;</span><span class="p">,</span>
+          <span class="s2">&quot;description&quot;</span><span class="o">:</span> <span class="s2">&quot;JSON containing basic stats extracted from processed Facebook posts&quot;</span>
+      <span class="p">},</span>
+      <span class="p">{</span>
+          <span class="s2">&quot;type&quot;</span><span class="o">:</span> <span class="s2">&quot;facebook-posts-raw&quot;</span><span class="p">,</span>
+          <span class="s2">&quot;description&quot;</span><span class="o">:</span> <span class="s2">&quot;JSON containing Facebook posts used in the analysis&quot;</span>
+      <span class="p">}</span>
+      <span class="p">]</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>All fields are required, apart from values of <code class="docutils literal"><span class="pre">arguments</span></code>, <code class="docutils literal"><span class="pre">inputs</span></code> and <code class="docutils literal"><span class="pre">outputs</span></code>. Each argument entry must have name, description, isOptional flag, default value and one or more sample values.</p>
+<p>Arguments describe what arguments can be passed to the plugin execution and what sort of values are expected.</p>
+<p>Inputs define if the plugin accepts data from individual plugin executions (jobs) using <code class="docutils literal"><span class="pre">job_id</span></code> or all data create by a plugin with <code class="docutils literal"><span class="pre">plugin_name</span></code>.</p>
+<p>Outputs describe what data can be saved by the plugin in the database and give an option to select only required data types (see <a class="reference internal" href="data_types.html"><em>Data types</em></a>) when the plugin is run.</p>
+</div></blockquote>
+<ol class="arabic simple" start="2">
+<li>Java executable. Must be located as specified in <code class="docutils literal"><span class="pre">path/jar</span></code> configuration setting:</li>
+</ol>
+<blockquote>
+<div><div class="highlight-javascript"><div class="highlight"><pre><span class="s2">&quot;paths&quot;</span><span class="o">:</span> <span class="p">{</span>
+  <span class="s2">&quot;jar&quot;</span><span class="o">:</span> <span class="s2">&quot;target/twitter-searcher-2.6.jar&quot;</span>
+</pre></div>
+</div>
+</div></blockquote>
+<ol class="arabic simple" start="3">
+<li>Folder with dependencies. Must be located as specified in <code class="docutils literal"><span class="pre">path/dependenciesFolder</span></code> configuration setting:</li>
+</ol>
+<blockquote>
+<div><div class="highlight-javascript"><div class="highlight"><pre><span class="s2">&quot;paths&quot;</span><span class="o">:</span> <span class="p">{</span>
+  <span class="s2">&quot;dependenciesFolder&quot;</span><span class="o">:</span> <span class="s2">&quot;target/lib&quot;</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>SAD service also supports custom HTML/CSS/JS visualisations of the data collected by plugins:</p>
+<a class="reference internal image-reference" href="_images/twitter_searcher_visualisation.png"><img alt="_images/twitter_searcher_visualisation.png" src="_images/twitter_searcher_visualisation.png" style="width: 100%;" /></a>
+<p>This is achieved by placing <strong>data.html</strong> file into the <strong>visualise/&lt;plugin name&gt;</strong> folder on the service:</p>
+<blockquote>
+<div><div class="highlight-javascript"><div class="highlight"><pre><span class="nx">webapps</span><span class="o">/</span><span class="nx">visualise</span><span class="o">/&lt;</span><span class="nx">plugin</span> <span class="nx">name</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>All sample SAD plugins come with a visualisation that can be used as a template and is located in:</p>
+<blockquote>
+<div><div class="highlight-javascript"><div class="highlight"><pre>&lt;plugin folder&gt;/src/main/resources/visualise
+</pre></div>
+</div>
+</div></blockquote>
+<img alt="_images/visualise_folder.png" src="_images/visualise_folder.png" />
+<p>For sample plugins the <strong>data.html</strong> file with the help of javascript (<strong>javascript/data.js</strong>) requests data for a SAD job from the SAD service and display limited number of results according to URL parameters:</p>
+<blockquote>
+<div><div class="highlight-javascript"><div class="highlight"><pre><span class="o">?</span><span class="nx">jobid</span><span class="o">=</span><span class="mi">1</span><span class="o">&amp;</span><span class="nx">num_results</span><span class="o">=</span><span class="mi">20</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>The layout of data.html can be fully customised using HTML, CSS and javascript.</p>
+</div>
+<div class="section" id="code-structure">
+<h2>Code structure<a class="headerlink" href="#code-structure" title="Permalink to this headline">¶</a></h2>
+<p>SAD plugin code is expected to go through the following steps (without ECC integration):</p>
+<ol class="arabic simple">
+<li>Get argument values of the execution.</li>
+<li>Get input data (if any).</li>
+<li>Do something with that input data according to the arguments: <strong>any Java code</strong>.</li>
+<li>Get requested output types.</li>
+<li>Save output data to the database as requested.</li>
+<li>Report successful execution.</li>
+</ol>
+<p>To assist with all those steps a <strong>PluginsHelper</strong> class can be used. For example, <strong>twitter-searcher</strong> plugin&#8217;s code is the following:</p>
+<ul class="simple">
+<li>Initialise PluginsHelper class and get hold of arguments:</li>
+</ul>
+<blockquote>
+<div><div class="highlight-java"><div class="highlight"><pre><span class="c1">// Always get Plugins helper first</span>
+<span class="n">PluginsHelper</span> <span class="n">ph</span> <span class="o">=</span> <span class="k">new</span> <span class="n">PluginsHelper</span><span class="o">(</span><span class="n">args</span><span class="o">);</span>
+
+<span class="c1">// Retrieve argument &quot;search_terms&quot;</span>
+<span class="n">String</span> <span class="n">search_terms</span> <span class="o">=</span> <span class="n">ph</span><span class="o">.</span><span class="na">getArgumentValue</span><span class="o">(</span><span class="s">&quot;search_terms&quot;</span><span class="o">);</span>
+
+<span class="c1">// Retrieve argument &quot;num_posts&quot;</span>
+<span class="n">String</span> <span class="n">num_posts</span> <span class="o">=</span> <span class="n">ph</span><span class="o">.</span><span class="na">getArgumentValue</span><span class="o">(</span><span class="s">&quot;num_posts&quot;</span><span class="o">);</span>
+</pre></div>
+</div>
+</div></blockquote>
+<ul class="simple">
+<li>Since no input data is required, search Twitter for <code class="docutils literal"><span class="pre">search_terms</span></code> and only request <code class="docutils literal"><span class="pre">num_posts</span></code> tweets:</li>
+</ul>
+<blockquote>
+<div><div class="highlight-java"><div class="highlight"><pre><span class="c1">// Initialise Social Integrator</span>
+<span class="n">AuthProvider</span> <span class="n">ap</span> <span class="o">=</span> <span class="n">initialiseSocialIntegratorForTwitter</span><span class="o">(</span><span class="s">&quot;oauth-twitter.properties&quot;</span><span class="o">);</span>
+
+<span class="c1">// Run Twitter search</span>
+<span class="n">List</span><span class="o">&lt;</span><span class="n">Message</span><span class="o">&gt;</span> <span class="n">tweets</span> <span class="o">=</span> <span class="n">searchTwitter</span><span class="o">(</span><span class="n">ap</span><span class="o">,</span> <span class="n">search_terms</span><span class="o">,</span> <span class="n">num_posts</span><span class="o">,</span> <span class="n">since_id</span><span class="o">);</span>
+</pre></div>
+</div>
+</div></blockquote>
+<ul class="simple">
+<li>Get hold of requested output types (see <a class="reference internal" href="data_types.html"><em>Data types</em></a>) and save tweets if needed:</li>
+</ul>
+<blockquote>
+<div><div class="highlight-java"><div class="highlight"><pre><span class="c1">// Check requested output types</span>
+<span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">requestedOutputTypes</span> <span class="o">=</span> <span class="n">ph</span><span class="o">.</span><span class="na">getRequestedOutputTypes</span><span class="o">();</span>
+
+<span class="c1">// Save tweets to the database if requested</span>
+<span class="k">if</span> <span class="o">(</span><span class="n">requestedOutputTypes</span><span class="o">.</span><span class="na">contains</span><span class="o">(</span><span class="s">&quot;twitter-static-search-raw&quot;</span><span class="o">))</span> <span class="o">{</span>
+  <span class="n">Timestamp</span> <span class="n">whenCollected</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Timestamp</span><span class="o">(</span><span class="n">System</span><span class="o">.</span><span class="na">currentTimeMillis</span><span class="o">());</span>
+  <span class="k">for</span> <span class="o">(</span><span class="n">Message</span> <span class="n">tweet</span> <span class="o">:</span> <span class="n">tweets</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">logger</span><span class="o">.</span><span class="na">debug</span><span class="o">(</span><span class="s">&quot;Saving tweet [&quot;</span> <span class="o">+</span> <span class="n">tweet</span><span class="o">.</span><span class="na">getId</span><span class="o">()</span> <span class="o">+</span> <span class="s">&quot;]: &quot;</span> <span class="o">+</span> <span class="n">tweet</span><span class="o">.</span><span class="na">getMessage</span><span class="o">());</span>
+      <span class="n">ph</span><span class="o">.</span><span class="na">saveData</span><span class="o">(</span><span class="s">&quot;twitter-static-search-raw&quot;</span><span class="o">,</span> <span class="n">tweet</span><span class="o">.</span><span class="na">getJson</span><span class="o">(),</span> <span class="n">whenCollected</span><span class="o">);</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+<ul class="simple">
+<li>Report success:</li>
+</ul>
+<blockquote>
+<div><div class="highlight-java"><div class="highlight"><pre><span class="c1">// Report success - failure reported automatically</span>
+<span class="n">ph</span><span class="o">.</span><span class="na">reportExecutionSuccess</span><span class="o">();</span>
+<span class="n">System</span><span class="o">.</span><span class="na">exit</span> <span class="o">(</span><span class="mi">0</span><span class="o">);</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>In order to avoid duplicates when searching Twitter multiple times, a <code class="docutils literal"><span class="pre">since_id</span></code> parameter can be exchanged between job executions. For example, schedule:</p>
+<blockquote>
+<div><div class="highlight-javascript"><div class="highlight"><pre><span class="s2">&quot;schedule&quot;</span><span class="o">:</span> <span class="p">{</span>
+  <span class="s2">&quot;times&quot;</span><span class="o">:</span> <span class="mi">2</span><span class="p">,</span>
+  <span class="s2">&quot;withIntervalInMilliseconds&quot;</span><span class="o">:</span> <span class="mi">20000</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>will create two executions of one job. In order to avoid duplicate tweets, the first job will set <code class="docutils literal"><span class="pre">since_id</span></code> value:</p>
+<blockquote>
+<div><div class="highlight-java"><div class="highlight"><pre><span class="c1">// Save new sinceID</span>
+<span class="k">if</span> <span class="o">(</span><span class="n">tweets</span><span class="o">.</span><span class="na">size</span><span class="o">()</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+  <span class="n">ph</span><span class="o">.</span><span class="na">putMetadataValueForKey</span><span class="o">(</span><span class="s">&quot;since_id&quot;</span><span class="o">,</span> <span class="n">tweets</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="mi">0</span><span class="o">).</span><span class="na">getId</span><span class="o">());</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>for the second execution to find and use:</p>
+<blockquote>
+<div><div class="highlight-java"><div class="highlight"><pre><span class="c1">// Get last found tweet ID from metadata (to avoid getting duplicate tweets in multiple executions), can be null</span>
+<span class="n">String</span> <span class="n">since_id</span> <span class="o">=</span> <span class="n">ph</span><span class="o">.</span><span class="na">getMetadataValueForKey</span><span class="o">(</span><span class="s">&quot;since_id&quot;</span><span class="o">);</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>If ECC integration is enabled, plugin&#8217;s metric model (see <a class="reference internal" href="eccintegration.html#ecc-sad-plugins-label"><em>ECC integration: SAD Plugins</em></a>) has to be defined in method:</p>
+<blockquote>
+<div><div class="highlight-javascript"><div class="highlight"><pre><span class="nx">PluginEccClient</span><span class="p">.</span><span class="nx">defineExperimentMetrics</span><span class="p">()</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>PluginHelper&#8217;s methods:</p>
+<blockquote>
+<div><div class="highlight-java"><div class="highlight"><pre><span class="kd">public</span> <span class="kt">void</span> <span class="nf">addAttribute</span><span class="o">(</span><span class="n">String</span> <span class="n">entityName</span><span class="o">,</span> <span class="n">String</span> <span class="n">attributeName</span><span class="o">,</span> <span class="n">String</span> <span class="n">description</span><span class="o">,</span> <span class="n">String</span> <span class="n">type</span><span class="o">,</span> <span class="n">String</span> <span class="n">unit</span><span class="o">)</span>
+<span class="kd">public</span> <span class="kt">void</span> <span class="nf">sendMetric</span><span class="o">(</span><span class="n">String</span> <span class="n">entityName</span><span class="o">,</span> <span class="n">String</span> <span class="n">attributeName</span><span class="o">,</span> <span class="n">String</span> <span class="n">value</span><span class="o">)</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>can be used to report measurements or extend existing metric model dynamically.</p>
+<p>For more details, please have a look at sample plugins code and PluginsHelper class in the SAD service javadocs.</p>
+</div>
+<div class="section" id="direct-access-to-mongo-database">
+<h2>Direct access to Mongo Database<a class="headerlink" href="#direct-access-to-mongo-database" title="Permalink to this headline">¶</a></h2>
+<p>PluginHelper provides access to Mongo&#8217;s collections via SAD Coordinator class that has the following convenience methods to interact with Mongo Database:</p>
+<blockquote>
+<div><div class="highlight-java"><div class="highlight"><pre><span class="kd">public</span> <span class="n">Datastore</span> <span class="nf">getDatastore</span><span class="o">();</span> <span class="c1">// returns the database</span>
+<span class="kd">public</span> <span class="n">DBCollection</span> <span class="nf">getDBCollection</span><span class="o">(</span><span class="n">String</span> <span class="n">name</span><span class="o">);</span> <span class="c1">// returns collection by name</span>
+<span class="kd">public</span> <span class="kt">void</span> <span class="nf">deleteDatabase</span><span class="o">();</span> <span class="c1">// deletes current database</span>
+<span class="kd">public</span> <span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">Query</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="nf">createQuery</span><span class="o">(</span><span class="n">Class</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">type</span><span class="o">);</span> <span class="c1">// creates custom queries</span>
+<span class="kd">public</span> <span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">Key</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="nf">saveObject</span><span class="o">(</span><span class="n">T</span> <span class="n">object</span><span class="o">);</span> <span class="c1">// saves objects to the database</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>To access SAD Coordinator from SAD plugin code, use:</p>
+<blockquote>
+<div><div class="highlight-java"><div class="highlight"><pre><span class="kd">public</span> <span class="n">Coordinator</span> <span class="nf">getCoordinator</span><span class="o">();</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>To get direct access to the Data collection (collection used by SAD plugins to store all output data), use:</p>
+<blockquote>
+<div><div class="highlight-java"><div class="highlight"><pre><span class="kd">public</span> <span class="n">DBCollection</span> <span class="nf">getDataCollection</span><span class="o">();</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>Once you have the collection object, use <a class="reference external" href="http://api.mongodb.org/java/current/index.html">Mongo Java API</a> to build database queries. To start with a query limiting data to the input data given to the current plugin execution, use PluginHelper&#8217;s method:</p>
+<blockquote>
+<div><div class="highlight-java"><div class="highlight"><pre><span class="kd">public</span> <span class="n">BasicDBObject</span> <span class="nf">getInputDataQuery</span><span class="o">();</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>As an example of Mongo database access, here is a walkthough basic-sns-stat&#8217;s plugin code that uses Mongo to:</p>
+<ul class="simple">
+<li>Count tweets, Facebook posts</li>
+<li>Count tweets in English</li>
+<li>Find media files and descriptions</li>
+</ul>
+<p>in input data.</p>
+<p>First, get the Data collection and input data query:</p>
+<blockquote>
+<div><div class="highlight-java"><div class="highlight"><pre><span class="n">DBCollection</span> <span class="n">collection</span> <span class="o">=</span> <span class="n">ph</span><span class="o">.</span><span class="na">getDataCollection</span><span class="o">();</span> <span class="c1">// database collection with all the data</span>
+<span class="n">BasicDBObject</span> <span class="n">inputDataQuery</span> <span class="o">=</span> <span class="n">ph</span><span class="o">.</span><span class="na">getInputDataQuery</span><span class="o">();</span> <span class="c1">// query that limits data to input jobs/plugins</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>Clone the input data query and expand it to only include data entries of type &#8220;twitter-static-search-raw&#8221; (tweets), then count the number of the results:</p>
+<blockquote>
+<div><div class="highlight-java"><div class="highlight"><pre><span class="n">BasicDBObject</span> <span class="n">tweetsQuery</span> <span class="o">=</span> <span class="o">(</span><span class="n">BasicDBObject</span><span class="o">)</span> <span class="n">inputDataQuery</span><span class="o">.</span><span class="na">copy</span><span class="o">();</span>
+<span class="n">tweetsQuery</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="s">&quot;dataType&quot;</span><span class="o">,</span> <span class="s">&quot;twitter-static-search-raw&quot;</span><span class="o">);</span> <span class="c1">// initial query expanded to limit data by dataType</span>
+<span class="n">logger</span><span class="o">.</span><span class="na">debug</span><span class="o">(</span><span class="s">&quot;Tweets: &quot;</span> <span class="o">+</span> <span class="n">collection</span><span class="o">.</span><span class="na">find</span><span class="o">(</span><span class="n">tweetsQuery</span><span class="o">).</span><span class="na">count</span><span class="o">());</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>Similarly, count Facebook posts in input data:</p>
+<blockquote>
+<div><div class="highlight-java"><div class="highlight"><pre><span class="n">BasicDBObject</span> <span class="n">fbPostsQuery</span> <span class="o">=</span> <span class="o">(</span><span class="n">BasicDBObject</span><span class="o">)</span> <span class="n">inputDataQuery</span><span class="o">.</span><span class="na">copy</span><span class="o">();</span>
+<span class="n">fbPostsQuery</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="s">&quot;dataType&quot;</span><span class="o">,</span> <span class="s">&quot;facebook-posts-raw&quot;</span><span class="o">);</span>
+<span class="n">logger</span><span class="o">.</span><span class="na">debug</span><span class="o">(</span><span class="s">&quot;FB posts: &quot;</span> <span class="o">+</span> <span class="n">collection</span><span class="o">.</span><span class="na">find</span><span class="o">(</span><span class="n">fbPostsQuery</span><span class="o">).</span><span class="na">count</span><span class="o">());</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>Count number of tweets with &#8216;lang&#8217; = &#8216;en&#8217; (Facebook posts don&#8217;t have that field) in input data:</p>
+<blockquote>
+<div><div class="highlight-java"><div class="highlight"><pre><span class="n">BasicDBObject</span> <span class="n">englishTweetsQuery</span> <span class="o">=</span> <span class="o">(</span><span class="n">BasicDBObject</span><span class="o">)</span> <span class="n">inputDataQuery</span><span class="o">.</span><span class="na">copy</span><span class="o">();</span>
+<span class="n">englishTweetsQuery</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="s">&quot;jsonData.lang&quot;</span><span class="o">,</span> <span class="s">&quot;en&quot;</span><span class="o">);</span>
+<span class="n">logger</span><span class="o">.</span><span class="na">debug</span><span class="o">(</span><span class="s">&quot;Tweets in English: &quot;</span> <span class="o">+</span> <span class="n">collection</span><span class="o">.</span><span class="na">find</span><span class="o">(</span><span class="n">englishTweetsQuery</span><span class="o">).</span><span class="na">count</span><span class="o">());</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>To find tweets with media files in them, reuse existing tweets-only query by requiring &#8216;media&#8217; field to exist:</p>
+<blockquote>
+<div><div class="highlight-java"><div class="highlight"><pre><span class="n">tweetsQuery</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="s">&quot;jsonData.entities.media&quot;</span><span class="o">,</span> <span class="k">new</span> <span class="n">BasicDBObject</span><span class="o">(</span><span class="s">&quot;$exists&quot;</span><span class="o">,</span> <span class="kc">true</span><span class="o">));</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>Then, create a new object describing which data fields we need the query to return (we will only need the URL link to the media file and text of the tweet):</p>
+<blockquote>
+<div><div class="highlight-java"><div class="highlight"><pre><span class="n">BasicDBObject</span> <span class="n">keysToReturn</span> <span class="o">=</span> <span class="k">new</span> <span class="n">BasicDBObject</span><span class="o">();</span>
+<span class="n">keysToReturn</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="s">&quot;jsonData.text&quot;</span><span class="o">,</span> <span class="mi">1</span><span class="o">);</span>
+<span class="n">keysToReturn</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="s">&quot;jsonData.entities.media.media_url&quot;</span><span class="o">,</span> <span class="mi">1</span><span class="o">);</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>Using <code class="docutils literal"><span class="pre">tweetsQuery</span></code> and <code class="docutils literal"><span class="pre">keysToReturn</span></code> objects we query the database, convert each returned data entry to JSONObject (for convenience), and extract URLs and corresponding descriptions:</p>
+<blockquote>
+<div><div class="highlight-java"><div class="highlight"><pre><span class="n">DBCursor</span> <span class="n">cursor</span> <span class="o">=</span> <span class="n">collection</span><span class="o">.</span><span class="na">find</span><span class="o">(</span><span class="n">tweetsQuery</span><span class="o">,</span> <span class="n">keysToReturn</span><span class="o">);</span>
+<span class="n">JSONObject</span> <span class="n">next</span><span class="o">;</span> <span class="n">String</span> <span class="n">text</span><span class="o">,</span> <span class="n">media_url</span><span class="o">;</span>
+<span class="k">while</span><span class="o">(</span><span class="n">cursor</span><span class="o">.</span><span class="na">hasNext</span><span class="o">())</span> <span class="o">{</span>
+    <span class="n">next</span> <span class="o">=</span> <span class="n">JSONObject</span><span class="o">.</span><span class="na">fromObject</span><span class="o">(</span><span class="n">cursor</span><span class="o">.</span><span class="na">next</span><span class="o">().</span><span class="na">toString</span><span class="o">());</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="n">next</span><span class="o">.</span><span class="na">getJSONObject</span><span class="o">(</span><span class="s">&quot;jsonData&quot;</span><span class="o">).</span><span class="na">getString</span><span class="o">(</span><span class="s">&quot;text&quot;</span><span class="o">);</span>
+    <span class="n">media_url</span> <span class="o">=</span> <span class="n">next</span><span class="o">.</span><span class="na">getJSONObject</span><span class="o">(</span><span class="s">&quot;jsonData&quot;</span><span class="o">).</span><span class="na">getJSONObject</span><span class="o">(</span><span class="s">&quot;entities&quot;</span><span class="o">).</span><span class="na">getJSONArray</span><span class="o">(</span><span class="s">&quot;media&quot;</span><span class="o">).</span><span class="na">getJSONObject</span><span class="o">(</span><span class="mi">0</span><span class="o">).</span><span class="na">getString</span><span class="o">(</span><span class="s">&quot;media_url&quot;</span><span class="o">);</span>
+    <span class="n">logger</span><span class="o">.</span><span class="na">debug</span><span class="o">(</span><span class="n">media_url</span> <span class="o">+</span> <span class="s">&quot; (&quot;</span> <span class="o">+</span> <span class="n">text</span> <span class="o">+</span> <span class="s">&quot;)&quot;</span><span class="o">);</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>Facebook post&#8217;s structure is slightly different, so exactly the same task can be accomplished like so:</p>
+<blockquote>
+<div><div class="highlight-java"><div class="highlight"><pre><span class="n">fbPostsQuery</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="s">&quot;jsonData.picture&quot;</span><span class="o">,</span> <span class="k">new</span> <span class="n">BasicDBObject</span><span class="o">(</span><span class="s">&quot;$exists&quot;</span><span class="o">,</span> <span class="kc">true</span><span class="o">));</span>
+<span class="n">keysToReturn</span> <span class="o">=</span> <span class="k">new</span> <span class="n">BasicDBObject</span><span class="o">();</span>
+<span class="n">keysToReturn</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="s">&quot;jsonData.message&quot;</span><span class="o">,</span> <span class="mi">1</span><span class="o">);</span>
+<span class="n">keysToReturn</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="s">&quot;jsonData.story&quot;</span><span class="o">,</span> <span class="mi">1</span><span class="o">);</span>
+<span class="n">keysToReturn</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="s">&quot;jsonData.name&quot;</span><span class="o">,</span> <span class="mi">1</span><span class="o">);</span>
+<span class="n">keysToReturn</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="s">&quot;jsonData.picture&quot;</span><span class="o">,</span> <span class="mi">1</span><span class="o">);</span>
+
+<span class="n">cursor</span> <span class="o">=</span> <span class="n">collection</span><span class="o">.</span><span class="na">find</span><span class="o">(</span><span class="n">fbPostsQuery</span><span class="o">,</span> <span class="n">keysToReturn</span><span class="o">);</span>
+<span class="k">while</span><span class="o">(</span><span class="n">cursor</span><span class="o">.</span><span class="na">hasNext</span><span class="o">())</span> <span class="o">{</span>
+    <span class="n">next</span> <span class="o">=</span> <span class="n">JSONObject</span><span class="o">.</span><span class="na">fromObject</span><span class="o">(</span><span class="n">cursor</span><span class="o">.</span><span class="na">next</span><span class="o">().</span><span class="na">toString</span><span class="o">());</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">next</span><span class="o">.</span><span class="na">getJSONObject</span><span class="o">(</span><span class="s">&quot;jsonData&quot;</span><span class="o">).</span><span class="na">containsKey</span><span class="o">(</span><span class="s">&quot;message&quot;</span><span class="o">))</span> <span class="o">{</span>
+        <span class="n">text</span> <span class="o">=</span> <span class="n">next</span><span class="o">.</span><span class="na">getJSONObject</span><span class="o">(</span><span class="s">&quot;jsonData&quot;</span><span class="o">).</span><span class="na">getString</span><span class="o">(</span><span class="s">&quot;message&quot;</span><span class="o">);</span>
+    <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">next</span><span class="o">.</span><span class="na">getJSONObject</span><span class="o">(</span><span class="s">&quot;jsonData&quot;</span><span class="o">).</span><span class="na">containsKey</span><span class="o">(</span><span class="s">&quot;name&quot;</span><span class="o">))</span> <span class="o">{</span>
+            <span class="n">text</span> <span class="o">=</span> <span class="n">next</span><span class="o">.</span><span class="na">getJSONObject</span><span class="o">(</span><span class="s">&quot;jsonData&quot;</span><span class="o">).</span><span class="na">getString</span><span class="o">(</span><span class="s">&quot;name&quot;</span><span class="o">);</span>
+        <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">next</span><span class="o">.</span><span class="na">getJSONObject</span><span class="o">(</span><span class="s">&quot;jsonData&quot;</span><span class="o">).</span><span class="na">containsKey</span><span class="o">(</span><span class="s">&quot;story&quot;</span><span class="o">))</span> <span class="o">{</span>
+                <span class="n">text</span> <span class="o">=</span> <span class="n">next</span><span class="o">.</span><span class="na">getJSONObject</span><span class="o">(</span><span class="s">&quot;jsonData&quot;</span><span class="o">).</span><span class="na">getString</span><span class="o">(</span><span class="s">&quot;story&quot;</span><span class="o">);</span>
+            <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+                <span class="n">text</span> <span class="o">=</span> <span class="s">&quot;no description&quot;</span><span class="o">;</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+    <span class="n">media_url</span> <span class="o">=</span> <span class="n">next</span><span class="o">.</span><span class="na">getJSONObject</span><span class="o">(</span><span class="s">&quot;jsonData&quot;</span><span class="o">).</span><span class="na">getString</span><span class="o">(</span><span class="s">&quot;picture&quot;</span><span class="o">);</span>
+    <span class="n">logger</span><span class="o">.</span><span class="na">debug</span><span class="o">(</span><span class="n">media_url</span> <span class="o">+</span> <span class="s">&quot; (&quot;</span> <span class="o">+</span> <span class="n">text</span> <span class="o">+</span> <span class="s">&quot;)&quot;</span><span class="o">);</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>Detailed reference: <a class="reference external" href="http://docs.mongodb.org/manual/reference/">http://docs.mongodb.org/manual/reference/</a></p>
+<p>Mongo Java API: <a class="reference external" href="http://api.mongodb.org/java/current/index.html">http://api.mongodb.org/java/current/index.html</a></p>
+</div>
+<div class="section" id="next-steps">
+<h2>Next steps<a class="headerlink" href="#next-steps" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference internal" href="data_types.html"><em>Data types</em></a></p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="data_types.html" title="Data Types"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="service_api.html" title="SAD Service API"
+             >previous</a> |</li>
+        <li><a href="index.html">EXPERIMEDIA SAD 2.6 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright University of Southampton IT Innovation Centre 2013-2014.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3b1.
+    </div>
+  </body>
+</html>

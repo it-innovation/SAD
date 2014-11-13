@@ -1,0 +1,9 @@
+uk.ac.soton.itinnovation.sad.service
+uk.ac.soton.itinnovation.sad.service.adapters
+uk.ac.soton.itinnovation.sad.service.configuration
+uk.ac.soton.itinnovation.sad.service.controllers
+uk.ac.soton.itinnovation.sad.service.dao
+uk.ac.soton.itinnovation.sad.service.domain
+uk.ac.soton.itinnovation.sad.service.helpers
+uk.ac.soton.itinnovation.sad.service.services
+uk.ac.soton.itinnovation.sad.service.utils

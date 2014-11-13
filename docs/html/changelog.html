@@ -1,0 +1,189 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Changelog &mdash; EXPERIMEDIA SAD 2.6 documentation</title>
+    
+    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '2.6',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="EXPERIMEDIA SAD 2.6 documentation" href="index.html" />
+    <link rel="next" title="SAD Service and Plugins Installation" href="installation.html" />
+    <link rel="prev" title="EXPERIMEDIA Social Analytics Dashboard (SAD) Documentation" href="index.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="installation.html" title="SAD Service and Plugins Installation"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="EXPERIMEDIA Social Analytics Dashboard (SAD) Documentation"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">EXPERIMEDIA SAD 2.6 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Changelog</a><ul>
+<li><a class="reference internal" href="#changes-since-version-2-5">Changes since version 2.5</a></li>
+<li><a class="reference internal" href="#changes-since-version-2-0-beta">Changes since version 2.0-beta</a></li>
+<li><a class="reference internal" href="#changes-since-version-1-6">Changes since version 1.6</a></li>
+<li><a class="reference internal" href="#changes-since-version-1-5">Changes since version 1.5</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">EXPERIMEDIA Social Analytics Dashboard (SAD) Documentation</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="installation.html"
+                        title="next chapter">SAD Service and Plugins Installation</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/changelog.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="changelog">
+<h1>Changelog<a class="headerlink" href="#changelog" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="changes-since-version-2-5">
+<h2>Changes since version 2.5<a class="headerlink" href="#changes-since-version-2-5" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Backend framework updated to Spring Boot (<a class="reference external" href="http://spring.io">http://spring.io</a>)</li>
+<li>Frontend framework updated to Foundation 5 (<a class="reference external" href="http://foundation.zurb.com">http://foundation.zurb.com</a>)</li>
+<li>Service can now be fully configured and reset from the UI</li>
+<li>Pause, resume, cancel, delete controls have been added to jobs</li>
+<li>Added basic authentication and HTTPS proxy support</li>
+<li>Added configurable &#8220;fixed&#8221; ECC client UUIDs for all SAD clients</li>
+<li>Log4j logging framework updated to Logback for both the service and plugins</li>
+<li>Supports ECC API v2.1</li>
+</ul>
+</div>
+<div class="section" id="changes-since-version-2-0-beta">
+<h2>Changes since version 2.0-beta<a class="headerlink" href="#changes-since-version-2-0-beta" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Takes full advantage of ECC API 2.0</li>
+<li>Adds new ECC metrics to both SAD Service and all Plugins</li>
+<li>Adds new Hot tweets plugin (deployment release only)</li>
+<li>Exposes data behind job executions</li>
+<li>Adds Vagrant script for painless deployment</li>
+<li>Adds stability improvements</li>
+</ul>
+</div>
+<div class="section" id="changes-since-version-1-6">
+<h2>Changes since version 1.6<a class="headerlink" href="#changes-since-version-1-6" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Underlying database changed from PostgreSQL to Mongo</li>
+<li>SAD plugins integrated with ECC</li>
+<li>Database access for SAD plugins</li>
+</ul>
+</div>
+<div class="section" id="changes-since-version-1-5">
+<h2>Changes since version 1.5<a class="headerlink" href="#changes-since-version-1-5" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Default plugins completely rewritten from scratch:</li>
+</ul>
+<blockquote>
+<div><ul class="simple">
+<li>Twitter searcher plugin - fetches tweets containing keywords or hashtags.</li>
+<li>Facebook collector plugin - collects posts from Facebook pages.</li>
+<li>Basic stats plugin - produces basic statistics on social networks data collected by the Twitter and Facebook plugins.</li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li>Twitter and Facebook plugin using EXPERIMEDIA Social Integrator to connect to Social Networks.</li>
+<li>All default plugins written using developer-friendly Plugin Helper class that simplifies common plugin tasks:</li>
+</ul>
+<blockquote>
+<div><ul class="simple">
+<li>Retrieval of arguments, input, requested outputs.</li>
+<li>Storage and retrieval of job metadata.</li>
+<li>Saving data into database.</li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li>All default plugins come with HTML/CSS/JS visualisation view of output data.</li>
+<li>SAD java packages have been renamed from eu.experimedia.itinnovation* to uk.ac.soton.itinnovation.sad*.</li>
+<li>License for SAD core has been changed from EXPERIMEDIA project license to GNU LESSER GENERAL PUBLIC LICENSE, Version 2.1.</li>
+<li>Default plugin licenses have been change from EXPERIMEDIA project license to Apache Software License, Version 2.0.</li>
+<li>Enhanced plugin configuration to include detailed information about input data and output data types.</li>
+<li>Default plugin logging has been switched to log4j.</li>
+<li>Individual plugin executions saved into log files.</li>
+<li>Significantly improved documentation.</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="installation.html" title="SAD Service and Plugins Installation"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="EXPERIMEDIA Social Analytics Dashboard (SAD) Documentation"
+             >previous</a> |</li>
+        <li><a href="index.html">EXPERIMEDIA SAD 2.6 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright University of Southampton IT Innovation Centre 2013-2014.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3b1.
+    </div>
+  </body>
+</html>

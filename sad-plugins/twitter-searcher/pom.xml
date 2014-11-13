@@ -1,0 +1,175 @@
+<?xml version="1.0"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>uk.ac.soton.itinnovation.sad.plugins</groupId>
+    <artifactId>twitter-searcher</artifactId>
+    <packaging>jar</packaging>
+    <name>Experimedia SAD Twitter Searcher Plugin</name>
+    <description>SAD plugin</description>
+
+    <parent>
+        <groupId>uk.ac.soton.itinnovation.sad.plugins</groupId>
+        <artifactId>sad-plugins</artifactId>
+        <version>2.6</version>
+    </parent>
+
+    <properties>
+        <sad.plugin.lib.folder>lib</sad.plugin.lib.folder>
+        <sad.plugin.main.class>uk.ac.soton.itinnovation.sad.plugins.twittersearcher.Main</sad.plugin.main.class>
+    </properties>
+
+    <repositories>
+        <!--Social Integrator - Social Auth repository-->
+        <repository>
+            <id>sonatype-oss-public</id>
+            <url>https://oss.sonatype.org/content/groups/public/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+        </repository>
+
+    </repositories>
+
+    <dependencies>
+
+        <!--Pretty Logback, see https://github.com/n0rad/logback-prettier-->
+        <dependency>
+            <groupId>fr.norad.logback.prettier</groupId>
+            <artifactId>logback-prettier</artifactId>
+            <version>0.5</version>
+        </dependency>
+
+        <!--JSON-->
+        <dependency>
+            <groupId>net.sf.json-lib</groupId>
+            <artifactId>json-lib</artifactId>
+            <version>2.4</version>
+            <classifier>jdk15</classifier>
+        </dependency>
+
+        <!--SAD Coordinator-->
+        <dependency>
+            <groupId>uk.ac.soton.itinnovation.sad</groupId>
+            <artifactId>sad-coordinator</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <!--SAD Service-->
+        <dependency>
+            <groupId>uk.ac.soton.itinnovation.sad</groupId>
+            <artifactId>sad-service</artifactId>
+            <version>${project.version}</version>
+            <classifier>classes</classifier>
+        </dependency>
+
+        <!--OAuth-->
+        <dependency>
+            <groupId>oauth.signpost</groupId>
+            <artifactId>signpost-core</artifactId>
+            <version>1.2</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <!--SocialIntegrator-->
+        <dependency>
+            <groupId>org.brickred</groupId>
+            <artifactId>socialauth</artifactId>
+            <version>4.2</version>
+        </dependency>
+        <dependency>
+            <groupId>gr.ntua</groupId>
+            <artifactId>socialintegrator</artifactId>
+            <version>${si.version}</version>
+        </dependency>
+
+        <!--Joda time-->
+        <dependency>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time</artifactId>
+            <version>2.3</version>
+        </dependency>
+
+    </dependencies>
+
+    <build>
+        <plugins>
+            <!--Copy dependencies jars into target/lib-->
+            <plugin>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>2.6</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}${file.separator}${sad.plugin.lib.folder}</outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <!--Build an executable JAR-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>2.4</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <addClasspath>true</addClasspath>
+                            <classpathPrefix>${sad.plugin.lib.folder}${file.separator}</classpathPrefix>
+                            <mainClass>${sad.plugin.main.class}</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
+            <!--Fill in paths to the jar and dependencies folder into configuration file,
+            copy configuration file into root folder-->
+            <plugin>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>2.6</version>
+                <executions>
+                    <execution>
+                        <id>copy-resources</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${basedir}</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>src${file.separator}main${file.separator}resources</directory>
+                                    <includes>
+                                        <include>configuration.json</include>
+                                    </includes>
+                                    <filtering>true</filtering>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <!--Remove generated configuration file on clean-->
+            <plugin>
+                <artifactId>maven-clean-plugin</artifactId>
+                <version>2.5</version>
+                <configuration>
+                    <filesets>
+                        <fileset>
+                            <directory>.</directory>
+                            <includes>
+                                <include>configuration.json</include>
+                                <include>LICENSE.txt</include>
+                            </includes>
+                        </fileset>
+                    </filesets>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

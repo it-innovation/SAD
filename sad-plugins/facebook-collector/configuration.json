@@ -1,0 +1,35 @@
+{
+    "enabled": "y",
+    "name": "facebook-collector",
+    "description": "Facebook collector EXPERIMEDIA SAD Plugin. Collects Facebook posts from groups and pages",
+    "paths": {
+        "jar": "target/facebook-collector-2.6.jar",
+        "dependenciesFolder": "target/lib"
+    },
+    "arguments": [
+    {
+        "name": "page_name",
+        "description": "Facebook page name to collect posts from, multiple instances of this argument are supported",
+        "isOptional": false,
+        "defaultValue": "congressschladming",
+        "sample_values": "HausAichGoessenberg|HauserKaiblingFan"
+    },
+    {
+        "name": "max_posts",
+        "description": "Number of posts to request from each page",
+        "isOptional": false,
+        "defaultValue": "125",
+        "sample_values": "100|1200"
+    }
+    ],
+    "inputs": [
+    ],
+    "outputs": {
+        "data": [
+        {
+            "type": "facebook-posts-raw",
+            "description": "JSON containing a Facebook post"
+        }
+        ]
+    }
+}

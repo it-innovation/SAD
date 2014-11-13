@@ -1,0 +1,652 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>ECC integration &mdash; EXPERIMEDIA SAD 2.6 documentation</title>
+    
+    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '2.6',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="EXPERIMEDIA SAD 2.6 documentation" href="index.html" />
+    <link rel="next" title="SAD Service API" href="service_api.html" />
+    <link rel="prev" title="Using sample SAD plugins" href="sample_plugins.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="service_api.html" title="SAD Service API"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="sample_plugins.html" title="Using sample SAD plugins"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">EXPERIMEDIA SAD 2.6 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">ECC integration</a><ul>
+<li><a class="reference internal" href="#sad-service">SAD Service</a></li>
+<li><a class="reference internal" href="#sad-plugins">SAD Plugins</a><ul>
+<li><a class="reference internal" href="#twitter-searcher-twitter-searcher">Twitter searcher (twitter-searcher)</a></li>
+<li><a class="reference internal" href="#facebook-collector-facebook-collector">Facebook collector (facebook-collector)</a></li>
+<li><a class="reference internal" href="#hot-tweets-hot-tweets">Hot tweets (hot-tweets)</a></li>
+<li><a class="reference internal" href="#basic-stats-for-twitter-facebook-collected-data-basic-sns-stats">Basic stats for Twitter/Facebook collected data (basic-sns-stats)</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#next-steps">Next steps</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="sample_plugins.html"
+                        title="previous chapter">Using sample SAD plugins</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="service_api.html"
+                        title="next chapter">SAD Service API</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/eccintegration.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="ecc-integration">
+<h1>ECC integration<a class="headerlink" href="#ecc-integration" title="Permalink to this headline">¶</a></h1>
+<p>SAD offers ECC integration for both the service and any SAD plugin. To enable ECC reporting, check &#8220;Use ECC&#8221; checkbox on SAD configuration page:</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="_images/sad_config_page_annotated.png"><img alt="_images/sad_config_page_annotated.png" src="_images/sad_config_page_annotated.png" style="width: 100%;" /></a>
+</div></blockquote>
+<p>SAD will create one ECC client for SAD service, and one for each plugin:</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="_images/ecc_dashboard_sad_clients.png"><img alt="_images/ecc_dashboard_sad_clients.png" src="_images/ecc_dashboard_sad_clients.png" style="width: 100%;" /></a>
+</div></blockquote>
+<p>Configuration of UUIDs of SAD ECC clients is explained in <a class="reference internal" href="service_exec.html"><em>Running &amp; Configuring SAD Service</em></a>.</p>
+<div class="section" id="sad-service">
+<h2>SAD Service<a class="headerlink" href="#sad-service" title="Permalink to this headline">¶</a></h2>
+<p>The service will create its own client that will use the following ECC Metric model reporting technical data about itself:</p>
+<ul>
+<li><p class="first">SAD Metric Generator (Metric generator for Social Analytics Dashboard)</p>
+<ul class="simple">
+<li>Entity: SAD Service (Entity for Social Analytics Dashboard)</li>
+</ul>
+<blockquote>
+<div><ul class="simple">
+<li>Attribute: Plugins Started (Number of plugins scheduled by SAD)</li>
+</ul>
+<blockquote>
+<div><ul class="simple">
+<li>Metric type: RATIO, unit: Times</li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li>Attribute: Plugins Executed Successfully (Number of plugins executed successfully by SAD)</li>
+</ul>
+<blockquote>
+<div><ul class="simple">
+<li>Metric type: RATIO, unit: Times</li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li>Attribute: Plugins failed (Number of plugins failed to execute (for whatever reason))</li>
+</ul>
+<blockquote>
+<div><ul class="simple">
+<li>Metric type: RATIO, unit: Times</li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li>Attribute: Names of plugins scheduled using SAD (Number of times SAD plugins have executed successfully)</li>
+</ul>
+<blockquote>
+<div><ul class="simple">
+<li>Metric type: NOMINAL</li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li>Attribute: Service methods called (Names of methods called in SAD API)</li>
+</ul>
+<blockquote>
+<div><ul class="simple">
+<li>Metric type: NOMINAL</li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li>Attribute: Database query duration (How long it took for a database query to run)</li>
+</ul>
+<blockquote>
+<div><ul class="simple">
+<li>Metric type: RATIO, unit: mSec</li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li>Attribute: Service query duration (How long it took for the service to respond as measured by the service)</li>
+</ul>
+<blockquote>
+<div><ul class="simple">
+<li>Metric type: RATIO, unit: mSec</li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li>Attribute: Plugin execution duration (How long it took to execute the plugin)</li>
+</ul>
+<blockquote>
+<div><ul class="simple">
+<li>Metric type: RATIO, unit: mSec</li>
+</ul>
+</div></blockquote>
+</div></blockquote>
+</li>
+</ul>
+</div>
+<div class="section" id="sad-plugins">
+<span id="ecc-sad-plugins-label"></span><h2>SAD Plugins<a class="headerlink" href="#sad-plugins" title="Permalink to this headline">¶</a></h2>
+<p>Since version 2.5 SAD plugins are expected to use Logback logger (<a class="reference external" href="http://logback.qos.ch">http://logback.qos.ch</a>). Using old log4j logger can <strong>prevent plugins from executing</strong>.</p>
+<p>Since version 2.0-beta each SAD client has its own standalone ECC client by default located in class <strong>PluginEccClient.java</strong>:</p>
+<blockquote>
+<div><div class="highlight-java"><div class="highlight"><pre><span class="kd">public</span> <span class="kd">class</span> <span class="nc">PluginEccClient</span> <span class="kd">extends</span> <span class="n">GenericEccClient</span> <span class="o">{</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">METRIC_GENERATOR_MAIN</span> <span class="o">=</span> <span class="s">&quot;Twitter searcher plugin metric generator&quot;</span><span class="o">;</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">ENTITY_Twitter</span> <span class="o">=</span> <span class="s">&quot;Twitter&quot;</span><span class="o">;</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">ENTITY_SocialNetworksDataGroup</span> <span class="o">=</span> <span class="s">&quot;Social Networks Data Group&quot;</span><span class="o">;</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">ENTITY_PLUGINS</span> <span class="o">=</span> <span class="s">&quot;SAD Plugins&quot;</span><span class="o">;</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">ATTRIBUTE_TWEETS_FOUND</span> <span class="o">=</span> <span class="s">&quot;Tweets count&quot;</span><span class="o">;</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">ATTRIBUTE_USERS_FOUND</span> <span class="o">=</span> <span class="s">&quot;Twitter users count&quot;</span><span class="o">;</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">ATTRIBUTE_KEYWORDS</span> <span class="o">=</span> <span class="s">&quot;Twitter channels&quot;</span><span class="o">;</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">ATTRIBUTE_REQUESTS_COUNT</span> <span class="o">=</span> <span class="s">&quot;Request count&quot;</span><span class="o">;</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">ATTRIBUTE_REQUEST_LATENCY</span> <span class="o">=</span> <span class="s">&quot;Request latency&quot;</span><span class="o">;</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">ATTRIBUTE_EXECUTION_DURATION</span> <span class="o">=</span> <span class="s">&quot;Successful execution duration (twitter searcher)&quot;</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="nf">PluginEccClient</span><span class="o">(</span><span class="n">String</span> <span class="n">name</span><span class="o">,</span> <span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="kd">super</span><span class="o">(</span><span class="n">name</span><span class="o">,</span> <span class="n">args</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">defineExperimentMetrics</span><span class="o">()</span> <span class="o">{</span>
+
+        <span class="n">mainMetricGenerator</span> <span class="o">=</span> <span class="k">new</span> <span class="n">MetricGenerator</span><span class="o">();</span>
+        <span class="n">currentExperiment</span><span class="o">.</span><span class="na">addMetricGenerator</span><span class="o">(</span><span class="n">mainMetricGenerator</span><span class="o">);</span>
+        <span class="n">mainMetricGenerator</span><span class="o">.</span><span class="na">setName</span><span class="o">(</span><span class="n">METRIC_GENERATOR_MAIN</span><span class="o">);</span>
+        <span class="n">mainMetricGenerator</span><span class="o">.</span><span class="na">setDescription</span><span class="o">(</span><span class="s">&quot;Main metric generator for &quot;</span> <span class="o">+</span> <span class="n">name</span><span class="o">);</span>
+
+        <span class="n">MetricGroup</span> <span class="n">metricGroup</span> <span class="o">=</span> <span class="n">MetricHelper</span><span class="o">.</span><span class="na">createMetricGroup</span><span class="o">(</span><span class="n">name</span> <span class="o">+</span> <span class="s">&quot;&#39;s metric group&quot;</span><span class="o">,</span> <span class="s">&quot;Metric group for plugin &quot;</span> <span class="o">+</span> <span class="n">name</span><span class="o">,</span> <span class="n">mainMetricGenerator</span><span class="o">);</span>
+
+        <span class="n">Entity</span> <span class="n">snDataGroupEntity</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Entity</span><span class="o">();</span>
+        <span class="n">mainMetricGenerator</span><span class="o">.</span><span class="na">addEntity</span><span class="o">(</span><span class="n">snDataGroupEntity</span><span class="o">);</span>
+        <span class="n">snDataGroupEntity</span><span class="o">.</span><span class="na">setName</span><span class="o">(</span><span class="n">ENTITY_SocialNetworksDataGroup</span><span class="o">);</span>
+        <span class="n">snDataGroupEntity</span><span class="o">.</span><span class="na">setDescription</span><span class="o">(</span><span class="s">&quot;Entity for Social Networks data&quot;</span><span class="o">);</span>
+
+        <span class="n">Attribute</span> <span class="n">a_tweets_found</span> <span class="o">=</span> <span class="n">MetricHelper</span><span class="o">.</span><span class="na">createAttribute</span><span class="o">(</span><span class="n">ATTRIBUTE_TWEETS_FOUND</span><span class="o">,</span> <span class="s">&quot;How many tweets were found in the last search&quot;</span><span class="o">,</span> <span class="n">snDataGroupEntity</span><span class="o">);</span>
+        <span class="n">MeasurementSet</span> <span class="n">ms_tweets_found</span> <span class="o">=</span> <span class="n">MetricHelper</span><span class="o">.</span><span class="na">createMeasurementSet</span><span class="o">(</span><span class="n">a_tweets_found</span><span class="o">,</span> <span class="n">MetricType</span><span class="o">.</span><span class="na">RATIO</span><span class="o">,</span> <span class="k">new</span> <span class="n">Unit</span><span class="o">(</span><span class="s">&quot;Tweets&quot;</span><span class="o">),</span> <span class="n">metricGroup</span><span class="o">);</span>
+
+        <span class="n">Attribute</span> <span class="n">a_users_found</span> <span class="o">=</span> <span class="n">MetricHelper</span><span class="o">.</span><span class="na">createAttribute</span><span class="o">(</span><span class="n">ATTRIBUTE_USERS_FOUND</span><span class="o">,</span> <span class="s">&quot;How many users were found in the last search&quot;</span><span class="o">,</span> <span class="n">snDataGroupEntity</span><span class="o">);</span>
+        <span class="n">MeasurementSet</span> <span class="n">ms_users_found</span> <span class="o">=</span> <span class="n">MetricHelper</span><span class="o">.</span><span class="na">createMeasurementSet</span><span class="o">(</span><span class="n">a_users_found</span><span class="o">,</span> <span class="n">MetricType</span><span class="o">.</span><span class="na">RATIO</span><span class="o">,</span> <span class="k">new</span> <span class="n">Unit</span><span class="o">(</span><span class="s">&quot;Users&quot;</span><span class="o">),</span> <span class="n">metricGroup</span><span class="o">);</span>
+
+        <span class="n">Attribute</span> <span class="n">a_keywords</span> <span class="o">=</span> <span class="n">MetricHelper</span><span class="o">.</span><span class="na">createAttribute</span><span class="o">(</span><span class="n">ATTRIBUTE_KEYWORDS</span><span class="o">,</span> <span class="s">&quot;Search terms used&quot;</span><span class="o">,</span> <span class="n">snDataGroupEntity</span><span class="o">);</span>
+        <span class="n">MeasurementSet</span> <span class="n">ms_keywords</span> <span class="o">=</span> <span class="n">MetricHelper</span><span class="o">.</span><span class="na">createMeasurementSet</span><span class="o">(</span><span class="n">a_keywords</span><span class="o">,</span> <span class="n">MetricType</span><span class="o">.</span><span class="na">NOMINAL</span><span class="o">,</span> <span class="k">new</span> <span class="n">Unit</span><span class="o">(</span><span class="s">&quot;&quot;</span><span class="o">),</span> <span class="n">metricGroup</span><span class="o">);</span>
+
+        <span class="n">measurementSetMap</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">ms_tweets_found</span><span class="o">.</span><span class="na">getID</span><span class="o">(),</span> <span class="n">ms_tweets_found</span><span class="o">);</span>
+        <span class="n">measurementSetMap</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">ms_users_found</span><span class="o">.</span><span class="na">getID</span><span class="o">(),</span> <span class="n">ms_users_found</span><span class="o">);</span>
+        <span class="n">measurementSetMap</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">ms_keywords</span><span class="o">.</span><span class="na">getID</span><span class="o">(),</span> <span class="n">ms_keywords</span><span class="o">);</span>
+
+        <span class="n">Entity</span> <span class="n">twitterEntity</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Entity</span><span class="o">();</span>
+        <span class="n">mainMetricGenerator</span><span class="o">.</span><span class="na">addEntity</span><span class="o">(</span><span class="n">twitterEntity</span><span class="o">);</span>
+        <span class="n">twitterEntity</span><span class="o">.</span><span class="na">setName</span><span class="o">(</span><span class="n">ENTITY_Twitter</span><span class="o">);</span>
+        <span class="n">twitterEntity</span><span class="o">.</span><span class="na">setDescription</span><span class="o">(</span><span class="s">&quot;Entity for Twitter&quot;</span><span class="o">);</span>
+
+        <span class="n">Attribute</span> <span class="n">a_requests_count</span> <span class="o">=</span> <span class="n">MetricHelper</span><span class="o">.</span><span class="na">createAttribute</span><span class="o">(</span><span class="n">ATTRIBUTE_REQUESTS_COUNT</span><span class="o">,</span> <span class="s">&quot;Number of requests given to the Social Integrator&quot;</span><span class="o">,</span> <span class="n">twitterEntity</span><span class="o">);</span>
+        <span class="n">MeasurementSet</span> <span class="n">ms_requests</span> <span class="o">=</span> <span class="n">MetricHelper</span><span class="o">.</span><span class="na">createMeasurementSet</span><span class="o">(</span><span class="n">a_requests_count</span><span class="o">,</span> <span class="n">MetricType</span><span class="o">.</span><span class="na">RATIO</span><span class="o">,</span> <span class="k">new</span> <span class="n">Unit</span><span class="o">(</span><span class="s">&quot;Times&quot;</span><span class="o">),</span> <span class="n">metricGroup</span><span class="o">);</span>
+
+        <span class="n">Attribute</span> <span class="n">a_request_latency</span> <span class="o">=</span> <span class="n">MetricHelper</span><span class="o">.</span><span class="na">createAttribute</span><span class="o">(</span><span class="n">ATTRIBUTE_REQUEST_LATENCY</span><span class="o">,</span> <span class="s">&quot;Response time of Social Integrator and Twitter&quot;</span><span class="o">,</span> <span class="n">twitterEntity</span><span class="o">);</span>
+        <span class="n">MeasurementSet</span> <span class="n">ms_latency</span> <span class="o">=</span> <span class="n">MetricHelper</span><span class="o">.</span><span class="na">createMeasurementSet</span><span class="o">(</span><span class="n">a_request_latency</span><span class="o">,</span> <span class="n">MetricType</span><span class="o">.</span><span class="na">RATIO</span><span class="o">,</span> <span class="k">new</span> <span class="n">Unit</span><span class="o">(</span><span class="s">&quot;mSec&quot;</span><span class="o">),</span> <span class="n">metricGroup</span><span class="o">);</span>
+
+        <span class="n">measurementSetMap</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">ms_requests</span><span class="o">.</span><span class="na">getID</span><span class="o">(),</span> <span class="n">ms_requests</span><span class="o">);</span>
+        <span class="n">measurementSetMap</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">ms_latency</span><span class="o">.</span><span class="na">getID</span><span class="o">(),</span> <span class="n">ms_latency</span><span class="o">);</span>
+
+        <span class="n">Entity</span> <span class="n">sadPluginsEntity</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Entity</span><span class="o">();</span>
+        <span class="n">mainMetricGenerator</span><span class="o">.</span><span class="na">addEntity</span><span class="o">(</span><span class="n">sadPluginsEntity</span><span class="o">);</span>
+        <span class="n">sadPluginsEntity</span><span class="o">.</span><span class="na">setName</span><span class="o">(</span><span class="n">ENTITY_PLUGINS</span><span class="o">);</span>
+        <span class="n">sadPluginsEntity</span><span class="o">.</span><span class="na">setDescription</span><span class="o">(</span><span class="s">&quot;Entity for SAD plugins&quot;</span><span class="o">);</span>
+
+        <span class="n">Attribute</span> <span class="n">a_successful_execution_duration</span> <span class="o">=</span> <span class="n">MetricHelper</span><span class="o">.</span><span class="na">createAttribute</span><span class="o">(</span><span class="n">ATTRIBUTE_EXECUTION_DURATION</span><span class="o">,</span> <span class="s">&quot;How long it took to execute the plugin&quot;</span><span class="o">,</span> <span class="n">sadPluginsEntity</span><span class="o">);</span>
+        <span class="n">MeasurementSet</span> <span class="n">ms_exec_duration</span> <span class="o">=</span> <span class="n">MetricHelper</span><span class="o">.</span><span class="na">createMeasurementSet</span><span class="o">(</span><span class="n">a_successful_execution_duration</span><span class="o">,</span> <span class="n">MetricType</span><span class="o">.</span><span class="na">RATIO</span><span class="o">,</span> <span class="k">new</span> <span class="n">Unit</span><span class="o">(</span><span class="s">&quot;mSec&quot;</span><span class="o">),</span> <span class="n">metricGroup</span><span class="o">);</span>
+
+        <span class="n">measurementSetMap</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">ms_exec_duration</span><span class="o">.</span><span class="na">getID</span><span class="o">(),</span> <span class="n">ms_exec_duration</span><span class="o">);</span>
+
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>and launched from the Main method of the plugin:</p>
+<blockquote>
+<div><div class="highlight-java"><div class="highlight"><pre><span class="n">PluginEccClient</span> <span class="n">eccClient</span> <span class="o">=</span> <span class="k">new</span> <span class="n">PluginEccClient</span><span class="o">(</span><span class="n">name</span><span class="o">,</span> <span class="n">args</span><span class="o">);</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>The Plugin&#8217;s ECC client runs in <strong>ECC</strong> mode that the plugin is launched in by the SAD Service when the service starts:</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="_images/sad_plugins_ecc_explained.png"><img alt="_images/sad_plugins_ecc_explained.png" src="_images/sad_plugins_ecc_explained.png" style="width: 100%;" /></a>
+</div></blockquote>
+<p>In this mode a new socket server is created (one per plugin) to accept metric model updates and new measurements from the main code when the plugin is run in <strong>Execution</strong> mode.</p>
+<p>In <strong>Execution</strong> mode the main code of the plugin (the code that delivers the purpose functionality of the plugin) is run. A socket client is also created to communicate with the ECC client of the plugin. PluginHelper class provides the following methods to add new entities, attributes to the metric model and report new measurements:</p>
+<blockquote>
+<div><div class="highlight-java"><div class="highlight"><pre><span class="kd">public</span> <span class="kt">void</span> <span class="nf">addEntity</span><span class="o">(</span><span class="n">String</span> <span class="n">metrigeneratorName</span><span class="o">,</span> <span class="n">String</span> <span class="n">entityName</span><span class="o">,</span> <span class="n">String</span> <span class="n">description</span><span class="o">)</span>
+<span class="kd">public</span> <span class="kt">void</span> <span class="nf">addAttribute</span><span class="o">(</span><span class="n">String</span> <span class="n">entityName</span><span class="o">,</span> <span class="n">String</span> <span class="n">attributeName</span><span class="o">,</span> <span class="n">String</span> <span class="n">description</span><span class="o">,</span> <span class="n">String</span> <span class="n">type</span><span class="o">,</span> <span class="n">String</span> <span class="n">unit</span><span class="o">)</span>
+<span class="kd">public</span> <span class="kt">void</span> <span class="nf">sendMetric</span><span class="o">(</span><span class="n">String</span> <span class="n">entityName</span><span class="o">,</span> <span class="n">String</span> <span class="n">attributeName</span><span class="o">,</span> <span class="n">String</span> <span class="n">value</span><span class="o">)</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>As the metric model is defined in PluginEccClient.defineExperimentMetrics() method (see PluginEccClient class example above), it easy to report measurements on existing attributes:</p>
+<blockquote>
+<div><div class="highlight-java"><div class="highlight"><pre><span class="n">PluginsHelper</span> <span class="n">ph</span> <span class="o">=</span> <span class="k">new</span> <span class="n">PluginsHelper</span><span class="o">(</span><span class="n">args</span><span class="o">);</span>
+<span class="n">ph</span><span class="o">.</span><span class="na">sendMetric</span><span class="o">(</span><span class="n">PluginEccClient</span><span class="o">.</span><span class="na">ENTITY_SocialNetworksDataGroup</span><span class="o">,</span> <span class="n">PluginEccClient</span><span class="o">.</span><span class="na">ATTRIBUTE_TWEETS_FOUND</span><span class="o">,</span> <span class="s">&quot;100&quot;</span><span class="o">);</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>To add a new attribute to an existing Entity (for example, for new number of messages posted on a Facebook page to monitor):</p>
+<blockquote>
+<div><div class="highlight-java"><div class="highlight"><pre><span class="n">PluginsHelper</span> <span class="n">ph</span> <span class="o">=</span> <span class="k">new</span> <span class="n">PluginsHelper</span><span class="o">(</span><span class="n">args</span><span class="o">);</span>
+<span class="n">String</span> <span class="n">newAttribute</span> <span class="o">=</span> <span class="s">&quot;Messages from page &#39;&quot;</span> <span class="o">+</span> <span class="n">page_name</span> <span class="o">+</span> <span class="s">&quot;&#39;&quot;</span><span class="o">;</span>
+<span class="n">ph</span><span class="o">.</span><span class="na">addAttribute</span><span class="o">(</span><span class="n">PluginEccClient</span><span class="o">.</span><span class="na">ENTITY_STATS</span><span class="o">,</span> <span class="n">newAttribute</span><span class="o">,</span> <span class="s">&quot;Number of messages collected from page &#39;&quot;</span> <span class="o">+</span> <span class="n">page_name</span> <span class="o">+</span> <span class="s">&quot;&#39;&quot;</span><span class="o">,</span> <span class="s">&quot;ratio&quot;</span><span class="o">,</span> <span class="s">&quot;Posts&quot;</span><span class="o">);</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>and report measurements for the new attribute:</p>
+<blockquote>
+<div><div class="highlight-java"><div class="highlight"><pre><span class="n">ph</span><span class="o">.</span><span class="na">sendMetric</span><span class="o">(</span><span class="n">PluginEccClient</span><span class="o">.</span><span class="na">ENTITY_STATS</span><span class="o">,</span> <span class="n">newAttribute</span><span class="o">,</span> <span class="s">&quot;490&quot;</span><span class="o">);</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>To create an entirely new Entity and report measurements:</p>
+<blockquote>
+<div><div class="highlight-java"><div class="highlight"><pre><span class="n">PluginsHelper</span> <span class="n">ph</span> <span class="o">=</span> <span class="k">new</span> <span class="n">PluginsHelper</span><span class="o">(</span><span class="n">args</span><span class="o">);</span>
+
+<span class="n">String</span> <span class="n">searchTermEntityName</span> <span class="o">=</span> <span class="s">&quot;Entity for search terms &#39;&quot;</span> <span class="o">+</span> <span class="n">search_terms</span> <span class="o">+</span> <span class="s">&quot;&#39;&quot;</span><span class="o">;</span>
+<span class="n">ph</span><span class="o">.</span><span class="na">addEntity</span><span class="o">(</span><span class="n">PluginEccClient</span><span class="o">.</span><span class="na">METRIC_GENERATOR_MAIN</span><span class="o">,</span> <span class="n">searchTermEntityName</span><span class="o">,</span> <span class="s">&quot;Dynamic entity&quot;</span><span class="o">);</span>
+
+<span class="n">String</span> <span class="n">newAttribute</span> <span class="o">=</span> <span class="s">&quot;Tweets for search term &#39;&quot;</span> <span class="o">+</span> <span class="n">search_terms</span> <span class="o">+</span> <span class="s">&quot;&#39;&quot;</span><span class="o">;</span>
+<span class="n">ph</span><span class="o">.</span><span class="na">addAttribute</span><span class="o">(</span><span class="n">searchTermEntityName</span><span class="o">,</span> <span class="n">newAttribute</span><span class="o">,</span> <span class="s">&quot;Tweets found for search terms &#39;&quot;</span> <span class="o">+</span> <span class="n">search_terms</span> <span class="o">+</span> <span class="s">&quot;&#39;&quot;</span><span class="o">,</span> <span class="s">&quot;ratio&quot;</span><span class="o">,</span> <span class="s">&quot;Tweets&quot;</span><span class="o">);</span>
+<span class="n">ph</span><span class="o">.</span><span class="na">sendMetric</span><span class="o">(</span><span class="n">searchTermEntityName</span><span class="o">,</span> <span class="n">newAttribute</span><span class="o">,</span> <span class="n">Integer</span><span class="o">.</span><span class="na">toString</span><span class="o">(</span><span class="n">tweets</span><span class="o">.</span><span class="na">size</span><span class="o">()));</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>For detailed examples see Main methods of default plugins in <strong>sad-plugins</strong> folder.</p>
+<div class="section" id="twitter-searcher-twitter-searcher">
+<h3>Twitter searcher (twitter-searcher)<a class="headerlink" href="#twitter-searcher-twitter-searcher" title="Permalink to this headline">¶</a></h3>
+<p>Has the following metric model by default:</p>
+<ul>
+<li><p class="first">Twitter searcher&#8217;s metric generator (Main metric generator for Twitter searcher)</p>
+<ul class="simple">
+<li>Entity: Twitter (Social Network Twitter as an Entity)</li>
+</ul>
+<blockquote>
+<div><ul class="simple">
+<li>Attribute: Request count (Number of requests given to the Social Integrator)</li>
+</ul>
+<blockquote>
+<div><ul class="simple">
+<li>Metric type: RATIO, unit: Times</li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li>Attribute: Request latency (Response time of Social Integrator and Twitter)</li>
+</ul>
+<blockquote>
+<div><ul class="simple">
+<li>Metric type: RATIO, unit: mSec</li>
+</ul>
+</div></blockquote>
+</div></blockquote>
+<ul class="simple">
+<li>Entity: Social Networks Data Group (fixed UUID ef8ef409-11c8-42d9-814a-0f041f3fcbad)</li>
+</ul>
+<blockquote>
+<div><ul class="simple">
+<li>Attribute: Twitter channels (Search Terms Used)</li>
+</ul>
+<blockquote>
+<div><ul class="simple">
+<li>Metric type: NOMINAL</li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li>Attribute: Tweets count (Tweets collected in a single plugin execution)</li>
+</ul>
+<blockquote>
+<div><ul class="simple">
+<li>Metric type: RATIO, unit: Tweets</li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li>Attribute: Twitter user count (Distinct users collected in a single plugin execution)</li>
+</ul>
+<blockquote>
+<div><ul class="simple">
+<li>Metric type: RATIO, unit: Users</li>
+</ul>
+</div></blockquote>
+</div></blockquote>
+<ul class="simple">
+<li>Entity: SAD Plugins (fixed UUID ef8ef409-11c8-42d9-814a-0f041f3fcbaf)</li>
+</ul>
+<blockquote>
+<div><ul class="simple">
+<li>Attribute: Successful execution duration (How long it took to execute the plugin)</li>
+</ul>
+<blockquote>
+<div><ul class="simple">
+<li>Metric type: RATIO, unit: mSec</li>
+</ul>
+</div></blockquote>
+</div></blockquote>
+</li>
+</ul>
+<p>For each new search term it extends the model by adding a new attribute (tweets found for input search terms) to a new entity (search terms):</p>
+<blockquote>
+<div><ul class="simple">
+<li>Entity: Twitter search term (dynamic entity)</li>
+</ul>
+<blockquote>
+<div><ul class="simple">
+<li>Attribute: Tweets count (Tweets collected from a search term)</li>
+</ul>
+<blockquote>
+<div><ul class="simple">
+<li>Metric type: RATIO, unit: Tweets</li>
+</ul>
+</div></blockquote>
+</div></blockquote>
+<div class="highlight-java"><div class="highlight"><pre><span class="n">String</span> <span class="n">searchTermEntityName</span> <span class="o">=</span> <span class="s">&quot;Entity for search terms &#39;&quot;</span> <span class="o">+</span> <span class="n">search_terms</span> <span class="o">+</span> <span class="s">&quot;&#39;&quot;</span><span class="o">;</span>
+<span class="n">ph</span><span class="o">.</span><span class="na">addEntity</span><span class="o">(</span><span class="n">PluginEccClient</span><span class="o">.</span><span class="na">METRIC_GENERATOR_MAIN</span><span class="o">,</span> <span class="n">searchTermEntityName</span><span class="o">,</span> <span class="s">&quot;Dynamic entity&quot;</span><span class="o">);</span>
+
+<span class="n">String</span> <span class="n">newAttribute</span> <span class="o">=</span> <span class="s">&quot;Tweets for search term &#39;&quot;</span> <span class="o">+</span> <span class="n">search_terms</span> <span class="o">+</span> <span class="s">&quot;&#39;&quot;</span><span class="o">;</span>
+<span class="n">ph</span><span class="o">.</span><span class="na">addAttribute</span><span class="o">(</span><span class="n">searchTermEntityName</span><span class="o">,</span> <span class="n">newAttribute</span><span class="o">,</span> <span class="s">&quot;Tweets found for search terms &#39;&quot;</span> <span class="o">+</span> <span class="n">search_terms</span> <span class="o">+</span> <span class="s">&quot;&#39;&quot;</span><span class="o">,</span> <span class="s">&quot;ratio&quot;</span><span class="o">,</span> <span class="s">&quot;Tweets&quot;</span><span class="o">);</span>
+<span class="n">ph</span><span class="o">.</span><span class="na">sendMetric</span><span class="o">(</span><span class="n">searchTermEntityName</span><span class="o">,</span> <span class="n">newAttribute</span><span class="o">,</span> <span class="n">Integer</span><span class="o">.</span><span class="na">toString</span><span class="o">(</span><span class="n">tweets</span><span class="o">.</span><span class="na">size</span><span class="o">()));</span>
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="facebook-collector-facebook-collector">
+<h3>Facebook collector (facebook-collector)<a class="headerlink" href="#facebook-collector-facebook-collector" title="Permalink to this headline">¶</a></h3>
+<p>Has the following metric model by default:</p>
+<ul>
+<li><p class="first">Facebook collector&#8217;s metric generator (Main metric generator for Facebook collector)</p>
+<ul class="simple">
+<li>Entity: Facebook (Social Network Facebook as an Entity)</li>
+</ul>
+<blockquote>
+<div><ul class="simple">
+<li>Attribute: Request count (Number of requests given to the Social Integrator)</li>
+</ul>
+<blockquote>
+<div><ul class="simple">
+<li>Metric type: RATIO, unit: Times</li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li>Attribute: Request latency (Response time of Social Integrator and Twitter)</li>
+</ul>
+<blockquote>
+<div><ul class="simple">
+<li>Metric type: RATIO, unit: mSec</li>
+</ul>
+</div></blockquote>
+</div></blockquote>
+<ul class="simple">
+<li>Entity: Social Networks Data Group (fixed UUID ef8ef409-11c8-42d9-814a-0f041f3fcbad)</li>
+</ul>
+<blockquote>
+<div><ul class="simple">
+<li>Attribute: Facebook channels (Facebook pages collected from)</li>
+</ul>
+<blockquote>
+<div><ul class="simple">
+<li>Metric type: NOMINAL</li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li>Attribute: Facebook posts count (Number of Facebook posts collected)</li>
+</ul>
+<blockquote>
+<div><ul class="simple">
+<li>Metric type: RATIO, unit: Tweets</li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li>Attribute: Facebook user count (Distinct Facebook users posting)</li>
+</ul>
+<blockquote>
+<div><ul class="simple">
+<li>Metric type: RATIO, unit: Users</li>
+</ul>
+</div></blockquote>
+</div></blockquote>
+<ul class="simple">
+<li>Entity: SAD Plugins (fixed UUID ef8ef409-11c8-42d9-814a-0f041f3fcbaf)</li>
+</ul>
+<blockquote>
+<div><ul class="simple">
+<li>Attribute: Successful execution duration (How long it took to execute the plugin)</li>
+</ul>
+<blockquote>
+<div><ul class="simple">
+<li>Metric type: RATIO, unit: mSec</li>
+</ul>
+</div></blockquote>
+</div></blockquote>
+</li>
+</ul>
+<p>For each new search term it extends the model by adding a new attribute (messages per Facebook page) to entity (new Facebook page):</p>
+<blockquote>
+<div><ul class="simple">
+<li>Entity: Facebook page (dynamic entity)</li>
+</ul>
+<blockquote>
+<div><ul class="simple">
+<li>Attribute: Facebook posts count (Facebook posts collected from the Facebook page)</li>
+</ul>
+<blockquote>
+<div><ul class="simple">
+<li>Metric type: RATIO, unit: Posts</li>
+</ul>
+</div></blockquote>
+</div></blockquote>
+<div class="highlight-java"><div class="highlight"><pre><span class="n">String</span> <span class="n">pageEntityName</span> <span class="o">=</span> <span class="s">&quot;Entity for Facebook page &#39;&quot;</span> <span class="o">+</span> <span class="n">page_name</span> <span class="o">+</span> <span class="s">&quot;&#39;&quot;</span><span class="o">;</span>
+<span class="n">ph</span><span class="o">.</span><span class="na">addEntity</span><span class="o">(</span><span class="n">PluginEccClient</span><span class="o">.</span><span class="na">METRIC_GENERATOR_MAIN</span><span class="o">,</span> <span class="n">pageEntityName</span><span class="o">,</span> <span class="s">&quot;Dynamic entity&quot;</span><span class="o">);</span>
+
+<span class="n">String</span> <span class="n">newAttribute</span> <span class="o">=</span> <span class="s">&quot;Messages from page &#39;&quot;</span> <span class="o">+</span> <span class="n">page_name</span> <span class="o">+</span> <span class="s">&quot;&#39;&quot;</span><span class="o">;</span>
+<span class="n">ph</span><span class="o">.</span><span class="na">addAttribute</span><span class="o">(</span><span class="n">pageEntityName</span><span class="o">,</span> <span class="n">newAttribute</span><span class="o">,</span> <span class="s">&quot;Number of messages collected from page &#39;&quot;</span> <span class="o">+</span> <span class="n">page_name</span> <span class="o">+</span> <span class="s">&quot;&#39;&quot;</span><span class="o">,</span> <span class="s">&quot;ratio&quot;</span><span class="o">,</span> <span class="s">&quot;Posts&quot;</span><span class="o">);</span>
+<span class="n">ph</span><span class="o">.</span><span class="na">sendMetric</span><span class="o">(</span><span class="n">pageEntityName</span><span class="o">,</span> <span class="n">newAttribute</span><span class="o">,</span> <span class="n">Integer</span><span class="o">.</span><span class="na">toString</span><span class="o">(</span><span class="n">collectedMessages</span><span class="o">.</span><span class="na">size</span><span class="o">()));</span>
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="hot-tweets-hot-tweets">
+<h3>Hot tweets (hot-tweets)<a class="headerlink" href="#hot-tweets-hot-tweets" title="Permalink to this headline">¶</a></h3>
+<p>Has the following metric model by default:</p>
+<ul>
+<li><p class="first">Hot tweets&#8217; metric generator (Main metric generator for Hot tweets)</p>
+<ul class="simple">
+<li>Entity: Social Networks Data Group (fixed UUID ef8ef409-11c8-42d9-814a-0f041f3fcbad)</li>
+</ul>
+<blockquote>
+<div><ul class="simple">
+<li>Attribute: Tweets analysed (How many tweets were analysed)</li>
+</ul>
+<blockquote>
+<div><ul class="simple">
+<li>Metric type: RATIO, unit: Tweets</li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li>Attribute: Hot tweets generated (How many hot tweets were identified)</li>
+</ul>
+<blockquote>
+<div><ul class="simple">
+<li>Metric type: RATIO, unit: Tweets</li>
+</ul>
+</div></blockquote>
+</div></blockquote>
+<ul class="simple">
+<li>Entity: SAD Plugins (fixed UUID ef8ef409-11c8-42d9-814a-0f041f3fcbaf)</li>
+</ul>
+<blockquote>
+<div><ul class="simple">
+<li>Attribute: Successful execution duration (How long it took to execute the plugin)</li>
+</ul>
+<blockquote>
+<div><ul class="simple">
+<li>Metric type: RATIO, unit: mSec</li>
+</ul>
+</div></blockquote>
+</div></blockquote>
+</li>
+</ul>
+</div>
+<div class="section" id="basic-stats-for-twitter-facebook-collected-data-basic-sns-stats">
+<h3>Basic stats for Twitter/Facebook collected data (basic-sns-stats)<a class="headerlink" href="#basic-stats-for-twitter-facebook-collected-data-basic-sns-stats" title="Permalink to this headline">¶</a></h3>
+<p>Has the following metric model by default:</p>
+<ul>
+<li><p class="first">Basic analytics&#8217;s metric generator (Main metric generator for Basic analytics)</p>
+<ul class="simple">
+<li>Entity: Social Networks Data Group (fixed UUID ef8ef409-11c8-42d9-814a-0f041f3fcbad)</li>
+</ul>
+<blockquote>
+<div><ul class="simple">
+<li>Attribute: Tweets analysed (How many tweets were analysed)</li>
+</ul>
+<blockquote>
+<div><ul class="simple">
+<li>Metric type: RATIO, unit: Tweets</li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li>Attribute: Facebook posts analysed (How many Facebook posts were analysed)</li>
+</ul>
+<blockquote>
+<div><ul class="simple">
+<li>Metric type: RATIO, unit: Posts</li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li>Attribute: Media files with links (Number of media files (images mostly) with links were found in a social network)</li>
+</ul>
+<blockquote>
+<div><ul class="simple">
+<li>Metric type: RATIO, unit: Files</li>
+</ul>
+</div></blockquote>
+</div></blockquote>
+<ul class="simple">
+<li>Entity: SAD Plugins (fixed UUID ef8ef409-11c8-42d9-814a-0f041f3fcbaf)</li>
+</ul>
+<blockquote>
+<div><ul class="simple">
+<li>Attribute: Successful execution duration (How long it took to execute the plugin)</li>
+</ul>
+<blockquote>
+<div><ul class="simple">
+<li>Metric type: RATIO, unit: mSec</li>
+</ul>
+</div></blockquote>
+</div></blockquote>
+</li>
+</ul>
+<p>For each new search term it extends the model by adding a new attribute to entity &#8220;SAD Plugins&#8221;:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Attribute: Output data types (dynamic, names of requested output data types)</li>
+</ul>
+<blockquote>
+<div><ul class="simple">
+<li>Metric type: NOMINAL</li>
+</ul>
+</div></blockquote>
+<div class="highlight-java"><div class="highlight"><pre><span class="n">String</span> <span class="n">newAttribute</span> <span class="o">=</span> <span class="s">&quot;Requested output data types&quot;</span><span class="o">;</span>
+<span class="n">ph</span><span class="o">.</span><span class="na">addAttribute</span><span class="o">(</span><span class="n">PluginEccClient</span><span class="o">.</span><span class="na">ENTITY_STATS</span><span class="o">,</span> <span class="n">newAttribute</span><span class="o">,</span> <span class="s">&quot;Output data types&quot;</span><span class="o">,</span> <span class="s">&quot;nominal&quot;</span><span class="o">,</span> <span class="s">&quot;Data type&quot;</span><span class="o">);</span>
+<span class="k">for</span> <span class="o">(</span><span class="n">String</span> <span class="n">dataType</span> <span class="o">:</span> <span class="n">requestedOutputTypes</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">ph</span><span class="o">.</span><span class="na">sendMetric</span><span class="o">(</span><span class="n">PluginEccClient</span><span class="o">.</span><span class="na">ENTITY_STATS</span><span class="o">,</span> <span class="n">newAttribute</span><span class="o">,</span> <span class="n">dataType</span><span class="o">);</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="next-steps">
+<h2>Next steps<a class="headerlink" href="#next-steps" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference internal" href="service_api.html"><em>SAD Service API</em></a></p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="service_api.html" title="SAD Service API"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="sample_plugins.html" title="Using sample SAD plugins"
+             >previous</a> |</li>
+        <li><a href="index.html">EXPERIMEDIA SAD 2.6 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright University of Southampton IT Innovation Centre 2013-2014.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3b1.
+    </div>
+  </body>
+</html>

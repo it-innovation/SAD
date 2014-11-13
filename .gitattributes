@@ -1,0 +1,7 @@
+# See https://help.github.com/articles/dealing-with-line-endings
+# Set default behaviour, in case users don't have core.autocrlf set.
+* text=auto
+
+# Declare that shell scripts always should have LF line endings on checkout.
+# This is needed because you might check out the repo in Windows and then use those files from a Linux Vagrant VM.
+*.sh text eol=lf

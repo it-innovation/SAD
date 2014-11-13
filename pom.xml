@@ -1,0 +1,358 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>uk.ac.soton.itinnovation.sad</groupId>
+    <artifactId>sad-parent</artifactId>
+    <version>2.6</version>
+    <packaging>pom</packaging>
+    <name>Experimedia SAD Parent</name>
+    <description>SAD parent project to hold all other projects</description>
+    <url>https://github.com/it-innovation/SAD/</url>
+    <organization>
+        <name>University of Southampton IT Innovation Centre</name>
+        <url>http://www.it-innovation.soton.ac.uk</url>
+    </organization>
+
+    <!--License-->
+    <licenses>
+        <license>
+            <name>LGPL 2.1</name>
+            <url>http://www.gnu.org/licenses/lgpl-2.1.html</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+    
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <skipTests>true</skipTests>
+
+        <!--ECC version-->
+        <ecc.version>2.1</ecc.version>
+
+        <!--Social Integrator version-->
+        <si.version>1.6beta</si.version>
+
+        <!--License-->
+        <license.licenseName>lgpl_v2_1</license.licenseName>
+        <project.inceptionYear>2013</project.inceptionYear>
+        <project.organization.name>University of Southampton IT Innovation Centre</project.organization.name>
+        <license.licenseResolver>${project.baseUri}/src/license</license.licenseResolver>
+    </properties>
+
+    <modules>
+        <module>sad-coordinator</module>
+        <module>sad-service</module>
+        <module>sad-plugins</module>
+    </modules>
+
+    <repositories>
+        <!-- MongoDB-Quartz -->
+        <repository>
+            <id>clojars.org</id>
+            <url>http://clojars.org/repo</url>
+        </repository>
+
+        <!-- EXPERImonitor (ECC) -->
+        <repository>
+            <id>uk.ac.soton.itinnovation.experimedia</id>
+            <url>http://repo.it-innovation.soton.ac.uk/maven2/release/</url>
+        </repository>
+
+    </repositories>
+
+    <build>
+        <plugins>
+
+            <!--Java version-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.3.2</version>
+                <configuration>
+                    <source>1.7</source>
+                    <target>1.7</target>
+                </configuration>
+            </plugin>
+
+            <!--Remove generated license file on clean-->
+            <plugin>
+                <artifactId>maven-clean-plugin</artifactId>
+                <version>2.5</version>
+                <configuration>
+                    <filesets>
+                        <fileset>
+                            <directory>.</directory>
+                            <includes>
+                                <include>LICENSE.txt</include>
+                            </includes>
+                        </fileset>
+                    </filesets>
+                </configuration>
+            </plugin>
+
+        </plugins>
+    </build>
+
+    <profiles>
+        <!-- Test profile -->
+        <profile>
+            <id>ServiceTest</id>
+            <properties>
+                <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+                <skipTests>false</skipTests>
+            </properties>
+        </profile>
+
+        <!-- Source release profile -->
+        <profile>
+            <id>releasesrc</id>
+            <activation>
+                <property>
+                    <name>releasesrc</name>
+                    <value>true</value>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>license-maven-plugin</artifactId>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-project-info-reports-plugin</artifactId>
+                        <version>2.7</version>
+                        <configuration>
+                            <dependencyLocationEnabled>false</dependencyLocationEnabled>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-javadoc-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <configuration>
+                                    <aggregate>false</aggregate>
+                                </configuration>
+                                <id>attach-javadocs</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>javadoc</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-site-plugin</artifactId>
+                        <version>3.3</version>
+                        <configuration>
+                            <reportPlugins>
+                                <plugin>
+                                    <groupId>org.codehaus.mojo</groupId>
+                                    <artifactId>license-maven-plugin</artifactId>
+                                    <version>1.4</version>
+                                </plugin>
+                                <plugin>
+                                    <groupId>org.apache.maven.plugins</groupId>
+                                    <artifactId>maven-project-info-reports-plugin</artifactId>
+                                    <version>2.7</version>
+                                    <reportSets>
+                                        <reportSet>
+                                            <reports>
+                                                <report>dependencies</report>
+                                            </reports>
+                                        </reportSet>
+                                    </reportSets>
+                                </plugin>
+                            </reportPlugins>
+                        </configuration>
+                    </plugin>
+                </plugins>
+
+                <pluginManagement>
+                    <plugins>
+                        <plugin>
+                            <groupId>org.codehaus.mojo</groupId>
+                            <artifactId>license-maven-plugin</artifactId>
+                            <version>1.4</version>
+                            <executions>
+                                <execution>
+                                    <id>third-party-report</id>
+                                    <phase>package</phase>
+                                    <goals>
+                                        <goal>third-party-report</goal>
+                                    </goals>
+                                    <configuration>
+                                        <useMissingFile>true</useMissingFile>
+                                    </configuration>
+                                </execution>
+                                <execution>
+                                    <id>update-project-license</id>
+                                    <goals>
+                                        <goal>update-project-license</goal>
+                                    </goals>
+                                    <phase>package</phase>
+                                </execution>
+                                <execution>
+                                    <id>license-list</id>
+                                    <goals>
+                                        <goal>license-list</goal>
+                                    </goals>
+                                    <configuration>
+                                        <detail>true</detail>
+                                    </configuration>
+                                </execution>
+                            </executions>
+                        </plugin>
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-assembly-plugin</artifactId>
+                            <version>2.2-beta-1</version>
+                            <configuration>
+                                <descriptors>
+                                    <descriptor>src/main/assembly/src.xml</descriptor>
+                                </descriptors>
+                            </configuration>
+                        </plugin>
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-project-info-reports-plugin</artifactId>
+                            <version>2.7</version>
+                            <executions>
+                                <execution>
+                                    <id>add-licenses</id>
+                                    <phase>package</phase>
+                                    <goals>
+                                        <goal>dependencies</goal>
+                                    </goals>
+                                </execution>
+                            </executions>
+                        </plugin>
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-javadoc-plugin</artifactId>
+                            <version>2.9</version>
+                            <configuration>
+                                <quiet>true</quiet>
+                            </configuration>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
+            </build>
+        </profile>
+
+        <!-- Binary release profile -->
+        <profile>
+            <id>releasebin</id>
+            <activation>
+                <property>
+                    <name>releasebin</name>
+                    <value>true</value>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>license-maven-plugin</artifactId>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-project-info-reports-plugin</artifactId>
+                        <version>2.7</version>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-site-plugin</artifactId>
+                        <version>3.3</version>
+                        <configuration>
+                            <reportPlugins>
+                                <plugin>
+                                    <groupId>org.codehaus.mojo</groupId>
+                                    <artifactId>license-maven-plugin</artifactId>
+                                    <version>1.4</version>
+                                </plugin>
+                                <plugin>
+                                    <groupId>org.apache.maven.plugins</groupId>
+                                    <artifactId>maven-project-info-reports-plugin</artifactId>
+                                    <version>2.7</version>
+                                    <reportSets>
+                                        <reportSet>
+                                            <reports>
+                                                <report>dependencies</report>
+                                            </reports>
+                                        </reportSet>
+                                    </reportSets>
+                                </plugin>
+                            </reportPlugins>
+                        </configuration>
+                    </plugin>
+                </plugins>
+
+                <pluginManagement>
+                    <plugins>
+                        <plugin>
+                            <groupId>org.codehaus.mojo</groupId>
+                            <artifactId>license-maven-plugin</artifactId>
+                            <version>1.4</version>
+                            <executions>
+                                <execution>
+                                    <id>third-party-report</id>
+                                    <phase>package</phase>
+                                    <goals>
+                                        <goal>third-party-report</goal>
+                                    </goals>
+                                    <configuration>
+                                        <useMissingFile>true</useMissingFile>
+                                    </configuration>
+                                </execution>
+                                <execution>
+                                    <id>update-project-license</id>
+                                    <goals>
+                                        <goal>update-project-license</goal>
+                                    </goals>
+                                    <phase>package</phase>
+                                </execution>
+                                <execution>
+                                    <id>license-list</id>
+                                    <goals>
+                                        <goal>license-list</goal>
+                                    </goals>
+                                    <configuration>
+                                        <detail>true</detail>
+                                    </configuration>
+                                </execution>
+                            </executions>
+                        </plugin>
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-assembly-plugin</artifactId>
+                            <version>2.2-beta-1</version>
+                            <configuration>
+                                <descriptors>
+                                    <descriptor>src/main/assembly/bin.xml</descriptor>
+                                </descriptors>
+                            </configuration>
+                        </plugin>
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-project-info-reports-plugin</artifactId>
+                            <version>2.7</version>
+                            <executions>
+                                <execution>
+                                    <id>add-licenses</id>
+                                    <phase>package</phase>
+                                    <goals>
+                                        <goal>dependencies</goal>
+                                    </goals>
+                                </execution>
+                            </executions>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
+            </build>
+        </profile>
+
+    </profiles>
+</project>

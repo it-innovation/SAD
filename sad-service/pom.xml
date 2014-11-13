@@ -1,0 +1,349 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>uk.ac.soton.itinnovation.sad</groupId>
+    <artifactId>sad-service</artifactId>
+    <packaging>war</packaging>
+    <name>Experimedia SAD Service Dashboard</name>
+    <description>Main SAD interface component</description>
+
+    <parent>
+        <artifactId>sad-parent</artifactId>
+        <groupId>uk.ac.soton.itinnovation.sad</groupId>
+        <version>2.6</version>
+        <relativePath>..</relativePath>
+    </parent>
+
+    <repositories>
+        <!-- Spring -->
+        <repository>
+            <id>spring-snapshots</id>
+            <url>http://repo.spring.io/snapshot</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>spring-milestones</id>
+            <url>http://repo.spring.io/milestone</url>
+        </repository>
+
+    </repositories>
+
+    <pluginRepositories>
+        <!--Spring-->
+        <pluginRepository>
+            <id>spring-snapshots</id>
+            <url>http://repo.spring.io/snapshot</url>
+        </pluginRepository>
+        <pluginRepository>
+            <id>spring-milestones</id>
+            <url>http://repo.spring.io/milestone</url>
+        </pluginRepository>
+    </pluginRepositories>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <org.springframework.version>3.1.1.RELEASE</org.springframework.version>
+    </properties>
+
+    <dependencies>
+
+        <!--Spring Web-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <!--Spring security-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+
+        <!--Pretty Logback, see https://github.com/n0rad/logback-prettier-->
+        <dependency>
+            <groupId>fr.norad.logback.prettier</groupId>
+            <artifactId>logback-prettier</artifactId>
+            <version>0.5</version>
+        </dependency>
+
+        <!--Testing-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.codehaus.jackson</groupId>
+            <artifactId>jackson-mapper-asl</artifactId>
+            <version>1.9.12</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.3</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.quartz-scheduler</groupId>
+            <artifactId>quartz</artifactId>
+            <version>2.1.7</version>
+        </dependency>
+
+        <!--Preferred JSON-->
+        <dependency>
+            <groupId>net.sf.json-lib</groupId>
+            <artifactId>json-lib</artifactId>
+            <version>2.4</version>
+            <classifier>jdk15</classifier>
+        </dependency>
+
+        <!--NTUA JSON-->
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20090211</version>
+        </dependency>
+
+        <!--SAD Coordinator-->
+        <dependency>
+            <groupId>uk.ac.soton.itinnovation.sad</groupId>
+            <artifactId>sad-coordinator</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <!--RSS-->
+        <dependency>
+            <groupId>net.java.dev.rome</groupId>
+            <artifactId>rome</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
+        <!--Custom RSS-->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-oxm</artifactId>
+            <version>${org.springframework.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.thoughtworks.xstream</groupId>
+            <artifactId>xstream</artifactId>
+            <version>1.3.1</version>
+        </dependency>
+
+        <!--Simple XML building-->
+        <dependency>
+            <groupId>com.jamesmurty.utils</groupId>
+            <artifactId>java-xmlbuilder</artifactId>
+            <version>0.6</version>
+        </dependency>
+
+        <!--For compile only, your container should have this-->
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>servlet-api</artifactId>
+            <version>2.5</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!--ECC-->
+        <dependency>
+            <groupId>uk.ac.soton.itinnovation.experimedia</groupId>
+            <artifactId>experimedia-arch-ecc-amqpAPI-impl</artifactId>
+            <version>${ecc.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>uk.ac.soton.itinnovation.experimedia</groupId>
+            <artifactId>experimedia-arch-ecc-amqpAPI-spec</artifactId>
+            <version>${ecc.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>uk.ac.soton.itinnovation.experimedia</groupId>
+            <artifactId>experimedia-arch-ecc-common-dataModel-experiment</artifactId>
+            <version>${ecc.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>uk.ac.soton.itinnovation.experimedia</groupId>
+            <artifactId>experimedia-arch-ecc-common-dataModel-metrics</artifactId>
+            <version>${ecc.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>uk.ac.soton.itinnovation.experimedia</groupId>
+            <artifactId>experimedia-arch-ecc-common-dataModel-monitor</artifactId>
+            <version>${ecc.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>uk.ac.soton.itinnovation.experimedia</groupId>
+            <artifactId>experimedia-arch-ecc-em-factory</artifactId>
+            <version>${ecc.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>uk.ac.soton.itinnovation.experimedia</groupId>
+            <artifactId>experimedia-arch-ecc-em-impl</artifactId>
+            <version>${ecc.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>uk.ac.soton.itinnovation.experimedia</groupId>
+            <artifactId>experimedia-arch-ecc-em-spec</artifactId>
+            <version>${ecc.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>uk.ac.soton.itinnovation.experimedia</groupId>
+            <artifactId>experimedia-arch-ecc-samples-shared</artifactId>
+            <version>${ecc.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>uk.ac.soton.itinnovation.experimedia</groupId>
+            <artifactId>experimedia-arch-ecc-common-dataModel-provenance</artifactId>
+            <version>${ecc.version}</version>
+        </dependency>
+
+        <!--RabbitMQ client explicitly-->
+        <dependency>
+            <groupId>com.rabbitmq</groupId>
+            <artifactId>amqp-client</artifactId>
+            <version>2.8.6</version>
+        </dependency>
+
+        <!--Gson explicitly-->
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.2.2</version>
+        </dependency>
+
+        <!--HTTP Client-->
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>4.2.5</version>
+        </dependency>
+
+        <!--Rest FB-->
+        <dependency>
+            <groupId>com.restfb</groupId>
+            <artifactId>restfb</artifactId>
+            <version>1.6.11</version>
+        </dependency>
+
+        <!-- Mongo driver -->
+        <dependency>
+            <groupId>org.mongodb</groupId>
+            <artifactId>mongo-java-driver</artifactId>
+            <version>2.12.1</version>
+        </dependency>
+
+        <!--MongoDB-Quartz-->
+        <dependency>
+            <groupId>com.novemberain</groupId>
+            <artifactId>quartz-mongodb</artifactId>
+            <version>1.7.0</version>
+        </dependency>
+
+        <!--Morphia-->
+        <dependency>
+            <groupId>com.google.code.morphia</groupId>
+            <artifactId>morphia</artifactId>
+            <version>0.101.0</version>
+        </dependency>
+
+        <!--Morphia logger-->
+        <dependency>
+            <groupId>com.google.code.morphia</groupId>
+            <artifactId>morphia-logging-slf4j</artifactId>
+            <version>0.101.0</version>
+        </dependency>
+
+    </dependencies>
+
+    <dependencyManagement>
+        <dependencies>
+            <!--Spring Boot-->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-parent</artifactId>
+                <version>1.0.1.RELEASE</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <build>
+        <!--<finalName>SAD-${project.version}</finalName>-->
+        <plugins>
+            <!--Enables mvn spring:boot run-->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>1.0.1.BUILD-SNAPSHOT</version>
+            </plugin>
+
+            <!-- Disable tests during build by default -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.17</version>
+                <configuration>
+                    <skipTests>${skipTests}</skipTests>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>2.4</version>
+                <configuration>
+                    <failOnMissingWebXml>false</failOnMissingWebXml>
+                    <packagingExcludes>WEB-INF/lib/*tomcat*.jar</packagingExcludes>
+                    <archive>
+                        <manifest>
+                            <addClasspath>true</addClasspath>
+                            <classpathPrefix>lib/</classpathPrefix>
+                        </manifest>
+                    </archive>
+                    <attachClasses>true</attachClasses>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.mortbay.jetty</groupId>
+                <artifactId>jetty-maven-plugin</artifactId>
+                <version>8.1.9.v20130131</version>
+                <configuration>
+                    <scanIntervalSeconds>0</scanIntervalSeconds>
+                    <stopKey>stop</stopKey>
+                    <stopPort>9999</stopPort>
+                    <webApp>
+                        <contextPath>/SAD</contextPath>
+                    </webApp>
+                    <scanIntervalSeconds>0</scanIntervalSeconds> <!-- anything above 0 enables hot redeployment-->
+                    <extraClasspath>${basedir}/target/classes/</extraClasspath>
+                    <connectors>
+                        <connector implementation="org.eclipse.jetty.server.nio.SelectChannelConnector">
+                            <port>8081</port>
+                            <maxIdleTime>6000000</maxIdleTime>
+                        </connector>
+                    </connectors>
+                    <systemProperties>
+                        <systemProperty>
+                            <name>log4j.configuration</name>
+                            <value>log4j.properties</value>
+                        </systemProperty>
+                    </systemProperties>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

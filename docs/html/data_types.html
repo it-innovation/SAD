@@ -1,0 +1,294 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Data Types &mdash; EXPERIMEDIA SAD 2.6 documentation</title>
+    
+    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '2.6',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="EXPERIMEDIA SAD 2.6 documentation" href="index.html" />
+    <link rel="next" title="SAD configuration files explained" href="config_files.html" />
+    <link rel="prev" title="Plugin development" href="plugin_dev.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="config_files.html" title="SAD configuration files explained"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="plugin_dev.html" title="Plugin development"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">EXPERIMEDIA SAD 2.6 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Data Types</a><ul>
+<li><a class="reference internal" href="#twitter-static-search-raw">twitter-static-search-raw</a></li>
+<li><a class="reference internal" href="#facebook-posts-raw">facebook-posts-raw</a></li>
+<li><a class="reference internal" href="#twitter-basic-stats">twitter-basic-stats</a></li>
+<li><a class="reference internal" href="#facebook-basic-stats">facebook-basic-stats</a></li>
+<li><a class="reference internal" href="#media-links-with-descriptions">media-links-with-descriptions</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="plugin_dev.html"
+                        title="previous chapter">Plugin development</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="config_files.html"
+                        title="next chapter">SAD configuration files explained</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/data_types.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="data-types">
+<h1>Data Types<a class="headerlink" href="#data-types" title="Permalink to this headline">¶</a></h1>
+<p>In SAD data types are used to identify different bits of data saved by the plugins so that that data can be visualised or easily processed by other plugins.</p>
+<div class="section" id="twitter-static-search-raw">
+<h2>twitter-static-search-raw<a class="headerlink" href="#twitter-static-search-raw" title="Permalink to this headline">¶</a></h2>
+<p>Tweet as JSON in Twitter search results. Example (does not include all possible parameters):</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="p">{</span>
+  <span class="s2">&quot;contributors&quot;</span><span class="o">:</span><span class="kc">null</span><span class="p">,</span>
+  <span class="s2">&quot;text&quot;</span><span class="o">:</span><span class="s2">&quot;2 Dudes at Dachstein - D-Stone seems like the place to be right now. Peep Lukas Brandauer &amp;amp;amp; Roli Sharmer get D... http://t.co/yzXwEKJTf6&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;geo&quot;</span><span class="o">:</span><span class="kc">null</span><span class="p">,</span>
+  <span class="s2">&quot;retweeted&quot;</span><span class="o">:</span><span class="kc">false</span><span class="p">,</span>
+  <span class="s2">&quot;in_reply_to_screen_name&quot;</span><span class="o">:</span><span class="kc">null</span><span class="p">,</span>
+  <span class="s2">&quot;possibly_sensitive&quot;</span><span class="o">:</span><span class="kc">false</span><span class="p">,</span>
+  <span class="s2">&quot;truncated&quot;</span><span class="o">:</span><span class="kc">false</span><span class="p">,</span>
+  <span class="s2">&quot;lang&quot;</span><span class="o">:</span><span class="s2">&quot;en&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;entities&quot;</span><span class="o">:</span><span class="p">{</span>
+     <span class="s2">&quot;symbols&quot;</span><span class="o">:</span><span class="p">[</span>
+     <span class="p">],</span>
+     <span class="s2">&quot;urls&quot;</span><span class="o">:</span><span class="p">[</span>
+        <span class="p">{</span>
+           <span class="s2">&quot;expanded_url&quot;</span><span class="o">:</span><span class="s2">&quot;http://ow.ly/2yrlCX&quot;</span><span class="p">,</span>
+           <span class="s2">&quot;indices&quot;</span><span class="o">:</span><span class="p">[</span>
+              <span class="mi">122</span><span class="p">,</span>
+              <span class="mi">144</span>
+           <span class="p">],</span>
+           <span class="s2">&quot;display_url&quot;</span><span class="o">:</span><span class="s2">&quot;ow.ly/2yrlCX&quot;</span><span class="p">,</span>
+           <span class="s2">&quot;url&quot;</span><span class="o">:</span><span class="s2">&quot;http://t.co/yzXwEKJTf6&quot;</span>
+        <span class="p">}</span>
+     <span class="p">],</span>
+     <span class="s2">&quot;hashtags&quot;</span><span class="o">:</span><span class="p">[</span>
+     <span class="p">],</span>
+     <span class="s2">&quot;user_mentions&quot;</span><span class="o">:</span><span class="p">[</span>
+     <span class="p">]</span>
+  <span class="p">},</span>
+  <span class="s2">&quot;in_reply_to_status_id_str&quot;</span><span class="o">:</span><span class="kc">null</span><span class="p">,</span>
+  <span class="s2">&quot;id&quot;</span><span class="o">:</span><span class="mi">357778831106510849</span><span class="p">,</span>
+  <span class="s2">&quot;source&quot;</span><span class="o">:</span><span class="s2">&quot;&lt;a href=\&quot;http://www.hootsuite.com\&quot; rel=\&quot;nofollow\&quot;&gt;HootSuite&lt;/a&gt;&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;in_reply_to_user_id_str&quot;</span><span class="o">:</span><span class="kc">null</span><span class="p">,</span>
+  <span class="s2">&quot;favorited&quot;</span><span class="o">:</span><span class="kc">false</span><span class="p">,</span>
+  <span class="s2">&quot;in_reply_to_status_id&quot;</span><span class="o">:</span><span class="kc">null</span><span class="p">,</span>
+  <span class="s2">&quot;retweet_count&quot;</span><span class="o">:</span><span class="mi">0</span><span class="p">,</span>
+  <span class="s2">&quot;created_at&quot;</span><span class="o">:</span><span class="s2">&quot;Thu Jul 18 08:28:15 +0000 2013&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;in_reply_to_user_id&quot;</span><span class="o">:</span><span class="kc">null</span><span class="p">,</span>
+  <span class="s2">&quot;favorite_count&quot;</span><span class="o">:</span><span class="mi">0</span><span class="p">,</span>
+  <span class="s2">&quot;id_str&quot;</span><span class="o">:</span><span class="s2">&quot;357778831106510849&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;place&quot;</span><span class="o">:</span><span class="kc">null</span><span class="p">,</span>
+  <span class="s2">&quot;user&quot;</span><span class="o">:</span><span class="p">{</span>
+     <span class="s2">&quot;location&quot;</span><span class="o">:</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+     <span class="s2">&quot;default_profile&quot;</span><span class="o">:</span><span class="kc">false</span><span class="p">,</span>
+     <span class="s2">&quot;profile_background_tile&quot;</span><span class="o">:</span><span class="kc">true</span><span class="p">,</span>
+     <span class="s2">&quot;statuses_count&quot;</span><span class="o">:</span><span class="mi">3566</span><span class="p">,</span>
+     <span class="s2">&quot;lang&quot;</span><span class="o">:</span><span class="s2">&quot;en&quot;</span><span class="p">,</span>
+     <span class="s2">&quot;profile_link_color&quot;</span><span class="o">:</span><span class="s2">&quot;00B2D6&quot;</span><span class="p">,</span>
+     <span class="s2">&quot;id&quot;</span><span class="o">:</span><span class="mi">21199176</span><span class="p">,</span>
+     <span class="s2">&quot;following&quot;</span><span class="o">:</span><span class="kc">false</span><span class="p">,</span>
+     <span class="s2">&quot;protected&quot;</span><span class="o">:</span><span class="kc">false</span><span class="p">,</span>
+     <span class="s2">&quot;favourites_count&quot;</span><span class="o">:</span><span class="mi">1</span><span class="p">,</span>
+     <span class="s2">&quot;profile_text_color&quot;</span><span class="o">:</span><span class="s2">&quot;222222&quot;</span><span class="p">,</span>
+     <span class="s2">&quot;description&quot;</span><span class="o">:</span><span class="s2">&quot;Keep snowboarding real for over a decade....&quot;</span><span class="p">,</span>
+     <span class="s2">&quot;verified&quot;</span><span class="o">:</span><span class="kc">false</span><span class="p">,</span>
+     <span class="s2">&quot;contributors_enabled&quot;</span><span class="o">:</span><span class="kc">false</span><span class="p">,</span>
+     <span class="s2">&quot;profile_sidebar_border_color&quot;</span><span class="o">:</span><span class="s2">&quot;CCCCCC&quot;</span><span class="p">,</span>
+     <span class="s2">&quot;name&quot;</span><span class="o">:</span><span class="s2">&quot;METHODMAG&quot;</span><span class="p">,</span>
+     <span class="s2">&quot;profile_background_color&quot;</span><span class="o">:</span><span class="s2">&quot;EFEFEF&quot;</span><span class="p">,</span>
+     <span class="s2">&quot;created_at&quot;</span><span class="o">:</span><span class="s2">&quot;Wed Feb 18 14:18:12 +0000 2009&quot;</span><span class="p">,</span>
+     <span class="s2">&quot;default_profile_image&quot;</span><span class="o">:</span><span class="kc">false</span><span class="p">,</span>
+     <span class="s2">&quot;followers_count&quot;</span><span class="o">:</span><span class="mi">6154</span><span class="p">,</span>
+     <span class="s2">&quot;profile_image_url_https&quot;</span><span class="o">:</span><span class="s2">&quot;https://si0.twimg.com/profile_images/532638484/starstar_normal.jpg&quot;</span><span class="p">,</span>
+     <span class="s2">&quot;geo_enabled&quot;</span><span class="o">:</span><span class="kc">false</span><span class="p">,</span>
+     <span class="s2">&quot;profile_background_image_url&quot;</span><span class="o">:</span><span class="s2">&quot;http://a0.twimg.com/profile_background_images/198136500/logo-bg.png&quot;</span><span class="p">,</span>
+     <span class="s2">&quot;profile_background_image_url_https&quot;</span><span class="o">:</span><span class="s2">&quot;https://si0.twimg.com/profile_background_images/198136500/logo-bg.png&quot;</span><span class="p">,</span>
+     <span class="s2">&quot;follow_request_sent&quot;</span><span class="o">:</span><span class="kc">false</span><span class="p">,</span>
+     <span class="s2">&quot;entities&quot;</span><span class="o">:</span><span class="p">{</span>
+        <span class="s2">&quot;description&quot;</span><span class="o">:</span><span class="p">{</span>
+           <span class="s2">&quot;urls&quot;</span><span class="o">:</span><span class="p">[</span>
+           <span class="p">]</span>
+        <span class="p">},</span>
+        <span class="s2">&quot;url&quot;</span><span class="o">:</span><span class="p">{</span>
+           <span class="s2">&quot;urls&quot;</span><span class="o">:</span><span class="p">[</span>
+              <span class="p">{</span>
+                 <span class="s2">&quot;expanded_url&quot;</span><span class="o">:</span><span class="s2">&quot;http://www.methodmag.com&quot;</span><span class="p">,</span>
+                 <span class="s2">&quot;indices&quot;</span><span class="o">:</span><span class="p">[</span>
+                    <span class="mi">0</span><span class="p">,</span>
+                    <span class="mi">22</span>
+                 <span class="p">],</span>
+                 <span class="s2">&quot;display_url&quot;</span><span class="o">:</span><span class="s2">&quot;methodmag.com&quot;</span><span class="p">,</span>
+                 <span class="s2">&quot;url&quot;</span><span class="o">:</span><span class="s2">&quot;http://t.co/sxWnFNbFjh&quot;</span>
+              <span class="p">}</span>
+           <span class="p">]</span>
+        <span class="p">}</span>
+     <span class="p">},</span>
+     <span class="s2">&quot;url&quot;</span><span class="o">:</span><span class="s2">&quot;http://t.co/sxWnFNbFjh&quot;</span><span class="p">,</span>
+     <span class="s2">&quot;utc_offset&quot;</span><span class="o">:</span><span class="mi">3600</span><span class="p">,</span>
+     <span class="s2">&quot;time_zone&quot;</span><span class="o">:</span><span class="s2">&quot;Vienna&quot;</span><span class="p">,</span>
+     <span class="s2">&quot;notifications&quot;</span><span class="o">:</span><span class="kc">false</span><span class="p">,</span>
+     <span class="s2">&quot;profile_use_background_image&quot;</span><span class="o">:</span><span class="kc">true</span><span class="p">,</span>
+     <span class="s2">&quot;friends_count&quot;</span><span class="o">:</span><span class="mi">187</span><span class="p">,</span>
+     <span class="s2">&quot;profile_sidebar_fill_color&quot;</span><span class="o">:</span><span class="s2">&quot;CCCCCC&quot;</span><span class="p">,</span>
+     <span class="s2">&quot;screen_name&quot;</span><span class="o">:</span><span class="s2">&quot;methodmag&quot;</span><span class="p">,</span>
+     <span class="s2">&quot;id_str&quot;</span><span class="o">:</span><span class="s2">&quot;21199176&quot;</span><span class="p">,</span>
+     <span class="s2">&quot;profile_image_url&quot;</span><span class="o">:</span><span class="s2">&quot;http://a0.twimg.com/profile_images/532638484/starstar_normal.jpg&quot;</span><span class="p">,</span>
+     <span class="s2">&quot;listed_count&quot;</span><span class="o">:</span><span class="mi">230</span><span class="p">,</span>
+     <span class="s2">&quot;is_translator&quot;</span><span class="o">:</span><span class="kc">false</span>
+  <span class="p">},</span>
+  <span class="s2">&quot;coordinates&quot;</span><span class="o">:</span><span class="kc">null</span><span class="p">,</span>
+  <span class="s2">&quot;metadata&quot;</span><span class="o">:</span><span class="p">{</span>
+     <span class="s2">&quot;result_type&quot;</span><span class="o">:</span><span class="s2">&quot;recent&quot;</span><span class="p">,</span>
+     <span class="s2">&quot;iso_language_code&quot;</span><span class="o">:</span><span class="s2">&quot;en&quot;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="facebook-posts-raw">
+<h2>facebook-posts-raw<a class="headerlink" href="#facebook-posts-raw" title="Permalink to this headline">¶</a></h2>
+<p>Facebook post as JSON in Facebook search results. Example (does not include all possible parameters):</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="p">{</span>
+  <span class="s2">&quot;icon&quot;</span><span class="o">:</span><span class="s2">&quot;http://static.ak.fbcdn.net/rsrc.php/v2/yz/r/StEh3RhPvjk.gif&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;link&quot;</span><span class="o">:</span><span class="s2">&quot;http://www.facebook.com/photo.php?fbid=620595071293050&amp;set=a.233615586657669.64346.206028732749688&amp;type=1&amp;relevant_count=1&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;object_id&quot;</span><span class="o">:</span><span class="s2">&quot;620595071293050&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;channelowner&quot;</span><span class="o">:</span><span class="s2">&quot;ENNSTALL_TV&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;privacy&quot;</span><span class="o">:</span><span class="p">{</span>
+     <span class="s2">&quot;value&quot;</span><span class="o">:</span><span class="s2">&quot;&quot;</span>
+  <span class="p">},</span>
+  <span class="s2">&quot;from&quot;</span><span class="o">:</span><span class="p">{</span>
+     <span class="s2">&quot;id&quot;</span><span class="o">:</span><span class="s2">&quot;206028732749688&quot;</span><span class="p">,</span>
+     <span class="s2">&quot;category&quot;</span><span class="o">:</span><span class="s2">&quot;Tv channel&quot;</span><span class="p">,</span>
+     <span class="s2">&quot;name&quot;</span><span class="o">:</span><span class="s2">&quot;ENNSTAL TV&quot;</span>
+  <span class="p">},</span>
+  <span class="s2">&quot;type&quot;</span><span class="o">:</span><span class="s2">&quot;photo&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;updated_time&quot;</span><span class="o">:</span><span class="s2">&quot;2013-07-18T10:29:38+0000&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;id&quot;</span><span class="o">:</span><span class="s2">&quot;206028732749688_620595077959716&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;message&quot;</span><span class="o">:</span><span class="s2">&quot;Josef Bucher BZÖ Kameratechnisch begleitet von Ennstal TV - on tour  in der MFL Liezen ...&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;picture&quot;</span><span class="o">:</span><span class="s2">&quot;http://photos-c.ak.fbcdn.net/hphotos-ak-ash4/1014159_620595071293050_441545934_s.jpg&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;status_type&quot;</span><span class="o">:</span><span class="s2">&quot;added_photos&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;created_time&quot;</span><span class="o">:</span><span class="s2">&quot;2013-07-18T10:29:38+0000&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="twitter-basic-stats">
+<h2>twitter-basic-stats<a class="headerlink" href="#twitter-basic-stats" title="Permalink to this headline">¶</a></h2>
+<p>Basic stats created from <code class="docutils literal"><span class="pre">twitter-static-search-raw</span></code> data by basis-sns-stats plugin v2.0-beta. Example:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="p">{</span>
+  <span class="s2">&quot;unique_tweets&quot;</span><span class="o">:</span> <span class="mi">99</span><span class="p">,</span>
+  <span class="s2">&quot;unique_users&quot;</span><span class="o">:</span> <span class="mi">88</span><span class="p">,</span>
+  <span class="s2">&quot;unique_languages&quot;</span><span class="o">:</span> <span class="mi">9</span><span class="p">,</span>
+  <span class="s2">&quot;unique_sources&quot;</span><span class="o">:</span> <span class="mi">18</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="facebook-basic-stats">
+<h2>facebook-basic-stats<a class="headerlink" href="#facebook-basic-stats" title="Permalink to this headline">¶</a></h2>
+<p>Basic stats created from <code class="docutils literal"><span class="pre">facebook-posts-raw</span></code> data by basis-sns-stats plugin v2.0-beta. Example:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="p">{</span>
+  <span class="s2">&quot;unique_posts&quot;</span><span class="o">:</span> <span class="mi">30</span><span class="p">,</span>
+  <span class="s2">&quot;unique_users&quot;</span><span class="o">:</span> <span class="mi">2</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="media-links-with-descriptions">
+<h2>media-links-with-descriptions<a class="headerlink" href="#media-links-with-descriptions" title="Permalink to this headline">¶</a></h2>
+<p>Basic stats created from <code class="docutils literal"><span class="pre">media-links-with-descriptions</span></code> data by basis-sns-stats plugin v2.0. Example:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="p">{</span>
+   <span class="s2">&quot;media_url&quot;</span><span class="o">:</span> <span class="s2">&quot;http://pbs.twimg.com/media/BXa2oisCMAAG7nE.jpg&quot;</span>
+   <span class="s2">&quot;text&quot;</span><span class="o">:</span> <span class="s2">&quot;My favourite pair of football boots this year, the Nike Mercurial CR7 IX Galaxy Edition. http://t.co/beZsA2v0dR&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="config_files.html" title="SAD configuration files explained"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="plugin_dev.html" title="Plugin development"
+             >previous</a> |</li>
+        <li><a href="index.html">EXPERIMEDIA SAD 2.6 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright University of Southampton IT Innovation Centre 2013-2014.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3b1.
+    </div>
+  </body>
+</html>

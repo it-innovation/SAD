@@ -1,0 +1,798 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>SAD Service API &mdash; EXPERIMEDIA SAD 2.6 documentation</title>
+    
+    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '2.6',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="EXPERIMEDIA SAD 2.6 documentation" href="index.html" />
+    <link rel="next" title="Plugin development" href="plugin_dev.html" />
+    <link rel="prev" title="ECC integration" href="eccintegration.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="plugin_dev.html" title="Plugin development"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="eccintegration.html" title="ECC integration"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">EXPERIMEDIA SAD 2.6 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">SAD Service API</a><ul>
+<li><a class="reference internal" href="#service">Service</a></li>
+<li><a class="reference internal" href="#plugins">Plugins</a></li>
+<li><a class="reference internal" href="#jobs">Jobs</a></li>
+<li><a class="reference internal" href="#executions">Executions</a></li>
+<li><a class="reference internal" href="#next-steps">Next steps</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="eccintegration.html"
+                        title="previous chapter">ECC integration</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="plugin_dev.html"
+                        title="next chapter">Plugin development</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/service_api.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="sad-service-api">
+<h1>SAD Service API<a class="headerlink" href="#sad-service-api" title="Permalink to this headline">¶</a></h1>
+<p>SAD service offers REST interface to interact with the service, plugins, jobs, executions and their data. Detailed list of SAD Service API calls and responses can be found below.</p>
+<div class="section" id="service">
+<h2>Service<a class="headerlink" href="#service" title="Permalink to this headline">¶</a></h2>
+<p><strong>Get configuration</strong></p>
+<p>REQUEST:</p>
+<blockquote>
+<div><div class="highlight-javascript"><div class="highlight"><pre>URL: &lt;basepath&gt;/service/q/getconfiguration
+Type: GET
+</pre></div>
+</div>
+</div></blockquote>
+<p>RESPONSE (service configuration as JSON):</p>
+<blockquote>
+<div><div class="highlight-javascript"><div class="highlight"><pre><span class="p">{</span>
+   <span class="s2">&quot;resultType&quot;</span><span class="o">:</span><span class="s2">&quot;sadproperties&quot;</span><span class="p">,</span>
+   <span class="s2">&quot;resultValue&quot;</span><span class="o">:</span><span class="p">{</span>
+      <span class="s2">&quot;plugins&quot;</span><span class="o">:</span><span class="p">{</span>
+         <span class="s2">&quot;path&quot;</span><span class="o">:</span><span class="s2">&quot;../sad-plugins&quot;</span>
+      <span class="p">},</span>
+      <span class="s2">&quot;coordinator&quot;</span><span class="o">:</span><span class="p">{</span>
+         <span class="s2">&quot;path&quot;</span><span class="o">:</span><span class="s2">&quot;src/main/resources/coordinator.json&quot;</span><span class="p">,</span>
+         <span class="s2">&quot;reset_database_on_start&quot;</span><span class="o">:</span><span class="s2">&quot;n&quot;</span>
+      <span class="p">},</span>
+      <span class="s2">&quot;basepath&quot;</span><span class="o">:</span><span class="s2">&quot;http://localhost:8081/SAD&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;ecc&quot;</span><span class="o">:</span><span class="p">{</span>
+         <span class="s2">&quot;enabled&quot;</span><span class="o">:</span><span class="s2">&quot;n&quot;</span><span class="p">,</span>
+         <span class="s2">&quot;Rabbit_IP&quot;</span><span class="o">:</span><span class="s2">&quot;127.0.0.1&quot;</span><span class="p">,</span>
+         <span class="s2">&quot;Rabbit_Port&quot;</span><span class="o">:</span><span class="s2">&quot;5672&quot;</span><span class="p">,</span>
+         <span class="s2">&quot;Monitor_ID&quot;</span><span class="o">:</span><span class="s2">&quot;00000000-0000-0000-0000-000000000000&quot;</span><span class="p">,</span>
+         <span class="s2">&quot;Client_Name&quot;</span><span class="o">:</span><span class="s2">&quot;Social Analytics Dashboard&quot;</span>
+      <span class="p">},</span>
+      <span class="s2">&quot;edm&quot;</span><span class="o">:</span><span class="p">{</span>
+         <span class="s2">&quot;enabled&quot;</span><span class="o">:</span><span class="s2">&quot;n&quot;</span><span class="p">,</span>
+         <span class="s2">&quot;dbURL&quot;</span><span class="o">:</span><span class="s2">&quot;localhost:5432&quot;</span><span class="p">,</span>
+         <span class="s2">&quot;dbName&quot;</span><span class="o">:</span><span class="s2">&quot;agent-edm-metrics&quot;</span><span class="p">,</span>
+         <span class="s2">&quot;dbUsername&quot;</span><span class="o">:</span><span class="s2">&quot;postgres&quot;</span><span class="p">,</span>
+         <span class="s2">&quot;dbPassword&quot;</span><span class="o">:</span><span class="s2">&quot;sofia&quot;</span><span class="p">,</span>
+         <span class="s2">&quot;dbType&quot;</span><span class="o">:</span><span class="s2">&quot;postgresql&quot;</span>
+      <span class="p">}</span>
+   <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p><strong>Get last plugin run</strong></p>
+<p>REQUEST:</p>
+<blockquote>
+<div><div class="highlight-javascript"><div class="highlight"><pre>URL: &lt;basepath&gt;/service/q/getlastrun
+Type: GET
+</pre></div>
+</div>
+</div></blockquote>
+<p>RESPONSE (plugin run details as JSON):</p>
+<blockquote>
+<div><div class="highlight-javascript"><div class="highlight"><pre><span class="p">{</span>
+   <span class="s2">&quot;result&quot;</span><span class="o">:</span><span class="s2">&quot;ok&quot;</span><span class="p">,</span>
+   <span class="s2">&quot;response&quot;</span><span class="o">:</span><span class="p">{</span>
+      <span class="s2">&quot;name&quot;</span><span class="o">:</span><span class="s2">&quot;Job for plugin twitter-searcher&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;id&quot;</span><span class="o">:</span><span class="s2">&quot;1&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;description&quot;</span><span class="o">:</span><span class="s2">&quot;Job created by Scheduling service&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;arguments&quot;</span><span class="o">:</span><span class="p">[</span>
+         <span class="p">{</span>
+            <span class="s2">&quot;search_terms&quot;</span><span class="o">:</span><span class="s2">&quot;football&quot;</span>
+         <span class="p">},</span>
+         <span class="p">{</span>
+            <span class="s2">&quot;num_posts&quot;</span><span class="o">:</span><span class="s2">&quot;99&quot;</span>
+         <span class="p">}</span>
+      <span class="p">],</span>
+      <span class="s2">&quot;status&quot;</span><span class="o">:</span><span class="s2">&quot;finished&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;created&quot;</span><span class="o">:</span><span class="s2">&quot;2013-07-25 13:14:16.142&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;lastrun&quot;</span><span class="o">:</span><span class="s2">&quot;2013-07-25 13:14:20.136&quot;</span>
+   <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p><strong>Get last plugin run data</strong></p>
+<p>REQUEST:</p>
+<blockquote>
+<div><div class="highlight-javascript"><div class="highlight"><pre>URL: &lt;basepath&gt;/service/q/getlastrundata
+Type: GET
+</pre></div>
+</div>
+</div></blockquote>
+<p>RESPONSE (data as JSON):</p>
+<blockquote>
+<div><div class="highlight-javascript"><div class="highlight"><pre><span class="p">{</span>
+  <span class="s2">&quot;result&quot;</span><span class="o">:</span> <span class="s2">&quot;ok&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;response&quot;</span><span class="o">:</span> <span class="p">{</span>
+    <span class="s2">&quot;jsonData&quot;</span><span class="o">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+          <span class="s2">&quot;retweeted&quot;</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
+          <span class="p">...</span>
+        <span class="p">},</span>
+      <span class="s2">&quot;collected&quot;</span><span class="o">:</span> <span class="s2">&quot;2013-07-25 13:14:19.704&quot;</span>
+      <span class="p">}</span>
+    <span class="p">]</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p><strong>Get last plugin run logs</strong></p>
+<p>REQUEST:</p>
+<blockquote>
+<div><div class="highlight-javascript"><div class="highlight"><pre>URL: &lt;basepath&gt;/service/q/getlastrunlogs
+Type: GET
+</pre></div>
+</div>
+</div></blockquote>
+<p>RESPONSE (logs as JSON):</p>
+<blockquote>
+<div><div class="highlight-javascript"><div class="highlight"><pre>{
+  &quot;result&quot;: &quot;ok&quot;,
+  &quot;response&quot;: {
+    &quot;stdOut&quot;: &quot;2013-07-25 13:14:17,347 DEBUG \t[PluginsHelper:80] Using command line arguments:
+    ...
+    &quot;stdError&quot;: &quot;&quot;
+  }
+}
+</pre></div>
+</div>
+</div></blockquote>
+<p><strong>Run a plugin</strong></p>
+<p>REQUEST:</p>
+<blockquote>
+<div><div class="highlight-javascript"><div class="highlight"><pre>URL: &lt;basepath&gt;/service/q/run
+Type: POST
+ContentType: application/json; charset=utf-8
+Data: &lt;plugin start configuration, use control panel to help create&gt;
+</pre></div>
+</div>
+</div></blockquote>
+<p>RESPONSE (new job details as JSON):</p>
+<blockquote>
+<div><div class="highlight-javascript"><div class="highlight"><pre><span class="p">{</span>
+  <span class="s2">&quot;result&quot;</span><span class="o">:</span> <span class="s2">&quot;ok&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;response&quot;</span><span class="o">:</span> <span class="p">{</span>
+    <span class="s2">&quot;ID&quot;</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s2">&quot;PluginName&quot;</span><span class="o">:</span> <span class="s2">&quot;twitter-searcher&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Name&quot;</span><span class="o">:</span> <span class="s2">&quot;Job for plugin twitter-searcher&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Description&quot;</span><span class="o">:</span> <span class="s2">&quot;Job created by Scheduling service&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Arguments&quot;</span><span class="o">:</span> <span class="p">[</span>
+      <span class="p">{</span>
+        <span class="s2">&quot;search_terms&quot;</span><span class="o">:</span> <span class="s2">&quot;football&quot;</span>
+      <span class="p">},</span>
+      <span class="p">{</span>
+        <span class="s2">&quot;num_posts&quot;</span><span class="o">:</span> <span class="s2">&quot;99&quot;</span>
+      <span class="p">}</span>
+    <span class="p">],</span>
+    <span class="s2">&quot;Inputs&quot;</span><span class="o">:</span> <span class="p">[],</span>
+    <span class="s2">&quot;Outputs&quot;</span><span class="o">:</span> <span class="p">[</span>
+      <span class="p">{</span>
+        <span class="s2">&quot;type&quot;</span><span class="o">:</span> <span class="s2">&quot;twitter-static-search-raw&quot;</span>
+      <span class="p">}</span>
+    <span class="p">],</span>
+    <span class="s2">&quot;Schedule&quot;</span><span class="o">:</span> <span class="p">{</span>
+      <span class="s2">&quot;times&quot;</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span>
+      <span class="s2">&quot;withIntervalInMilliseconds&quot;</span><span class="o">:</span> <span class="mi">20000</span>
+    <span class="p">},</span>
+    <span class="s2">&quot;Status&quot;</span><span class="o">:</span> <span class="s2">&quot;scheduled&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;WhenCreated_as_string&quot;</span><span class="o">:</span> <span class="s2">&quot;2013-07-25 13:14:16&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;WhenCreated_in_msec&quot;</span><span class="o">:</span> <span class="mi">1374754456142</span><span class="p">,</span>
+    <span class="s2">&quot;WhenLastrun_as_string&quot;</span><span class="o">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;WhenLastrun_in_msec&quot;</span><span class="o">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Executions_num&quot;</span><span class="o">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="s2">&quot;status_url&quot;</span><span class="o">:</span> <span class="s2">&quot;http://localhost:8081/SAD/service/jobs/1&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;data_url&quot;</span><span class="o">:</span> <span class="s2">&quot;http://localhost:8081/SAD/service/jobs/1/data&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;visualised_data_url&quot;</span><span class="o">:</span> <span class="s2">&quot;http://localhost:8081/SAD/visualise/twitter-searcher/data.html?jobid=1&amp;num_results=20&quot;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="plugins">
+<h2>Plugins<a class="headerlink" href="#plugins" title="Permalink to this headline">¶</a></h2>
+<p><strong>List plugins</strong></p>
+<p>REQUEST:</p>
+<blockquote>
+<div><div class="highlight-javascript"><div class="highlight"><pre>URL: &lt;basepath&gt;/service/plugins
+Type: GET
+</pre></div>
+</div>
+</div></blockquote>
+<p>RESPONSE (all plugins with configurations as JSON):</p>
+<blockquote>
+<div><div class="highlight-javascript"><div class="highlight"><pre><span class="p">{</span>
+   <span class="s2">&quot;result&quot;</span><span class="o">:</span><span class="s2">&quot;ok&quot;</span><span class="p">,</span>
+   <span class="s2">&quot;response&quot;</span><span class="o">:</span><span class="p">{</span>
+      <span class="s2">&quot;basic-sns-stats&quot;</span><span class="o">:</span><span class="p">{</span>
+         <span class="s2">&quot;enabled&quot;</span><span class="o">:</span><span class="s2">&quot;y&quot;</span><span class="p">,</span>
+         <span class="s2">&quot;name&quot;</span><span class="o">:</span><span class="s2">&quot;basic-sns-stats&quot;</span><span class="p">,</span>
+         <span class="s2">&quot;description&quot;</span><span class="o">:</span><span class="s2">&quot;Basic Social Network posts analytics plugin. Extracts basics stats from collections of tweets or Facebook posts&quot;</span><span class="p">,</span>
+         <span class="s2">&quot;paths&quot;</span><span class="o">:</span><span class="p">{</span>
+            <span class="s2">&quot;jar&quot;</span><span class="o">:</span><span class="s2">&quot;target/basic-sns-stats-2.6.jar&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;dependenciesFolder&quot;</span><span class="o">:</span><span class="s2">&quot;target/lib&quot;</span>
+         <span class="p">},</span>
+         <span class="s2">&quot;arguments&quot;</span><span class="o">:</span><span class="p">[</span>
+            <span class="p">{</span>
+               <span class="s2">&quot;name&quot;</span><span class="o">:</span><span class="s2">&quot;num_posts&quot;</span><span class="p">,</span>
+               <span class="s2">&quot;description&quot;</span><span class="o">:</span><span class="s2">&quot;Number of social network posts per social network to analyse&quot;</span><span class="p">,</span>
+               <span class="s2">&quot;isOptional&quot;</span><span class="o">:</span><span class="kc">true</span><span class="p">,</span>
+               <span class="s2">&quot;defaultValue&quot;</span><span class="o">:</span><span class="s2">&quot;all&quot;</span><span class="p">,</span>
+               <span class="s2">&quot;sample_values&quot;</span><span class="o">:</span><span class="s2">&quot;all|125&quot;</span>
+            <span class="p">}</span>
+         <span class="p">],</span>
+         <span class="s2">&quot;inputs&quot;</span><span class="o">:</span><span class="p">[</span>
+            <span class="p">{</span>
+               <span class="s2">&quot;source&quot;</span><span class="o">:</span><span class="s2">&quot;job_id&quot;</span><span class="p">,</span>
+               <span class="s2">&quot;defaultValue&quot;</span><span class="o">:</span><span class="s2">&quot;1&quot;</span><span class="p">,</span>
+               <span class="s2">&quot;required_data_types&quot;</span><span class="o">:</span><span class="p">[</span>
+                  <span class="p">{</span>
+                     <span class="s2">&quot;twitter-static-search-raw&quot;</span><span class="o">:</span><span class="s2">&quot;JSON Twitter posts as returned by Twitter API&quot;</span>
+                  <span class="p">},</span>
+                  <span class="p">{</span>
+                     <span class="s2">&quot;facebook-posts-raw&quot;</span><span class="o">:</span><span class="s2">&quot;JSON Facebook posts as returned by Facebook API&quot;</span>
+                  <span class="p">}</span>
+               <span class="p">]</span>
+            <span class="p">},</span>
+            <span class="p">{</span>
+               <span class="s2">&quot;source&quot;</span><span class="o">:</span><span class="s2">&quot;plugin_name&quot;</span><span class="p">,</span>
+               <span class="s2">&quot;defaultValue&quot;</span><span class="o">:</span><span class="s2">&quot;twitter-searcher&quot;</span><span class="p">,</span>
+               <span class="s2">&quot;required_data_types&quot;</span><span class="o">:</span><span class="p">[</span>
+                  <span class="p">{</span>
+                     <span class="s2">&quot;twitter-static-search-raw&quot;</span><span class="o">:</span><span class="s2">&quot;JSON Twitter posts as returned by Twitter API&quot;</span>
+                  <span class="p">},</span>
+                  <span class="p">{</span>
+                     <span class="s2">&quot;facebook-posts-raw&quot;</span><span class="o">:</span><span class="s2">&quot;JSON Facebook posts as returned by Facebook API&quot;</span>
+                  <span class="p">}</span>
+               <span class="p">]</span>
+            <span class="p">}</span>
+         <span class="p">],</span>
+         <span class="s2">&quot;outputs&quot;</span><span class="o">:</span><span class="p">{</span>
+            <span class="s2">&quot;data&quot;</span><span class="o">:</span><span class="p">[</span>
+               <span class="p">{</span>
+                  <span class="s2">&quot;type&quot;</span><span class="o">:</span><span class="s2">&quot;twitter-basic-stats&quot;</span><span class="p">,</span>
+                  <span class="s2">&quot;description&quot;</span><span class="o">:</span><span class="s2">&quot;JSON containing basic stats extracted from processed tweets&quot;</span>
+               <span class="p">},</span>
+               <span class="p">{</span>
+                  <span class="s2">&quot;type&quot;</span><span class="o">:</span><span class="s2">&quot;twitter-static-search-raw&quot;</span><span class="p">,</span>
+                  <span class="s2">&quot;description&quot;</span><span class="o">:</span><span class="s2">&quot;JSON containing tweets used in the analysis&quot;</span>
+               <span class="p">},</span>
+               <span class="p">{</span>
+                  <span class="s2">&quot;type&quot;</span><span class="o">:</span><span class="s2">&quot;facebook-basic-stats&quot;</span><span class="p">,</span>
+                  <span class="s2">&quot;description&quot;</span><span class="o">:</span><span class="s2">&quot;JSON containing basic stats extracted from processed Facebook posts&quot;</span>
+               <span class="p">},</span>
+               <span class="p">{</span>
+                  <span class="s2">&quot;type&quot;</span><span class="o">:</span><span class="s2">&quot;facebook-posts-raw&quot;</span><span class="p">,</span>
+                  <span class="s2">&quot;description&quot;</span><span class="o">:</span><span class="s2">&quot;JSON containing Facebook posts used in the analysis&quot;</span>
+               <span class="p">}</span>
+            <span class="p">]</span>
+         <span class="p">},</span>
+         <span class="s2">&quot;pluginFolder&quot;</span><span class="o">:</span><span class="s2">&quot;basic-sns-stats&quot;</span>
+      <span class="p">},</span>
+      <span class="s2">&quot;facebook-collector&quot;</span><span class="o">:</span><span class="p">{</span>
+         <span class="s2">&quot;enabled&quot;</span><span class="o">:</span><span class="s2">&quot;y&quot;</span><span class="p">,</span>
+         <span class="s2">&quot;name&quot;</span><span class="o">:</span><span class="s2">&quot;facebook-collector&quot;</span><span class="p">,</span>
+         <span class="s2">&quot;description&quot;</span><span class="o">:</span><span class="s2">&quot;Facebook collector EXPERIMEDIA SAD Plugin. Collects Facebook posts from groups and pages&quot;</span><span class="p">,</span>
+         <span class="s2">&quot;paths&quot;</span><span class="o">:</span><span class="p">{</span>
+            <span class="s2">&quot;jar&quot;</span><span class="o">:</span><span class="s2">&quot;target/facebook-collector-2.6.jar&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;dependenciesFolder&quot;</span><span class="o">:</span><span class="s2">&quot;target/lib&quot;</span>
+         <span class="p">},</span>
+         <span class="s2">&quot;arguments&quot;</span><span class="o">:</span><span class="p">[</span>
+            <span class="p">{</span>
+               <span class="s2">&quot;name&quot;</span><span class="o">:</span><span class="s2">&quot;page_name&quot;</span><span class="p">,</span>
+               <span class="s2">&quot;description&quot;</span><span class="o">:</span><span class="s2">&quot;Facebook page name to collect posts from, multiple instances of this argument are supported&quot;</span><span class="p">,</span>
+               <span class="s2">&quot;isOptional&quot;</span><span class="o">:</span><span class="kc">false</span><span class="p">,</span>
+               <span class="s2">&quot;defaultValue&quot;</span><span class="o">:</span><span class="s2">&quot;congressschladming&quot;</span><span class="p">,</span>
+               <span class="s2">&quot;sample_values&quot;</span><span class="o">:</span><span class="s2">&quot;HausAichGoessenberg|HauserKaiblingFan&quot;</span>
+            <span class="p">},</span>
+            <span class="p">{</span>
+               <span class="s2">&quot;name&quot;</span><span class="o">:</span><span class="s2">&quot;max_posts&quot;</span><span class="p">,</span>
+               <span class="s2">&quot;description&quot;</span><span class="o">:</span><span class="s2">&quot;Number of posts to request from each page&quot;</span><span class="p">,</span>
+               <span class="s2">&quot;isOptional&quot;</span><span class="o">:</span><span class="kc">false</span><span class="p">,</span>
+               <span class="s2">&quot;defaultValue&quot;</span><span class="o">:</span><span class="s2">&quot;500&quot;</span><span class="p">,</span>
+               <span class="s2">&quot;sample_values&quot;</span><span class="o">:</span><span class="s2">&quot;100|1200&quot;</span>
+            <span class="p">}</span>
+         <span class="p">],</span>
+         <span class="s2">&quot;inputs&quot;</span><span class="o">:</span><span class="p">[</span>
+
+         <span class="p">],</span>
+         <span class="s2">&quot;outputs&quot;</span><span class="o">:</span><span class="p">{</span>
+            <span class="s2">&quot;data&quot;</span><span class="o">:</span><span class="p">[</span>
+               <span class="p">{</span>
+                  <span class="s2">&quot;type&quot;</span><span class="o">:</span><span class="s2">&quot;facebook-posts-raw&quot;</span><span class="p">,</span>
+                  <span class="s2">&quot;description&quot;</span><span class="o">:</span><span class="s2">&quot;JSON containing a Facebook post&quot;</span>
+               <span class="p">}</span>
+            <span class="p">]</span>
+         <span class="p">},</span>
+         <span class="s2">&quot;pluginFolder&quot;</span><span class="o">:</span><span class="s2">&quot;facebook-collector&quot;</span>
+      <span class="p">},</span>
+      <span class="s2">&quot;twitter-searcher&quot;</span><span class="o">:</span><span class="p">{</span>
+         <span class="s2">&quot;enabled&quot;</span><span class="o">:</span><span class="s2">&quot;y&quot;</span><span class="p">,</span>
+         <span class="s2">&quot;name&quot;</span><span class="o">:</span><span class="s2">&quot;twitter-searcher&quot;</span><span class="p">,</span>
+         <span class="s2">&quot;description&quot;</span><span class="o">:</span><span class="s2">&quot;Twitter searcher EXPERIMEDIA SAD Plugin. Performs static Twitter searches for a keyword or a hashtag&quot;</span><span class="p">,</span>
+         <span class="s2">&quot;paths&quot;</span><span class="o">:</span><span class="p">{</span>
+            <span class="s2">&quot;jar&quot;</span><span class="o">:</span><span class="s2">&quot;target/twitter-searcher-2.6.jar&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;dependenciesFolder&quot;</span><span class="o">:</span><span class="s2">&quot;target/lib&quot;</span>
+         <span class="p">},</span>
+         <span class="s2">&quot;arguments&quot;</span><span class="o">:</span><span class="p">[</span>
+            <span class="p">{</span>
+               <span class="s2">&quot;name&quot;</span><span class="o">:</span><span class="s2">&quot;search_terms&quot;</span><span class="p">,</span>
+               <span class="s2">&quot;description&quot;</span><span class="o">:</span><span class="s2">&quot;Keyword or hashtag to search Twitter for&quot;</span><span class="p">,</span>
+               <span class="s2">&quot;isOptional&quot;</span><span class="o">:</span><span class="kc">false</span><span class="p">,</span>
+               <span class="s2">&quot;defaultValue&quot;</span><span class="o">:</span><span class="s2">&quot;football&quot;</span><span class="p">,</span>
+               <span class="s2">&quot;sample_values&quot;</span><span class="o">:</span><span class="s2">&quot;Schladming OR Planai OR Dachstein OR Rohrmoos OR MidEurope&quot;</span>
+            <span class="p">},</span>
+            <span class="p">{</span>
+               <span class="s2">&quot;name&quot;</span><span class="o">:</span><span class="s2">&quot;num_posts&quot;</span><span class="p">,</span>
+               <span class="s2">&quot;description&quot;</span><span class="o">:</span><span class="s2">&quot;Number of tweets to find&quot;</span><span class="p">,</span>
+               <span class="s2">&quot;isOptional&quot;</span><span class="o">:</span><span class="kc">true</span><span class="p">,</span>
+               <span class="s2">&quot;defaultValue&quot;</span><span class="o">:</span><span class="s2">&quot;99&quot;</span><span class="p">,</span>
+               <span class="s2">&quot;sample_values&quot;</span><span class="o">:</span><span class="s2">&quot;all|125&quot;</span>
+            <span class="p">}</span>
+         <span class="p">],</span>
+         <span class="s2">&quot;inputs&quot;</span><span class="o">:</span><span class="p">[</span>
+
+         <span class="p">],</span>
+         <span class="s2">&quot;outputs&quot;</span><span class="o">:</span><span class="p">{</span>
+            <span class="s2">&quot;data&quot;</span><span class="o">:</span><span class="p">[</span>
+               <span class="p">{</span>
+                  <span class="s2">&quot;type&quot;</span><span class="o">:</span><span class="s2">&quot;twitter-static-search-raw&quot;</span><span class="p">,</span>
+                  <span class="s2">&quot;description&quot;</span><span class="o">:</span><span class="s2">&quot;JSON containing all processed tweets&quot;</span>
+               <span class="p">}</span>
+            <span class="p">]</span>
+         <span class="p">},</span>
+         <span class="s2">&quot;pluginFolder&quot;</span><span class="o">:</span><span class="s2">&quot;twitter-searcher&quot;</span>
+      <span class="p">}</span>
+   <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p><strong>Get plugin configuration</strong></p>
+<p>REQUEST:</p>
+<blockquote>
+<div><div class="highlight-javascript"><div class="highlight"><pre>URL: &lt;basepath&gt;/service/plugins/&lt;plugin name&gt;
+Type: GET
+</pre></div>
+</div>
+</div></blockquote>
+<p>RESPONSE (&lt;plugin name&gt; configuration as JSON):</p>
+<blockquote>
+<div><div class="highlight-javascript"><div class="highlight"><pre><span class="p">{</span>
+  <span class="s2">&quot;result&quot;</span><span class="o">:</span><span class="s2">&quot;ok&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;response&quot;</span><span class="o">:</span><span class="p">{</span>
+     <span class="s2">&quot;enabled&quot;</span><span class="o">:</span><span class="s2">&quot;y&quot;</span><span class="p">,</span>
+     <span class="s2">&quot;name&quot;</span><span class="o">:</span><span class="s2">&quot;basic-sns-stats&quot;</span><span class="p">,</span>
+     <span class="s2">&quot;description&quot;</span><span class="o">:</span><span class="s2">&quot;Basic Social Network posts analytics plugin. Extracts basics stats from collections of tweets or Facebook posts&quot;</span><span class="p">,</span>
+     <span class="s2">&quot;paths&quot;</span><span class="o">:</span><span class="p">{</span>
+        <span class="s2">&quot;jar&quot;</span><span class="o">:</span><span class="s2">&quot;target/basic-sns-stats-2.6.jar&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;dependenciesFolder&quot;</span><span class="o">:</span><span class="s2">&quot;target/lib&quot;</span>
+     <span class="p">},</span>
+     <span class="s2">&quot;arguments&quot;</span><span class="o">:</span><span class="p">[</span>
+        <span class="p">{</span>
+           <span class="s2">&quot;name&quot;</span><span class="o">:</span><span class="s2">&quot;num_posts&quot;</span><span class="p">,</span>
+           <span class="s2">&quot;description&quot;</span><span class="o">:</span><span class="s2">&quot;Number of social network posts per social network to analyse&quot;</span><span class="p">,</span>
+           <span class="s2">&quot;isOptional&quot;</span><span class="o">:</span><span class="kc">true</span><span class="p">,</span>
+           <span class="s2">&quot;defaultValue&quot;</span><span class="o">:</span><span class="s2">&quot;all&quot;</span><span class="p">,</span>
+           <span class="s2">&quot;sample_values&quot;</span><span class="o">:</span><span class="s2">&quot;all|125&quot;</span>
+        <span class="p">}</span>
+     <span class="p">],</span>
+     <span class="s2">&quot;inputs&quot;</span><span class="o">:</span><span class="p">[</span>
+        <span class="p">{</span>
+           <span class="s2">&quot;source&quot;</span><span class="o">:</span><span class="s2">&quot;job_id&quot;</span><span class="p">,</span>
+           <span class="s2">&quot;defaultValue&quot;</span><span class="o">:</span><span class="s2">&quot;1&quot;</span><span class="p">,</span>
+           <span class="s2">&quot;required_data_types&quot;</span><span class="o">:</span><span class="p">[</span>
+              <span class="p">{</span>
+                 <span class="s2">&quot;twitter-static-search-raw&quot;</span><span class="o">:</span><span class="s2">&quot;JSON Twitter posts as returned by Twitter API&quot;</span>
+              <span class="p">},</span>
+              <span class="p">{</span>
+                 <span class="s2">&quot;facebook-posts-raw&quot;</span><span class="o">:</span><span class="s2">&quot;JSON Facebook posts as returned by Facebook API&quot;</span>
+              <span class="p">}</span>
+           <span class="p">]</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+           <span class="s2">&quot;source&quot;</span><span class="o">:</span><span class="s2">&quot;plugin_name&quot;</span><span class="p">,</span>
+           <span class="s2">&quot;defaultValue&quot;</span><span class="o">:</span><span class="s2">&quot;twitter-searcher&quot;</span><span class="p">,</span>
+           <span class="s2">&quot;required_data_types&quot;</span><span class="o">:</span><span class="p">[</span>
+              <span class="p">{</span>
+                 <span class="s2">&quot;twitter-static-search-raw&quot;</span><span class="o">:</span><span class="s2">&quot;JSON Twitter posts as returned by Twitter API&quot;</span>
+              <span class="p">},</span>
+              <span class="p">{</span>
+                 <span class="s2">&quot;facebook-posts-raw&quot;</span><span class="o">:</span><span class="s2">&quot;JSON Facebook posts as returned by Facebook API&quot;</span>
+              <span class="p">}</span>
+           <span class="p">]</span>
+        <span class="p">}</span>
+     <span class="p">],</span>
+     <span class="s2">&quot;outputs&quot;</span><span class="o">:</span><span class="p">{</span>
+        <span class="s2">&quot;data&quot;</span><span class="o">:</span><span class="p">[</span>
+           <span class="p">{</span>
+              <span class="s2">&quot;type&quot;</span><span class="o">:</span><span class="s2">&quot;twitter-basic-stats&quot;</span><span class="p">,</span>
+              <span class="s2">&quot;description&quot;</span><span class="o">:</span><span class="s2">&quot;JSON containing basic stats extracted from processed tweets&quot;</span>
+           <span class="p">},</span>
+           <span class="p">{</span>
+              <span class="s2">&quot;type&quot;</span><span class="o">:</span><span class="s2">&quot;twitter-static-search-raw&quot;</span><span class="p">,</span>
+              <span class="s2">&quot;description&quot;</span><span class="o">:</span><span class="s2">&quot;JSON containing tweets used in the analysis&quot;</span>
+           <span class="p">},</span>
+           <span class="p">{</span>
+              <span class="s2">&quot;type&quot;</span><span class="o">:</span><span class="s2">&quot;facebook-basic-stats&quot;</span><span class="p">,</span>
+              <span class="s2">&quot;description&quot;</span><span class="o">:</span><span class="s2">&quot;JSON containing basic stats extracted from processed Facebook posts&quot;</span>
+           <span class="p">},</span>
+           <span class="p">{</span>
+              <span class="s2">&quot;type&quot;</span><span class="o">:</span><span class="s2">&quot;facebook-posts-raw&quot;</span><span class="p">,</span>
+              <span class="s2">&quot;description&quot;</span><span class="o">:</span><span class="s2">&quot;JSON containing Facebook posts used in the analysis&quot;</span>
+           <span class="p">}</span>
+        <span class="p">]</span>
+     <span class="p">},</span>
+     <span class="s2">&quot;pluginFolder&quot;</span><span class="o">:</span><span class="s2">&quot;basic-sns-stats&quot;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="jobs">
+<h2>Jobs<a class="headerlink" href="#jobs" title="Permalink to this headline">¶</a></h2>
+<p><strong>List jobs</strong></p>
+<p>REQUEST:</p>
+<blockquote>
+<div><div class="highlight-javascript"><div class="highlight"><pre>URL: &lt;basepath&gt;/service/jobs
+Type: GET
+</pre></div>
+</div>
+</div></blockquote>
+<p>RESPONSE (all jobs as JSON):</p>
+<blockquote>
+<div><div class="highlight-javascript"><div class="highlight"><pre><span class="p">{</span>
+   <span class="s2">&quot;result&quot;</span><span class="o">:</span><span class="s2">&quot;ok&quot;</span><span class="p">,</span>
+   <span class="s2">&quot;response&quot;</span><span class="o">:</span><span class="p">{</span>
+      <span class="s2">&quot;num&quot;</span><span class="o">:</span><span class="mi">1</span><span class="p">,</span>
+      <span class="s2">&quot;list&quot;</span><span class="o">:</span><span class="p">[</span>
+         <span class="p">{</span>
+            <span class="s2">&quot;ID&quot;</span><span class="o">:</span><span class="mi">1</span><span class="p">,</span>
+            <span class="s2">&quot;PluginName&quot;</span><span class="o">:</span><span class="s2">&quot;twitter-searcher&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Name&quot;</span><span class="o">:</span><span class="s2">&quot;Job for plugin twitter-searcher&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Description&quot;</span><span class="o">:</span><span class="s2">&quot;Job created by Scheduling service&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Arguments&quot;</span><span class="o">:</span><span class="p">[</span>
+               <span class="p">{</span>
+                  <span class="s2">&quot;search_terms&quot;</span><span class="o">:</span><span class="s2">&quot;football&quot;</span>
+               <span class="p">},</span>
+               <span class="p">{</span>
+                  <span class="s2">&quot;num_posts&quot;</span><span class="o">:</span><span class="s2">&quot;99&quot;</span>
+               <span class="p">}</span>
+            <span class="p">],</span>
+            <span class="s2">&quot;Inputs&quot;</span><span class="o">:</span><span class="p">[</span>
+
+            <span class="p">],</span>
+            <span class="s2">&quot;Outputs&quot;</span><span class="o">:</span><span class="p">[</span>
+               <span class="p">{</span>
+                  <span class="s2">&quot;type&quot;</span><span class="o">:</span><span class="s2">&quot;twitter-static-search-raw&quot;</span>
+               <span class="p">}</span>
+            <span class="p">],</span>
+            <span class="s2">&quot;Schedule&quot;</span><span class="o">:</span><span class="p">{</span>
+               <span class="s2">&quot;times&quot;</span><span class="o">:</span><span class="mi">1</span><span class="p">,</span>
+               <span class="s2">&quot;withIntervalInMilliseconds&quot;</span><span class="o">:</span><span class="mi">20000</span>
+            <span class="p">},</span>
+            <span class="s2">&quot;Status&quot;</span><span class="o">:</span><span class="s2">&quot;finished&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;WhenCreated_as_string&quot;</span><span class="o">:</span><span class="s2">&quot;2013-07-25 13:14:16&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;WhenCreated_in_msec&quot;</span><span class="o">:</span><span class="mi">1374754456142</span><span class="p">,</span>
+            <span class="s2">&quot;WhenLastrun_as_string&quot;</span><span class="o">:</span><span class="s2">&quot;2013-07-25 13:14:20&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;WhenLastrun_in_msec&quot;</span><span class="o">:</span><span class="mi">1374754460136</span><span class="p">,</span>
+            <span class="s2">&quot;Executions_num&quot;</span><span class="o">:</span><span class="mi">1</span><span class="p">,</span>
+            <span class="s2">&quot;status_url&quot;</span><span class="o">:</span><span class="s2">&quot;http://localhost:8081/SAD/service/jobs/1&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;data_url&quot;</span><span class="o">:</span><span class="s2">&quot;http://localhost:8081/SAD/service/jobs/1/data&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;visualised_data_url&quot;</span><span class="o">:</span><span class="s2">&quot;http://localhost:8081/SAD/visualise/twitter-searcher/data.html?jobid=1&amp;num_results=20&quot;</span>
+         <span class="p">}</span>
+      <span class="p">]</span>
+   <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p><strong>Get job details</strong></p>
+<p>REQUEST:</p>
+<blockquote>
+<div><div class="highlight-javascript"><div class="highlight"><pre>URL: &lt;basepath&gt;/service/jobs/&lt;job id&gt;
+Type: GET
+</pre></div>
+</div>
+</div></blockquote>
+<p>RESPONSE (details of job with &lt;job id&gt; as JSON):</p>
+<blockquote>
+<div><div class="highlight-javascript"><div class="highlight"><pre><span class="p">{</span>
+   <span class="s2">&quot;result&quot;</span><span class="o">:</span><span class="s2">&quot;ok&quot;</span><span class="p">,</span>
+   <span class="s2">&quot;response&quot;</span><span class="o">:</span><span class="p">{</span>
+      <span class="s2">&quot;job&quot;</span><span class="o">:</span><span class="p">{</span>
+         <span class="s2">&quot;ID&quot;</span><span class="o">:</span><span class="mi">1</span><span class="p">,</span>
+         <span class="s2">&quot;PluginName&quot;</span><span class="o">:</span><span class="s2">&quot;twitter-searcher&quot;</span><span class="p">,</span>
+         <span class="s2">&quot;Name&quot;</span><span class="o">:</span><span class="s2">&quot;Job for plugin twitter-searcher&quot;</span><span class="p">,</span>
+         <span class="s2">&quot;Description&quot;</span><span class="o">:</span><span class="s2">&quot;Job created by Scheduling service&quot;</span><span class="p">,</span>
+         <span class="s2">&quot;Arguments&quot;</span><span class="o">:</span><span class="p">[</span>
+            <span class="p">{</span>
+               <span class="s2">&quot;search_terms&quot;</span><span class="o">:</span><span class="s2">&quot;football&quot;</span>
+            <span class="p">},</span>
+            <span class="p">{</span>
+               <span class="s2">&quot;num_posts&quot;</span><span class="o">:</span><span class="s2">&quot;99&quot;</span>
+            <span class="p">}</span>
+         <span class="p">],</span>
+         <span class="s2">&quot;Inputs&quot;</span><span class="o">:</span><span class="p">[</span>
+
+         <span class="p">],</span>
+         <span class="s2">&quot;Outputs&quot;</span><span class="o">:</span><span class="p">[</span>
+            <span class="p">{</span>
+               <span class="s2">&quot;type&quot;</span><span class="o">:</span><span class="s2">&quot;twitter-static-search-raw&quot;</span>
+            <span class="p">}</span>
+         <span class="p">],</span>
+         <span class="s2">&quot;Schedule&quot;</span><span class="o">:</span><span class="p">{</span>
+            <span class="s2">&quot;times&quot;</span><span class="o">:</span><span class="mi">1</span><span class="p">,</span>
+            <span class="s2">&quot;withIntervalInMilliseconds&quot;</span><span class="o">:</span><span class="mi">20000</span>
+         <span class="p">},</span>
+         <span class="s2">&quot;Status&quot;</span><span class="o">:</span><span class="s2">&quot;finished&quot;</span><span class="p">,</span>
+         <span class="s2">&quot;WhenCreated_as_string&quot;</span><span class="o">:</span><span class="s2">&quot;2013-07-25 13:14:16&quot;</span><span class="p">,</span>
+         <span class="s2">&quot;WhenCreated_in_msec&quot;</span><span class="o">:</span><span class="mi">1374754456142</span><span class="p">,</span>
+         <span class="s2">&quot;WhenLastrun_as_string&quot;</span><span class="o">:</span><span class="s2">&quot;2013-07-25 13:14:20&quot;</span><span class="p">,</span>
+         <span class="s2">&quot;WhenLastrun_in_msec&quot;</span><span class="o">:</span><span class="mi">1374754460136</span><span class="p">,</span>
+         <span class="s2">&quot;Executions_num&quot;</span><span class="o">:</span><span class="mi">1</span><span class="p">,</span>
+         <span class="s2">&quot;status_url&quot;</span><span class="o">:</span><span class="s2">&quot;http://localhost:8081/SAD/service/jobs/1&quot;</span><span class="p">,</span>
+         <span class="s2">&quot;data_url&quot;</span><span class="o">:</span><span class="s2">&quot;http://localhost:8081/SAD/service/jobs/1/data&quot;</span><span class="p">,</span>
+         <span class="s2">&quot;visualised_data_url&quot;</span><span class="o">:</span><span class="s2">&quot;http://localhost:8081/SAD/visualise/twitter-searcher/data.html?jobid=1&amp;num_results=20&quot;</span>
+      <span class="p">}</span>
+   <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p><strong>Get job data</strong></p>
+<p>REQUEST:</p>
+<blockquote>
+<div><div class="highlight-javascript"><div class="highlight"><pre>URL: &lt;basepath&gt;/service/jobs/&lt;job id&gt;/data
+Type: GET
+</pre></div>
+</div>
+</div></blockquote>
+<p>RESPONSE (data saved by job with &lt;job id&gt; in the database as JSON):</p>
+<blockquote>
+<div><div class="highlight-javascript"><div class="highlight"><pre><span class="p">{</span>
+  <span class="s2">&quot;response&quot;</span><span class="o">:</span> <span class="p">{</span>
+    <span class="s2">&quot;series&quot;</span><span class="o">:</span> <span class="p">{</span>
+      <span class="s2">&quot;0&quot;</span><span class="o">:</span> <span class="p">{</span>
+        <span class="s2">&quot;jsonData&quot;</span><span class="o">:</span> <span class="p">{</span>
+        <span class="s2">&quot;retweeted&quot;</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
+        <span class="p">...</span>
+    <span class="p">},</span>
+      <span class="s2">&quot;type&quot;</span><span class="o">:</span> <span class="s2">&quot;twitter-static-search-raw&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;WhenCreated_as_string&quot;</span><span class="o">:</span> <span class="s2">&quot;2013-07-25 13:14:19&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;WhenCreated_in_msec&quot;</span><span class="o">:</span> <span class="mi">1374754459704</span>
+    <span class="p">}</span>
+  <span class="p">},</span>
+    <span class="s2">&quot;num&quot;</span><span class="o">:</span> <span class="mi">99</span><span class="p">,</span>
+    <span class="s2">&quot;jobstatus&quot;</span><span class="o">:</span> <span class="s2">&quot;finished&quot;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="executions">
+<h2>Executions<a class="headerlink" href="#executions" title="Permalink to this headline">¶</a></h2>
+<p><strong>List all executions</strong></p>
+<p>REQUEST:</p>
+<blockquote>
+<div><div class="highlight-javascript"><div class="highlight"><pre>URL: &lt;basepath&gt;/service/executions
+Type: GET
+</pre></div>
+</div>
+</div></blockquote>
+<p>RESPONSE (all executions as JSON):</p>
+<blockquote>
+<div><div class="highlight-javascript"><div class="highlight"><pre><span class="p">{</span>
+   <span class="s2">&quot;result&quot;</span><span class="o">:</span><span class="s2">&quot;ok&quot;</span><span class="p">,</span>
+   <span class="s2">&quot;response&quot;</span><span class="o">:</span><span class="p">{</span>
+      <span class="s2">&quot;num&quot;</span><span class="o">:</span><span class="mi">1</span><span class="p">,</span>
+      <span class="s2">&quot;list&quot;</span><span class="o">:</span><span class="p">[</span>
+         <span class="p">{</span>
+            <span class="s2">&quot;DatabaseId&quot;</span><span class="o">:</span><span class="mi">1</span><span class="p">,</span>
+            <span class="s2">&quot;ID&quot;</span><span class="o">:</span><span class="mi">0</span><span class="p">,</span>
+            <span class="s2">&quot;SADJobID&quot;</span><span class="o">:</span><span class="mi">1</span><span class="p">,</span>
+            <span class="s2">&quot;Description&quot;</span><span class="o">:</span><span class="s2">&quot;Execution by job [1]&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Status&quot;</span><span class="o">:</span><span class="s2">&quot;success&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;WhenStarted_as_string&quot;</span><span class="o">:</span><span class="s2">&quot;2013-07-25 13:14:17.759&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;WhenStarted_in_msec&quot;</span><span class="o">:</span><span class="mi">1374754457759</span><span class="p">,</span>
+            <span class="s2">&quot;WhenFinished_as_string&quot;</span><span class="o">:</span><span class="s2">&quot;2013-07-25 13:14:20.125&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;WhenFinished_in_msec&quot;</span><span class="o">:</span><span class="mi">1374754460125</span>
+         <span class="p">}</span>
+      <span class="p">]</span>
+   <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p><strong>Get last 5 data entries for the last execution for plugin and of data type</strong></p>
+<blockquote>
+<div><div class="highlight-javascript"><div class="highlight"><pre>URL: &lt;basepath&gt;/service/executions/{pluginName}/{dataType}
+Type: GET
+</pre></div>
+</div>
+</div></blockquote>
+<p>RESPONSE (hot tweets as an example, JSON):</p>
+<blockquote>
+<div><div class="highlight-javascript"><div class="highlight"><pre><span class="p">{</span>
+   <span class="s2">&quot;result&quot;</span><span class="o">:</span><span class="s2">&quot;ok&quot;</span><span class="p">,</span>
+   <span class="s2">&quot;response&quot;</span><span class="o">:</span><span class="p">[</span>
+      <span class="p">{</span>
+         <span class="s2">&quot;id&quot;</span><span class="o">:</span><span class="s2">&quot;443563887288270848&quot;</span><span class="p">,</span>
+         <span class="s2">&quot;text&quot;</span><span class="o">:</span><span class="s2">&quot;168 days until football is back...\uD83C\uDFC8\uD83D\uDE4C&quot;</span><span class="p">,</span>
+         <span class="s2">&quot;created_at&quot;</span><span class="o">:</span><span class="s2">&quot;Wed Mar 12 01:47:26 +0000 2014&quot;</span><span class="p">,</span>
+         <span class="s2">&quot;lang&quot;</span><span class="o">:</span><span class="s2">&quot;en&quot;</span><span class="p">,</span>
+         <span class="s2">&quot;buzz_score&quot;</span><span class="o">:</span><span class="s2">&quot;0.8921&quot;</span><span class="p">,</span>
+         <span class="s2">&quot;uid&quot;</span><span class="o">:</span><span class="s2">&quot;1195754833&quot;</span><span class="p">,</span>
+         <span class="s2">&quot;name&quot;</span><span class="o">:</span><span class="s2">&quot;I Live For Football&quot;</span><span class="p">,</span>
+         <span class="s2">&quot;screen_name&quot;</span><span class="o">:</span><span class="s2">&quot;LiveToPlayFB&quot;</span><span class="p">,</span>
+         <span class="s2">&quot;followers_count&quot;</span><span class="o">:</span><span class="s2">&quot;24629&quot;</span><span class="p">,</span>
+         <span class="s2">&quot;friends_count&quot;</span><span class="o">:</span><span class="s2">&quot;8363&quot;</span>
+      <span class="p">},</span>
+      <span class="p">{</span>
+         <span class="s2">&quot;id&quot;</span><span class="o">:</span><span class="s2">&quot;443602053600800769&quot;</span><span class="p">,</span>
+         <span class="s2">&quot;text&quot;</span><span class="o">:</span><span class="s2">&quot;Retweet if you play any\nBasketball\uD83C\uDFC0\nFootball\uD83C\uDFC8\nVolleyball\uD83D\uDE4C\nBaseball⚾\nHockey❄\nSoccer⚽\nWrestling\nSoftball\nCheer\uD83C\uDF89\nTrack\nLacrosse\nGolf&quot;</span><span class="p">,</span>
+         <span class="s2">&quot;created_at&quot;</span><span class="o">:</span><span class="s2">&quot;Wed Mar 12 04:19:05 +0000 2014&quot;</span><span class="p">,</span>
+         <span class="s2">&quot;lang&quot;</span><span class="o">:</span><span class="s2">&quot;en&quot;</span><span class="p">,</span>
+         <span class="s2">&quot;buzz_score&quot;</span><span class="o">:</span><span class="s2">&quot;0.6642&quot;</span><span class="p">,</span>
+         <span class="s2">&quot;uid&quot;</span><span class="o">:</span><span class="s2">&quot;2334082075&quot;</span><span class="p">,</span>
+         <span class="s2">&quot;name&quot;</span><span class="o">:</span><span class="s2">&quot;Doubted Athlete&quot;</span><span class="p">,</span>
+         <span class="s2">&quot;screen_name&quot;</span><span class="o">:</span><span class="s2">&quot;DoubtedAthlete&quot;</span><span class="p">,</span>
+         <span class="s2">&quot;followers_count&quot;</span><span class="o">:</span><span class="s2">&quot;1406&quot;</span><span class="p">,</span>
+         <span class="s2">&quot;friends_count&quot;</span><span class="o">:</span><span class="s2">&quot;2&quot;</span>
+      <span class="p">},</span>
+      <span class="p">{</span>
+         <span class="s2">&quot;id&quot;</span><span class="o">:</span><span class="s2">&quot;443585944805834752&quot;</span><span class="p">,</span>
+         <span class="s2">&quot;text&quot;</span><span class="o">:</span><span class="s2">&quot;i feel like family, close friends, football, hockey, &amp;amp; baseball teams should go in first, then the seniors. &amp;amp; leftover spots to anyone else.&quot;</span><span class="p">,</span>
+         <span class="s2">&quot;created_at&quot;</span><span class="o">:</span><span class="s2">&quot;Wed Mar 12 03:15:05 +0000 2014&quot;</span><span class="p">,</span>
+         <span class="s2">&quot;lang&quot;</span><span class="o">:</span><span class="s2">&quot;en&quot;</span><span class="p">,</span>
+         <span class="s2">&quot;buzz_score&quot;</span><span class="o">:</span><span class="s2">&quot;0.7189&quot;</span><span class="p">,</span>
+         <span class="s2">&quot;uid&quot;</span><span class="o">:</span><span class="s2">&quot;280063004&quot;</span><span class="p">,</span>
+         <span class="s2">&quot;name&quot;</span><span class="o">:</span><span class="s2">&quot;danyell oosterveld ☯&quot;</span><span class="p">,</span>
+         <span class="s2">&quot;screen_name&quot;</span><span class="o">:</span><span class="s2">&quot;danyelllynnn&quot;</span><span class="p">,</span>
+         <span class="s2">&quot;followers_count&quot;</span><span class="o">:</span><span class="s2">&quot;176&quot;</span><span class="p">,</span>
+         <span class="s2">&quot;friends_count&quot;</span><span class="o">:</span><span class="s2">&quot;106&quot;</span>
+      <span class="p">},</span>
+      <span class="p">{</span>
+         <span class="s2">&quot;id&quot;</span><span class="o">:</span><span class="s2">&quot;382397178033213440&quot;</span><span class="p">,</span>
+         <span class="s2">&quot;text&quot;</span><span class="o">:</span><span class="s2">&quot;Play your Man like a football and Watch another Girl catch him like a goal keeper..you will regret watching the replay..&quot;</span><span class="p">,</span>
+         <span class="s2">&quot;created_at&quot;</span><span class="o">:</span><span class="s2">&quot;Tue Sep 24 06:52:46 +0000 2013&quot;</span><span class="p">,</span>
+         <span class="s2">&quot;lang&quot;</span><span class="o">:</span><span class="s2">&quot;en&quot;</span><span class="p">,</span>
+         <span class="s2">&quot;buzz_score&quot;</span><span class="o">:</span><span class="s2">&quot;0.4181&quot;</span><span class="p">,</span>
+         <span class="s2">&quot;uid&quot;</span><span class="o">:</span><span class="s2">&quot;795042152&quot;</span><span class="p">,</span>
+         <span class="s2">&quot;name&quot;</span><span class="o">:</span><span class="s2">&quot;COMEDIAN IGODYE&quot;</span><span class="p">,</span>
+         <span class="s2">&quot;screen_name&quot;</span><span class="o">:</span><span class="s2">&quot;i_go_dye&quot;</span><span class="p">,</span>
+         <span class="s2">&quot;followers_count&quot;</span><span class="o">:</span><span class="s2">&quot;66062&quot;</span><span class="p">,</span>
+         <span class="s2">&quot;friends_count&quot;</span><span class="o">:</span><span class="s2">&quot;2&quot;</span>
+      <span class="p">},</span>
+      <span class="p">{</span>
+         <span class="s2">&quot;id&quot;</span><span class="o">:</span><span class="s2">&quot;443686928639356928&quot;</span><span class="p">,</span>
+         <span class="s2">&quot;text&quot;</span><span class="o">:</span><span class="s2">&quot;And the winner is.. @JonWalmach for the Cruz Bday contest. Some real classics!! Pick up your shirt in the football office. #pvbearsfootball&quot;</span><span class="p">,</span>
+         <span class="s2">&quot;created_at&quot;</span><span class="o">:</span><span class="s2">&quot;Wed Mar 12 09:56:21 +0000 2014&quot;</span><span class="p">,</span>
+         <span class="s2">&quot;lang&quot;</span><span class="o">:</span><span class="s2">&quot;en&quot;</span><span class="p">,</span>
+         <span class="s2">&quot;buzz_score&quot;</span><span class="o">:</span><span class="s2">&quot;0.3264&quot;</span><span class="p">,</span>
+         <span class="s2">&quot;uid&quot;</span><span class="o">:</span><span class="s2">&quot;2312070447&quot;</span><span class="p">,</span>
+         <span class="s2">&quot;name&quot;</span><span class="o">:</span><span class="s2">&quot;PV Football&quot;</span><span class="p">,</span>
+         <span class="s2">&quot;screen_name&quot;</span><span class="o">:</span><span class="s2">&quot;football_PV&quot;</span><span class="p">,</span>
+         <span class="s2">&quot;followers_count&quot;</span><span class="o">:</span><span class="s2">&quot;147&quot;</span><span class="p">,</span>
+         <span class="s2">&quot;friends_count&quot;</span><span class="o">:</span><span class="s2">&quot;139&quot;</span>
+      <span class="p">}</span>
+   <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="next-steps">
+<h2>Next steps<a class="headerlink" href="#next-steps" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference internal" href="plugin_dev.html"><em>Plugin development</em></a></p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="plugin_dev.html" title="Plugin development"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="eccintegration.html" title="ECC integration"
+             >previous</a> |</li>
+        <li><a href="index.html">EXPERIMEDIA SAD 2.6 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright University of Southampton IT Innovation Centre 2013-2014.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3b1.
+    </div>
+  </body>
+</html>

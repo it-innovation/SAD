@@ -1,0 +1,265 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>SAD Service and Plugins Installation &mdash; EXPERIMEDIA SAD 2.6 documentation</title>
+    
+    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '2.6',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="EXPERIMEDIA SAD 2.6 documentation" href="index.html" />
+    <link rel="next" title="Running &amp; Configuring SAD Service" href="service_exec.html" />
+    <link rel="prev" title="Changelog" href="changelog.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="service_exec.html" title="Running &amp; Configuring SAD Service"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="changelog.html" title="Changelog"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">EXPERIMEDIA SAD 2.6 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">SAD Service and Plugins Installation</a><ul>
+<li><a class="reference internal" href="#prerequisites">Prerequisites</a></li>
+<li><a class="reference internal" href="#installing-dependencies">Installing dependencies</a></li>
+<li><a class="reference internal" href="#service-configuration">Service configuration</a></li>
+<li><a class="reference internal" href="#plugins-visualisation-files">Plugins visualisation files</a></li>
+<li><a class="reference internal" href="#build">Build</a></li>
+<li><a class="reference internal" href="#next-steps">Next steps</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="changelog.html"
+                        title="previous chapter">Changelog</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="service_exec.html"
+                        title="next chapter">Running &amp; Configuring SAD Service</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/installation.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="sad-service-and-plugins-installation">
+<h1>SAD Service and Plugins Installation<a class="headerlink" href="#sad-service-and-plugins-installation" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="prerequisites">
+<h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Java version 7</li>
+<li>Apache Maven version 3</li>
+<li>ECC version 2.1 or above <em>installed in Maven, see below</em></li>
+<li>Social Integrator version 1.6 beta <em>installed in Maven, see below</em></li>
+<li>MongoDB 2.4+ (<a class="reference external" href="http://www.mongodb.org/downloads">http://www.mongodb.org/downloads</a>)</li>
+<li>RabbitMQ Server version 2.8</li>
+<li>Apache Tomcat version 7 (optional) or similar with <strong>Servlet 3 support</strong></li>
+</ul>
+</div>
+<div class="section" id="installing-dependencies">
+<h2>Installing dependencies<a class="headerlink" href="#installing-dependencies" title="Permalink to this headline">¶</a></h2>
+<p><strong>ECC version 2.1</strong> and <strong>Social Integrator version 1.6 beta</strong> Java libraries are provided with this distribution in the <strong>lib</strong> folder. To install those dependencies in Maven, change into the <strong>lib</strong> folder and run the batch file provided:</p>
+<blockquote>
+<div><div class="highlight-sh"><div class="highlight"><pre><span class="nb">cd </span>lib
+install_into_maven <span class="o">(</span>Linux/Mac<span class="o">)</span>
+install_into_maven.bat <span class="o">(</span>Windows<span class="o">)</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>Alternatively, run the following in command line to install Social Integrator version 1.6beta:</p>
+<blockquote>
+<div><div class="highlight-sh"><div class="highlight"><pre><span class="nb">cd </span>lib
+mvn install:install-file -Dfile<span class="o">=</span>./SocialIntegrator-core-api-1.6beta.jar -DgroupId<span class="o">=</span>gr.ntua -DartifactId<span class="o">=</span>socialintegrator -Dversion<span class="o">=</span>1.6beta -Dpackaging<span class="o">=</span>jar
+</pre></div>
+</div>
+</div></blockquote>
+<p>and ECC version 2.1:</p>
+<blockquote>
+<div><div class="highlight-sh"><div class="highlight"><pre>mvn install:install-file -Dfile<span class="o">=</span>./SocialIntegrator-core-api-1.6beta.jar -DgroupId<span class="o">=</span>gr.ntua -DartifactId<span class="o">=</span>socialintegrator -Dversion<span class="o">=</span>1.6beta -Dpackaging<span class="o">=</span>jar
+mvn install:install-file -Dfile<span class="o">=</span>./experimedia-arch-ecc-amqpAPI-impl-2.1.jar -DgroupId<span class="o">=</span>uk.ac.soton.itinnovation.experimedia -DartifactId<span class="o">=</span>experimedia-arch-ecc-amqpAPI-impl -Dversion<span class="o">=</span>2.1 -Dpackaging<span class="o">=</span>jar
+mvn install:install-file -Dfile<span class="o">=</span>./experimedia-arch-ecc-amqpAPI-spec-2.1.jar -DgroupId<span class="o">=</span>uk.ac.soton.itinnovation.experimedia -DartifactId<span class="o">=</span>experimedia-arch-ecc-amqpAPI-spec -Dversion<span class="o">=</span>2.1 -Dpackaging<span class="o">=</span>jar
+mvn install:install-file -Dfile<span class="o">=</span>./experimedia-arch-ecc-common-dataModel-experiment-2.1.jar -DgroupId<span class="o">=</span>uk.ac.soton.itinnovation.experimedia -DartifactId<span class="o">=</span>experimedia-arch-ecc-common-dataModel-experiment -Dversion<span class="o">=</span>2.1 -Dpackaging<span class="o">=</span>jar
+mvn install:install-file -Dfile<span class="o">=</span>./experimedia-arch-ecc-common-dataModel-metrics-2.1.jar -DgroupId<span class="o">=</span>uk.ac.soton.itinnovation.experimedia -DartifactId<span class="o">=</span>experimedia-arch-ecc-common-dataModel-metrics -Dversion<span class="o">=</span>2.1 -Dpackaging<span class="o">=</span>jar
+mvn install:install-file -Dfile<span class="o">=</span>./experimedia-arch-ecc-common-dataModel-monitor-2.1.jar -DgroupId<span class="o">=</span>uk.ac.soton.itinnovation.experimedia -DartifactId<span class="o">=</span>experimedia-arch-ecc-common-dataModel-monitor -Dversion<span class="o">=</span>2.1 -Dpackaging<span class="o">=</span>jar
+mvn install:install-file -Dfile<span class="o">=</span>./experimedia-arch-ecc-common-dataModel-provenance-2.1.jar -DgroupId<span class="o">=</span>uk.ac.soton.itinnovation.experimedia -DartifactId<span class="o">=</span>experimedia-arch-ecc-common-dataModel-provenance -Dversion<span class="o">=</span>2.1 -Dpackaging<span class="o">=</span>jar
+mvn install:install-file -Dfile<span class="o">=</span>./experimedia-arch-ecc-edm-factory-2.1.jar -DgroupId<span class="o">=</span>uk.ac.soton.itinnovation.experimedia -DartifactId<span class="o">=</span>experimedia-arch-ecc-edm-factory -Dversion<span class="o">=</span>2.1 -Dpackaging<span class="o">=</span>jar
+mvn install:install-file -Dfile<span class="o">=</span>./experimedia-arch-ecc-edm-impl-metrics-2.1.jar -DgroupId<span class="o">=</span>uk.ac.soton.itinnovation.experimedia -DartifactId<span class="o">=</span>experimedia-arch-ecc-edm-impl-metrics -Dversion<span class="o">=</span>2.1 -Dpackaging<span class="o">=</span>jar
+mvn install:install-file -Dfile<span class="o">=</span>./experimedia-arch-ecc-edm-spec-2.1.jar -DgroupId<span class="o">=</span>uk.ac.soton.itinnovation.experimedia -DartifactId<span class="o">=</span>experimedia-arch-ecc-edm-spec -Dversion<span class="o">=</span>2.1 -Dpackaging<span class="o">=</span>jar
+mvn install:install-file -Dfile<span class="o">=</span>./experimedia-arch-ecc-em-factory-2.1.jar -DgroupId<span class="o">=</span>uk.ac.soton.itinnovation.experimedia -DartifactId<span class="o">=</span>experimedia-arch-ecc-em-factory -Dversion<span class="o">=</span>2.1 -Dpackaging<span class="o">=</span>jar
+mvn install:install-file -Dfile<span class="o">=</span>./experimedia-arch-ecc-em-impl-2.1.jar -DgroupId<span class="o">=</span>uk.ac.soton.itinnovation.experimedia -DartifactId<span class="o">=</span>experimedia-arch-ecc-em-impl -Dversion<span class="o">=</span>2.1 -Dpackaging<span class="o">=</span>jar
+mvn install:install-file -Dfile<span class="o">=</span>./experimedia-arch-ecc-em-spec-2.1.jar -DgroupId<span class="o">=</span>uk.ac.soton.itinnovation.experimedia -DartifactId<span class="o">=</span>experimedia-arch-ecc-em-spec -Dversion<span class="o">=</span>2.1 -Dpackaging<span class="o">=</span>jar
+mvn install:install-file -Dfile<span class="o">=</span>./experimedia-arch-ecc-samples-shared-2.1.jar -DgroupId<span class="o">=</span>uk.ac.soton.itinnovation.experimedia -DartifactId<span class="o">=</span>experimedia-arch-ecc-samples-shared -Dversion<span class="o">=</span>2.1 -Dpackaging<span class="o">=</span>jar
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="service-configuration">
+<span id="service-configuration-label"></span><h2>Service configuration<a class="headerlink" href="#service-configuration" title="Permalink to this headline">¶</a></h2>
+<p>Since version 2.5 all default service settings can be found in <strong>sad-service/src/main/resources/application.properties</strong>:</p>
+<blockquote>
+<div><div class="highlight-sh"><div class="highlight"><pre><span class="c"># Used for metric reporting and mvn spring-boot:run</span>
+server.port<span class="o">=</span>8081
+server.context-path<span class="o">=</span>/SAD
+
+<span class="c"># User login</span>
+security.user.name<span class="o">=</span>manager
+security.user.password<span class="o">=</span>cZGmMqLkFE
+security.basic.realm<span class="o">=</span>EXPERIMEDIA SAD
+
+<span class="c"># SAD default settings: basepath for external links, deployed path</span>
+sad.basepath<span class="o">=</span>http://localhost:8080/SAD
+sad.pluginsPath<span class="o">=</span>../sad-plugins
+sad.coordinatorPath<span class="o">=</span>src/main/resources/coordinator.json
+sad.resetDatabaseOnStart<span class="o">=</span><span class="nb">false</span>
+
+<span class="c"># ECC default settings - rabbit</span>
+sad.eccEnabled<span class="o">=</span><span class="nb">false</span>
+sad.ecc.monitorId<span class="o">=</span>00000000-0000-0000-0000-000000000000
+sad.ecc.rabbitIp<span class="o">=</span>127.0.0.1
+sad.ecc.rabbitPort<span class="o">=</span>5672
+sad.ecc.clientName<span class="o">=</span>Social Analytics Dashboard
+sad.ecc.clientsUuuidSeed<span class="o">=</span>3e85977c-f791-11e3-865e-b2227cce2b5
+
+<span class="c"># Unit tests</span>
+spring.main.show_banner<span class="o">=</span><span class="nb">false</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>Properties starting with <strong>sad.</strong> can be changed in the new service configuration UI. Make sure that regardless of your deployment choice <strong>server.</strong> properties are set correctly.</p>
+<p>Local database access is configured in <strong>sad.coordinatorPath</strong> file as before:</p>
+<blockquote>
+<div><div class="highlight-javascript"><div class="highlight"><pre><span class="s2">&quot;database&quot;</span><span class="o">:</span> <span class="p">{</span>
+ <span class="s2">&quot;mongo_server&quot;</span><span class="o">:</span> <span class="p">{</span>
+  <span class="s2">&quot;host&quot;</span><span class="o">:</span> <span class="s2">&quot;localhost&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;port&quot;</span><span class="o">:</span> <span class="s2">&quot;27017&quot;</span>
+ <span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>Database with name:</p>
+<blockquote>
+<div><div class="highlight-javascript"><div class="highlight"><pre><span class="s2">&quot;name&quot;</span><span class="o">:</span> <span class="s2">&quot;experimedia&quot;</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>will be created automatically.</p>
+</div>
+<div class="section" id="plugins-visualisation-files">
+<h2>Plugins visualisation files<a class="headerlink" href="#plugins-visualisation-files" title="Permalink to this headline">¶</a></h2>
+<p>To visualise plugin output via SAD Dashboard, copy the contents of each <strong>&lt;sad.pluginsPath property value&gt;/&lt;plugin-name&gt;/src/main/resources/visualise</strong> folder into <strong>sad-service/src/main/webapp/visualise/&lt;plugin-name&gt;</strong> folder, so that all default (or custom) plugin visualisations exist in that folder:</p>
+<blockquote>
+<div><div class="highlight-javascript"><div class="highlight"><pre><span class="nx">sad</span><span class="o">-</span><span class="nx">service</span><span class="o">/</span><span class="nx">src</span><span class="o">/</span><span class="nx">main</span><span class="o">/</span><span class="nx">webapp</span><span class="o">/</span><span class="nx">visualise</span><span class="o">/</span><span class="nx">basic</span><span class="o">-</span><span class="nx">sns</span><span class="o">-</span><span class="nx">stats</span>
+<span class="nx">sad</span><span class="o">-</span><span class="nx">service</span><span class="o">/</span><span class="nx">src</span><span class="o">/</span><span class="nx">main</span><span class="o">/</span><span class="nx">webapp</span><span class="o">/</span><span class="nx">visualise</span><span class="o">/</span><span class="nx">facebook</span><span class="o">-</span><span class="nx">collector</span>
+<span class="nx">sad</span><span class="o">-</span><span class="nx">service</span><span class="o">/</span><span class="nx">src</span><span class="o">/</span><span class="nx">main</span><span class="o">/</span><span class="nx">webapp</span><span class="o">/</span><span class="nx">visualise</span><span class="o">/</span><span class="nx">hot</span><span class="o">-</span><span class="nx">tweets</span>
+<span class="nx">sad</span><span class="o">-</span><span class="nx">service</span><span class="o">/</span><span class="nx">src</span><span class="o">/</span><span class="nx">main</span><span class="o">/</span><span class="nx">webapp</span><span class="o">/</span><span class="nx">visualise</span><span class="o">/</span><span class="nx">twitter</span><span class="o">-</span><span class="nx">searcher</span>
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="build">
+<h2>Build<a class="headerlink" href="#build" title="Permalink to this headline">¶</a></h2>
+<p>To build SAD service and plugins, in top folder of the distribution run:</p>
+<blockquote>
+<div><div class="highlight-javascript"><div class="highlight"><pre><span class="nx">mvn</span> <span class="nx">install</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>This will create a WAR file with SAD service in:</p>
+<blockquote>
+<div><div class="highlight-html"><div class="highlight"><pre>sad-service/target/sad-service-2.6.war
+</pre></div>
+</div>
+</div></blockquote>
+<p>and also create default plugins&#8217; jars and configuration files:</p>
+<blockquote>
+<div><div class="highlight-javascript"><div class="highlight"><pre>sad-plugins/&lt;plugin name&gt;/configuration.json
+sad-plugins/&lt;plugin name&gt;/target/&lt;plugin name&gt;-2.6.jar
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="next-steps">
+<h2>Next steps<a class="headerlink" href="#next-steps" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference internal" href="service_exec.html"><em>Running SAD Service</em></a></p>
+<p><a class="reference internal" href="using_control_panel.html"><em>Using SAD Control panel</em></a></p>
+<p><a class="reference internal" href="config_files.html"><em>SAD configuration files explained</em></a></p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="service_exec.html" title="Running &amp; Configuring SAD Service"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="changelog.html" title="Changelog"
+             >previous</a> |</li>
+        <li><a href="index.html">EXPERIMEDIA SAD 2.6 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright University of Southampton IT Innovation Centre 2013-2014.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3b1.
+    </div>
+  </body>
+</html>
