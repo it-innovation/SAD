@@ -8,7 +8,7 @@
 
 ## Configuration for this script (this part is Ruby) ##
 
-hostname = "SAD-mvb-master"
+hostname = "SAD-26"
 ram = "512"
 # Deploying with a static IP like this means that VirtualBox will set up a virtual network card that listens on 10.0.0.0/48
 # If you have other machines on that subnet then change the IP or you will have to delete the virtual card from the
