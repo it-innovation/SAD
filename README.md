@@ -9,9 +9,9 @@ The source code in this distribution is © Copyright University of Southampton I
 Licences
 --------
 
-The licence for this software is [LGPL v2.1](./sad-service/LICENCE.txt).
+The licence for this software is [LGPL v2.1](./sad-service/LICENSE.txt).
 
-A complete list of licences for this software and associated third party software can be found in the [licenses](licenses) folder.
+A complete list of licences for this software and associated third party software can be found in the [licences](licences) folder.
 
 Contact
 -------
@@ -25,7 +25,7 @@ For further information on collaboration, support or alternative licensing, plea
 Documentation
 -------------
 
-The primary of documentation can be found in the ['docs' folder](./docs/html/index.html) or online at [ReadTheDocs](http://sad.readthedocs.org/en/latest/). The documentation is written in RST format: readers have a choice of generating a printable version in a variety of formats including HTML and PDF.
+The primary of documentation can be found in the ['docs' folder](./docs/) or online at [ReadTheDocs](http://sad.readthedocs.org/en/latest/). The documentation is written in RST format: readers have a choice of generating a printable version in a variety of formats including HTML and PDF.
 
 [Javadoc for the source code](./javadoc) is included.
 
